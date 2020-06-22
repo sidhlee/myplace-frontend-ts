@@ -1,9 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
+import UserList from '../components/UserList';
 
-const StyledUsers = styled.div``;
+const USERS = [
+  {
+    id: 'u1',
+    name: 'Sid',
+    email: 'test@test.com',
+    image: 'https://placem.at/people?width=400&random=1',
+    places: [],
+  },
+  {
+    id: 'u2',
+    name: 'Nayoun',
+    email: 'test2@test.com',
+    image: 'https://placem.at/people?width=400&random=2',
+    places: [],
+  },
+];
+
 const Users: React.FC = (props) => {
-  return <StyledUsers>Users</StyledUsers>;
+  return <UserList users={USERS} />;
 };
 
 export default Users;
