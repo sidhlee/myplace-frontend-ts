@@ -4,7 +4,13 @@ import UserItem from './UserItem';
 
 import { User } from '../../shared/models/types';
 
-const StyledUserList = styled.ul``;
+const StyledUserList = styled.ul`
+  list-style: none;
+  max-width: 20rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+`;
 
 type UserListProps = {
   users: User[];
@@ -22,6 +28,7 @@ const UserList: React.FC<UserListProps> = (props) => {
     <StyledUserList>
       {props.users.map((user) => (
         <UserItem
+          id={user.id}
           image={user.image}
           name={user.name}
           placeCount={user.places.length}
