@@ -1,7 +1,8 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import styled from 'styled-components';
 
-const StyledSideDrawer = styled.div`
+const StyledSideDrawer = styled.aside`
   position: fixed;
   top: 0;
   left: 0;
@@ -31,7 +32,11 @@ const StyledSideDrawer = styled.div`
   }
 `;
 const SideDrawer: React.FC = (props) => {
-  return <StyledSideDrawer>{props.children}</StyledSideDrawer>;
+  const content = <StyledSideDrawer>{props.children}</StyledSideDrawer>;
+  return ReactDOM.createPortal(
+    content,
+    document.getElementById('drawer-hook')!
+  );
 };
 
 export default SideDrawer;
