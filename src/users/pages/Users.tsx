@@ -6,14 +6,14 @@ const USERS = [
     id: 'u1',
     name: 'Sid',
     email: 'test@test.com',
-    image: 'https://placem.at/people?width=400&random=1',
+    image: 'https://placem.at/people?w=400&random=1',
     places: [],
   },
   {
     id: 'u2',
     name: 'Nayoun',
     email: 'test2@test.com',
-    image: 'https://placem.at/people?width=400&random=2',
+    image: 'https://placem.at/people?w=400&random=2',
     places: [],
   },
 ];

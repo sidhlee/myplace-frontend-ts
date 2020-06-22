@@ -21,7 +21,11 @@ const UserList: React.FC<UserListProps> = (props) => {
   return (
     <StyledUserList>
       {props.users.map((user) => (
-        <UserItem />
+        <UserItem
+          image={user.image}
+          name={user.name}
+          placeCount={user.places.length}
+        />
       ))}
     </StyledUserList>
   );
