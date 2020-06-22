@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 
 import { bp } from '../../styled/vars';
 
+import SideDrawer from './SideDrawer';
 import MainHeader from './MainHeader';
 import NavLinks from './NavLinks';
 
-const StyledMainNavigation = styled.div<MainNavigationProps>`
+// Extending MainHeader to style the nested components
+const Navbar = styled(MainHeader)`
   .main-navigation__menu-btn {
     --size: 2.5rem;
     width: var(--size);
@@ -49,10 +51,15 @@ type MainNavigationProps = {
  */
 const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   return (
-    <StyledMainNavigation>
+    <React.Fragment>
       {/* SideDrawer will be placed here */}
       {/* De-couple Navbar(MainHeader) from its content */}
-      <MainHeader>
+      <SideDrawer>
+        <nav style={{ height: '100%' }}>
+          <NavLinks isSideDrawer />
+        </nav>
+      </SideDrawer>
+      <Navbar>
         {/* We can re-use MainHeader wrapping on different components
          */}
         <button className="main-navigation__menu-btn">
@@ -66,8 +73,8 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
         <nav>
           <NavLinks />
         </nav>
-      </MainHeader>
-    </StyledMainNavigation>
+      </Navbar>
+    </React.Fragment>
   );
 };
 

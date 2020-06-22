@@ -50,7 +50,7 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
   }
 
   @media (min-width: ${bp.desktop}) {
-    display: flex;
+    display: ${(props) => (props.isSideDrawer ? 'none' : 'flex')};
     flex-direction: row;
   }
 `;
@@ -61,7 +61,7 @@ type NavLinksProps = {
 
 const NavLinks: React.FC<NavLinksProps> = (props) => {
   return (
-    <StyledNavLinks>
+    <StyledNavLinks {...props}>
       <li>
         <NavLink to="/" exact>
           ALL USERS

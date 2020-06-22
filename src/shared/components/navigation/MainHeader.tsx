@@ -18,7 +18,9 @@ const StyledMainHeader = styled.div`
   }
 `;
 const MainHeader: React.FC = (props) => {
-  return <StyledMainHeader>{props.children}</StyledMainHeader>;
+  // To be able to extend the style,
+  // you need to attach the passed className prop to a DOM element
+  return <StyledMainHeader {...props}>{props.children}</StyledMainHeader>;
 };
 
 export default MainHeader;
