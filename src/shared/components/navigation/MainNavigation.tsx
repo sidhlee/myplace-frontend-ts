@@ -5,13 +5,9 @@ import { Link } from 'react-router-dom';
 import { bp } from '../../styled/vars';
 
 import MainHeader from './MainHeader';
+import NavLinks from './NavLinks';
 
 const StyledMainNavigation = styled.div<MainNavigationProps>`
-  /* display: ${(props) => (props.sideDrawer ? 'block' : 'none')};
-  height: 100%;
-  @media (min-width: ${bp.desktop}) {
-    display: block;
-  } */
   .main-navigation__menu-btn {
     --size: 2.5rem;
     width: var(--size);
@@ -67,7 +63,9 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
         <h1 className="main-navigation__title">
           <Link to="/">MyPlace</Link>
         </h1>
-        <nav>NavLinks</nav>
+        <nav>
+          <NavLinks />
+        </nav>
       </MainHeader>
     </StyledMainNavigation>
   );
