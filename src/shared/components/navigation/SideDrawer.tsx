@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import styled from 'styled-components';
+import { CSSTransition } from 'react-transition-group';
 
 const StyledSideDrawer = styled.aside`
   position: fixed;
@@ -31,8 +32,25 @@ const StyledSideDrawer = styled.aside`
     opacity: 0;
   }
 `;
-const SideDrawer: React.FC = (props) => {
-  const content = <StyledSideDrawer>{props.children}</StyledSideDrawer>;
+
+type SideDrawerProps = {
+  show: boolean;
+  closeDrawer: () => void;
+};
+const SideDrawer: React.FC<SideDrawerProps> = (props) => {
+  const content = (
+    <CSSTransition
+      in={props.show}
+      timeout={200}
+      classNames="slide-in-left"
+      mountOnEnter
+      unmountOnExit
+    >
+      <StyledSideDrawer onClick={props.closeDrawer}>
+        {props.children}
+      </StyledSideDrawer>
+    </CSSTransition>
+  );
   return ReactDOM.createPortal(
     content,
     document.getElementById('drawer-hook')!

@@ -62,18 +62,14 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
 
   return (
     <React.Fragment>
-      {/* SideDrawer will be placed here */}
+      {/* In order of CSSTransition to work, animating component should be rendered unconditionally */}
+      <SideDrawer show={isDrawerOpen} closeDrawer={closeDrawer}>
+        <nav style={{ height: '100%' }}>
+          <NavLinks isSideDrawer />
+        </nav>
+      </SideDrawer>
+      {isDrawerOpen && <Backdrop onClick={closeDrawer} />}
       {/* De-couple Navbar(MainHeader) from its content */}
-      {isDrawerOpen && (
-        <>
-          <SideDrawer>
-            <nav style={{ height: '100%' }}>
-              <NavLinks isSideDrawer />
-            </nav>
-          </SideDrawer>
-          <Backdrop onClick={closeDrawer} />
-        </>
-      )}
       <Navbar>
         {/* We can re-use MainHeader wrapping on different components
          */}
