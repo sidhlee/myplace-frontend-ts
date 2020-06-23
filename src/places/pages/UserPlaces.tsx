@@ -3,6 +3,7 @@ import React from 'react';
 import { Place } from '../../shared/models/types';
 
 import PlaceList from '../components/PlaceList';
+import { useParams } from 'react-router-dom';
 
 const PLACES: Place[] = [
   {
@@ -27,12 +28,14 @@ const PLACES: Place[] = [
       lat: 43.664416,
       lng: -79.412119,
     },
-    creator: 'u1',
+    creator: 'u2',
   },
 ];
 
 const UserPlaces = () => {
-  return <PlaceList places={PLACES} />;
+  const { userId } = useParams<{ userId: string }>();
+  const loadedPlace = PLACES.filter((place) => place.creator === userId);
+  return <PlaceList places={loadedPlace} />;
 };
 
 export default UserPlaces;

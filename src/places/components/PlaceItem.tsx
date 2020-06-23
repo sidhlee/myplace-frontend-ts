@@ -22,6 +22,9 @@ const StyledPlaceItem = styled.li`
   .place-item__info {
     margin: 1em auto;
     text-align: center;
+    h2 {
+      color: var(--text-accent);
+    }
   }
   .place-item__actions {
     text-align: right;
