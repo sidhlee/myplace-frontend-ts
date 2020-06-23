@@ -28,6 +28,7 @@ const UserList: React.FC<UserListProps> = (props) => {
     <StyledUserList>
       {props.users.map((user) => (
         <UserItem
+          key={user.id}
           id={user.id}
           image={user.image}
           name={user.name}

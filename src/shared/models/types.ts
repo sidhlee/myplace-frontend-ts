@@ -11,6 +11,7 @@ export interface Place {
   title: string;
   description: string;
   address: string;
+  image: string;
   location: {
     lat: number;
     lng: number;

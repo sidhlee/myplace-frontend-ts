@@ -68,7 +68,7 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
         </NavLink>
       </li>
       <li>
-        <NavLink to="/u1/place">My Place</NavLink>
+        <NavLink to="/u1/places">My Place</NavLink>
       </li>
       <li>
         <NavLink to="/places/new">Add Place</NavLink>
