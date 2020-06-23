@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { createPortal } from 'react-dom';
 
 const StyledBackdrop = styled.div`
   position: fixed;
@@ -11,7 +12,8 @@ const StyledBackdrop = styled.div`
   background: var(--cl-backdrop);
 `;
 const Backdrop: React.FC<{ onClick: () => void }> = (props) => {
-  return <StyledBackdrop onClick={props.onClick}></StyledBackdrop>;
+  const content = <StyledBackdrop onClick={props.onClick}></StyledBackdrop>;
+  return createPortal(content, document.getElementById('backdrop-hook')!);
 };
 
 export default Backdrop;
