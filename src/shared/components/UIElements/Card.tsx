@@ -5,7 +5,7 @@ const StyledCard = styled.div`
   padding: 1em;
   background: var(--cl-white);
   border: var(--border);
-  border-radius: 6px;
+  border-radius: var(--border-radius);
 `;
 const Card: React.FC = (props) => {
   return <StyledCard>{props.children}</StyledCard>;

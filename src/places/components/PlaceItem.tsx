@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Card from '../../shared/components/UIElements/Card';
+import Button from '../../shared/components/UIElements/Button';
 
 import { Place } from '../../shared/models/types';
 import { bp } from '../../shared/styled/vars';
@@ -23,7 +24,11 @@ const StyledPlaceItem = styled.li`
     margin: 1em auto;
     text-align: center;
     h2 {
+      font-size: 1.2rem;
       color: var(--text-accent);
+    }
+    h3 {
+      font-size: 1rem;
     }
   }
   .place-item__actions {
@@ -49,9 +54,9 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
           <p>{props.description}</p>
         </div>
         <div className="place-item__actions">
-          <button>VIEW ON MAP</button>
-          <button>EDIT</button>
-          <button>DELETE</button>
+          <Button>VIEW ON MAP</Button>
+          <Button>EDIT</Button>
+          <Button danger>DELETE</Button>
         </div>
       </Card>
     </StyledPlaceItem>
