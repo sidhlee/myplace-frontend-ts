@@ -8,6 +8,7 @@ import Avatar from '../../shared/components/UIElements/Avatar';
 const StyledUserItem = styled.li`
   margin-bottom: 2em;
   a {
+    padding: 1em;
     display: flex;
     align-items: center;
     text-decoration: none;

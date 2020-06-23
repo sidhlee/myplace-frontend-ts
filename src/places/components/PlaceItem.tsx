@@ -38,6 +38,7 @@ const StyledPlaceItem = styled.li`
   }
 
   .place-item__actions {
+    padding: 0 1em 1em;
     text-align: right;
   }
 `;

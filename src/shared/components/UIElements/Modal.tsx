@@ -2,7 +2,6 @@ import React, { ReactChild, ReactChildren } from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 import { CSSTransition } from 'react-transition-group';
-import { bp } from '../../styled/vars';
 
 const StyledModal = styled.div`
   position: fixed;
