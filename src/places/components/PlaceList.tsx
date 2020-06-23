@@ -26,6 +26,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
           address={place.address}
           description={place.description}
           image={place.image}
+          location={place.location}
         />
       ))}
     </StyledPlaceList>

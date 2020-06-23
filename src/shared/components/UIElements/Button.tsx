@@ -36,6 +36,7 @@ const Button = (props: ButtonProps) => {
       className={props.className}
       type={props.type}
       disabled={props.disabled}
+      onClick={props.onClick}
     >
       {props.children}
     </button>
