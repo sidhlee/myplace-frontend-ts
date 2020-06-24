@@ -9,6 +9,10 @@ import {
 
 const StyledNewPlaceForm = styled.form`
   width: 100%;
+  input,
+  textarea {
+    margin-bottom: 1em;
+  }
 `
 
 type NewPlaceFormProps = {}

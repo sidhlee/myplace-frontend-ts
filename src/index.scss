@@ -23,6 +23,7 @@
   --cl-secondary: #2a006e;
   --cl-accent: #f8df00;
   --cl-danger: #fa3e3e;
+  --cl-danger-alpha: rgba(250, 62, 62, 0.9);
   --cl-danger-hover: #ca3131;
   --cl-overlay: rgba(255, 255, 255, 0.9);
   --cl-bg: var(--fds-gray-10);
@@ -62,6 +63,8 @@ body {
 
 .App {
   background: var(--cl-bg);
+  width: 100vw;
+  overflow-x: hidden;
   min-height: 100vh;
   padding: calc(var(--main-header-height) + 1em) 0 2em;
 }
