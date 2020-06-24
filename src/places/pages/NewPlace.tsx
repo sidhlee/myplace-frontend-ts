@@ -23,7 +23,7 @@ const NewPlace: React.FC = (props) => {
     <StyledNewPlace>
       <div className="new-place__header">
         <h2>Add a New Place</h2>
-        <p>Share your favorite places with friends!</p>
+        <p>Share your favorite places with others!</p>
       </div>
       <div className="new-place__form">
         <NewPlaceForm />

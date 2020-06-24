@@ -19,6 +19,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         label="Title"
         placeholder="Title"
         validators={[]}
+        errorText="Please enter a valid title."
       />
       <Input
         id="description"
@@ -26,6 +27,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         label="Description"
         placeholder="Description"
         validators={[]}
+        errorText="Description should be more than 4 letters."
       />
       <Input
         id="address"
@@ -34,6 +36,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         label="Address"
         placeholder="Address (example: Central Park, NY)"
         validators={[]}
+        errorText="Please enter a valid address."
       />
     </StyledNewPlaceForm>
   )
