@@ -20,6 +20,7 @@ const StyledNewPlace = styled.form`
   }
 `
 const NewPlace: React.FC = (props) => {
+  const inputChangeCallback = 
   return (
     <StyledNewPlace>
       <div className="new-place__header">

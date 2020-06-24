@@ -56,7 +56,6 @@ type InputProps = {
 type InputState = {
   value: string
   isValid: boolean
-  validators: Validator[]
   isTouched: boolean
 }
 type Action =
@@ -85,7 +84,6 @@ const Input = (props: InputProps) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: '',
     isValid: false,
-    validators: [],
     isTouched: false,
   })
 
@@ -146,6 +144,7 @@ const Input = (props: InputProps) => {
           { name: 'flip', options: { fallbackPlacements: ['top-end'] } },
         ],
       }}
+      maxWidth={220}
     >
       <StyledInput invalid={invalid}>{element}</StyledInput>
     </DangerTippy>
