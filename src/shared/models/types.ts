@@ -1,20 +1,24 @@
 export interface User {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  places: string[];
+  id: string
+  name: string
+  email: string
+  image: string
+  places: string[]
 }
 
 export interface Place {
-  id: string;
-  title: string;
-  description: string;
-  address: string;
-  image: string;
+  id: string
+  title: string
+  description: string
+  address: string
+  image: string
   location: {
-    lat: number;
-    lng: number;
-  };
-  creator: string;
+    lat: number
+    lng: number
+  }
+  creator: string
+}
+
+export interface Validator {
+  isValid: boolean
 }
