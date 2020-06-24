@@ -18,7 +18,3 @@ export interface Place {
   }
   creator: string
 }
-
-export interface Validator {
-  isValid: boolean
-}

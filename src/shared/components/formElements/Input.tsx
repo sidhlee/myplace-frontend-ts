@@ -1,7 +1,7 @@
-import React, { FormEvent, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import styled, { css } from 'styled-components'
 
-import { Validator } from '../../models/types'
+import { validate, Validator } from '../../utils/validator'
 
 const invalidCss = css`
   border-color: var(--cl-danger);
@@ -39,8 +39,12 @@ type InputProps = {
 type InputState = {
   value: string
   isValid: boolean
+  validators: Validator[]
+  isTouched: boolean
 }
-type Action = { type: 'CHANGE'; value: string }
+type Action =
+  | { type: 'CHANGE'; value: string; validators: Validator[] }
+  | { type: 'TOUCH' }
 
 const inputReducer = (state: InputState, action: Action) => {
   switch (action.type) {
@@ -48,7 +52,12 @@ const inputReducer = (state: InputState, action: Action) => {
       return {
         ...state,
         value: action.value,
-        isValid: true,
+        isValid: validate(action.value, action.validators),
+      }
+    case 'TOUCH':
+      return {
+        ...state,
+        isTouched: true,
       }
     default:
       return state
@@ -59,14 +68,24 @@ const Input = (props: InputProps) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
     value: '',
     isValid: false,
+    validators: [],
+    isTouched: false,
   })
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    dispatch({ type: 'CHANGE', value: e.target.value })
+    dispatch({
+      type: 'CHANGE',
+      value: e.target.value,
+      validators: props.validators,
+    })
   }
-  const handleInputBlur = () => {}
+  const handleInputBlur = () => {
+    dispatch({
+      type: 'TOUCH',
+    })
+  }
 
   let element
   switch (props.element) {
@@ -75,8 +94,9 @@ const Input = (props: InputProps) => {
         <textarea
           id={props.id}
           placeholder={props.placeholder}
-          onChange={handleInputChange}
           value={inputState.value}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
           rows={props.rows || 3}
           aria-required
           aria-label={props.label}
@@ -88,16 +108,21 @@ const Input = (props: InputProps) => {
         <input
           id={props.id}
           type={props.type}
-          onChange={handleInputChange}
-          value={inputState.value}
           placeholder={props.placeholder}
+          value={inputState.value}
+          onChange={handleInputChange}
+          onBlur={handleInputBlur}
           aria-required
           aria-label={props.label}
         />
       )
   }
 
-  return <StyledInput invalid={!inputState.isValid}>{element}</StyledInput>
+  return (
+    <StyledInput invalid={!inputState.isValid && inputState.isTouched}>
+      {element}
+    </StyledInput>
+  )
 }
 
 export default Input
