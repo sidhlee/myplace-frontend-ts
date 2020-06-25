@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import Card from '../../shared/components/UIElements/Card';
-import Button from '../../shared/components/UIElements/Button';
-import Modal from '../../shared/components/UIElements/Modal';
-import Map from '../../shared/components/UIElements/Map';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import Card from '../../shared/components/UIElements/Card'
+import Button from '../../shared/components/UIElements/Button'
+import Modal from '../../shared/components/UIElements/Modal'
+import Map from '../../shared/components/UIElements/Map'
 
-import { Place } from '../../shared/models/types';
-import { bp } from '../../shared/styled/vars';
-import Backdrop from '../../shared/components/UIElements/Backdrop';
+import { Place } from '../../shared/models/types'
+import { bp } from '../../shared/styled/vars'
+import Backdrop from '../../shared/components/UIElements/Backdrop'
 
 const StyledPlaceItem = styled.li`
   margin: 1em 0;
@@ -41,12 +41,12 @@ const StyledPlaceItem = styled.li`
     padding: 0 1em 1em;
     text-align: right;
   }
-`;
+`
 
 type PlaceItemProps = Pick<
   Place,
   'title' | 'address' | 'description' | 'image' | 'location'
->;
+>
 
 const MapModal = styled(Modal)`
   .map-container {
@@ -63,13 +63,13 @@ const MapModal = styled(Modal)`
       margin: 0.5em;
     }
   }
-`;
+`
 
 const PlaceItem = (props: PlaceItemProps & { key: string }) => {
-  const [showMap, setShowMap] = useState(false);
+  const [showMap, setShowMap] = useState(false)
 
-  const openMap = () => setShowMap(true);
-  const closeMap = () => setShowMap(false);
+  const openMap = () => setShowMap(true)
+  const closeMap = () => setShowMap(false)
 
   return (
     <React.Fragment>
@@ -104,7 +104,7 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
         </Card>
       </StyledPlaceItem>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default PlaceItem;
+export default PlaceItem

@@ -1,15 +1,16 @@
-import React from 'react';
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
+} from 'react-router-dom'
 
-import MainNavigation from './shared/components/navigation/MainNavigation';
-import Users from './users/pages/Users';
-import NewPlace from './places/pages/NewPlace';
-import UserPlaces from './places/pages/UserPlaces';
+import MainNavigation from './shared/components/navigation/MainNavigation'
+import Users from './users/pages/Users'
+import NewPlace from './places/pages/NewPlace'
+import UserPlaces from './places/pages/UserPlaces'
+import UpdatePlace from './places/pages/UpdatePlace'
 
 function App() {
   return (
@@ -26,11 +27,14 @@ function App() {
           <Route path="/places/new">
             <NewPlace />
           </Route>
+          <Route path="/places/:placeId">
+            <UpdatePlace />
+          </Route>
           <Redirect to="/" />
         </Switch>
       </main>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App
