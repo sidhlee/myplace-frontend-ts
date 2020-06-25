@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import NewPlaceForm from '../components/NewPlaceForm'
 
-const StyledNewPlace = styled.form`
+const StyledNewPlace = styled.div`
   width: 100%;
   max-width: 350px;
   margin: 0 auto;
@@ -20,7 +20,6 @@ const StyledNewPlace = styled.form`
   }
 `
 const NewPlace: React.FC = (props) => {
-  const inputChangeCallback = 
   return (
     <StyledNewPlace>
       <div className="new-place__header">

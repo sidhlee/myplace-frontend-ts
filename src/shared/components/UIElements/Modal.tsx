@@ -1,7 +1,7 @@
-import React, { ReactChild, ReactChildren } from 'react';
-import styled from 'styled-components';
-import { createPortal } from 'react-dom';
-import { CSSTransition } from 'react-transition-group';
+import React, { ReactChild, ReactChildren, useRef } from 'react'
+import styled from 'styled-components'
+import { createPortal } from 'react-dom'
+import { CSSTransition } from 'react-transition-group'
 
 const StyledModal = styled.div`
   position: fixed;
@@ -50,35 +50,40 @@ const StyledModal = styled.div`
     transform: translateY(-10rem) translateX(-50%);
     opacity: 0;
   }
-`;
+`
 
 type ModalProps = {
-  show: boolean;
-  className?: string;
-  children: ReactChild | ReactChildren;
-  header?: ReactChild | ReactChildren;
-  footer?: ReactChild | ReactChildren;
-  headerClass?: string;
-  contentClass?: string;
-  footerClass?: string;
-};
+  show: boolean
+  className?: string
+  children: ReactChild | ReactChildren
+  header?: ReactChild | ReactChildren
+  footer?: ReactChild | ReactChildren
+  headerClass?: string
+  contentClass?: string
+  footerClass?: string
+}
 
 const Modal = (props: ModalProps) => {
+  const nodeRef = useRef(null)
+
   const content = (
     <CSSTransition
+      // nodeRef for deprecated findDOMNode
+      // https://github.com/reactjs/react-transition-group/blob/1fd4a65ac45edd2aea3dec18eeb8b9c07c7eb93f/CHANGELOG.md#440-2020-05-05
+      nodeRef={nodeRef}
       in={props.show}
       timeout={200}
       classNames="modal"
       mountOnEnter
       unmountOnExit
     >
-      <StyledModal className={props.className}>
+      <StyledModal className={props.className} ref={nodeRef}>
         <header className={`modal__header ${props.headerClass}`}>
           <h2>{props.header}</h2>
         </header>
         <form
           onSubmit={(e) => {
-            e.preventDefault();
+            e.preventDefault()
           }}
         >
           <div className={`modal__content ${props.contentClass}`}>
@@ -90,9 +95,9 @@ const Modal = (props: ModalProps) => {
         </footer>
       </StyledModal>
     </CSSTransition>
-  );
+  )
 
-  return createPortal(content, document.getElementById('modal-hook')!);
-};
+  return createPortal(content, document.getElementById('modal-hook')!)
+}
 
-export default Modal;
+export default Modal

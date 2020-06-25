@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
 import Tippy from '@tippyjs/react'
@@ -51,6 +51,7 @@ type InputProps = {
   rows?: number
   validators: Validator[]
   errorText?: string
+  inputChangeCallback: (id: string, value: string, isValid: boolean) => void
 }
 
 type InputState = {
@@ -86,6 +87,13 @@ const Input = (props: InputProps) => {
     isValid: false,
     isTouched: false,
   })
+
+  const { value, isValid } = inputState
+  // If you use props.inputChangeCallback, dep list will ask for props as well
+  const { inputChangeCallback, id } = props
+  useEffect(() => {
+    inputChangeCallback(id, value, isValid)
+  }, [inputChangeCallback, id, value, isValid])
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
