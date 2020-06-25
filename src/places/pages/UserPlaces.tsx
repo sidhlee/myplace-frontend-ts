@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-import { Place } from '../../shared/models/types';
+import { Place } from '../../shared/models/types'
 
-import PlaceList from '../components/PlaceList';
-import { useParams } from 'react-router-dom';
+import PlaceList from '../components/PlaceList'
+import { useParams } from 'react-router-dom'
 
 const PLACES: Place[] = [
   {
@@ -30,12 +30,12 @@ const PLACES: Place[] = [
     },
     creator: 'u2',
   },
-];
+]
 
 const UserPlaces = () => {
-  const { userId } = useParams<{ userId: string }>();
-  const loadedPlace = PLACES.filter((place) => place.creator === userId);
-  return <PlaceList places={loadedPlace} />;
-};
+  const { userId } = useParams<{ userId: string }>()
+  const loadedPlace = PLACES.filter((place) => place.creator === userId)
+  return <PlaceList places={loadedPlace} />
+}
 
-export default UserPlaces;
+export default UserPlaces

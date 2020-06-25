@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { FormEvent } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Button from '../../shared/components/UIElements/Button'
@@ -17,7 +17,24 @@ type UpdatePlaceFormProps = {
 }
 
 const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
-  const [formState, inputChangeCallback] = useForm()
+  const [formState, inputChangeCallback] = useForm(
+    {
+      title: {
+        value: props.place.title,
+        isValid: true,
+      },
+      description: {
+        value: props.place.description,
+        isValid: true,
+      },
+    },
+    true
+  )
+
+  const handleUpdateFormSubmit = (e: FormEvent) => {
+    e.preventDefault()
+    console.log(formState.inputs)
+  }
   return (
     <Form
       buttons={
@@ -30,6 +47,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
           </Button>
         </>
       }
+      onSubmit={handleUpdateFormSubmit}
     >
       <Input
         id="title"
@@ -40,8 +58,9 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
         inputChangeCallback={inputChangeCallback}
-        initialValue={props.place.title}
-        initialIsValid={true}
+        // All input & output data should be synchronized with formState
+        initialValue={formState.inputs.title.value}
+        initialIsValid={formState.inputs.title.isValid}
       />
       <Input
         id="description"
@@ -51,8 +70,8 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
         validators={[VALIDATOR_MINLENGTH(4)]}
         errorText="Description should be more than 4 letters."
         inputChangeCallback={inputChangeCallback}
-        initialValue={props.place.description}
-        initialIsValid={true}
+        initialValue={formState.inputs.description.value}
+        initialIsValid={formState.inputs.description.isValid}
       />
     </Form>
   )

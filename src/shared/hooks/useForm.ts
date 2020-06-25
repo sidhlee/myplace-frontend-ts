@@ -1,6 +1,6 @@
 import { useReducer, useCallback } from 'react'
 
-type FormStateInputId = 'title' | 'description' | 'address'
+type FormStateInputId = string
 
 type FormStateInputs = {
   [inputId in FormStateInputId]: {
@@ -78,26 +78,24 @@ const formReducer = (state: FormState, action: Action) => {
       return state
   }
 }
+
+// TODO - make this generic which takes InputId
+// and use that to type formState.inputs index
 /**
  * @returns [formState, inputChangeCallback]
  */
-export const useForm = () => {
+export const useForm = (
+  initialInputs: {
+    [inputId: string]: {
+      value: string
+      isValid: boolean
+    }
+  },
+  initialFormValidity: boolean
+) => {
   const [formState, dispatch] = useReducer(formReducer, {
-    inputs: {
-      title: {
-        value: '',
-        isValid: false,
-      },
-      description: {
-        value: '',
-        isValid: false,
-      },
-      address: {
-        value: '',
-        isValid: false,
-      },
-    },
-    isValid: false,
+    inputs: initialInputs,
+    isValid: initialFormValidity,
   })
 
   const inputChangeCallback = useCallback(

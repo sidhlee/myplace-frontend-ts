@@ -13,7 +13,23 @@ import { useForm } from '../../shared/hooks/useForm'
 type NewPlaceFormProps = {}
 
 const NewPlaceForm = (props: NewPlaceFormProps) => {
-  const [formState, inputChangeCallback] = useForm()
+  const [formState, inputChangeCallback] = useForm(
+    {
+      title: {
+        value: '',
+        isValid: false,
+      },
+      description: {
+        value: '',
+        isValid: false,
+      },
+      address: {
+        value: '',
+        isValid: false,
+      },
+    },
+    false
+  )
 
   const handleNewPlaceSubmit = (e: FormEvent) => {
     e.preventDefault()

@@ -21,7 +21,7 @@ type FormProps = {
 
 const Form = (props: FormProps) => {
   return (
-    <StyledForm className={props.className}>
+    <StyledForm className={props.className} onSubmit={props.onSubmit}>
       {props.children}
       <div className="form-actions">{props.buttons}</div>
     </StyledForm>
