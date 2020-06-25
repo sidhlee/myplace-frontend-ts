@@ -8,6 +8,7 @@ import Map from '../../shared/components/UIElements/Map'
 import { Place } from '../../shared/models/types'
 import { bp } from '../../shared/styled/vars'
 import Backdrop from '../../shared/components/UIElements/Backdrop'
+import AlertModal from '../../shared/components/UIElements/AlertModal'
 
 const StyledPlaceItem = styled.li`
   margin: 1em 0;
@@ -64,9 +65,16 @@ const MapModal = styled(Modal)`
 
 const PlaceItem = (props: PlaceItemProps & { key: string }) => {
   const [showMap, setShowMap] = useState(false)
+  const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
   const openMap = () => setShowMap(true)
   const closeMap = () => setShowMap(false)
+  const openDeleteConfirm = () => setShowDeleteConfirm(true)
+  const closeDeleteConfirm = () => setShowDeleteConfirm(false)
+  const confirmDelete = () => {
+    closeDeleteConfirm()
+    console.log('Deleting place...')
+  }
 
   return (
     <React.Fragment>
@@ -83,6 +91,26 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
           <Map center={props.location} zoom={16} />
         </div>
       </MapModal>
+      {showDeleteConfirm && <Backdrop onClick={closeDeleteConfirm} />}
+      <AlertModal
+        show={showDeleteConfirm}
+        header={'Delete Place'}
+        footer={
+          <>
+            <Button large type="button" onClick={closeDeleteConfirm}>
+              CANCEL
+            </Button>
+            <Button large onClick={confirmDelete} danger>
+              DELETE
+            </Button>
+          </>
+        }
+      >
+        <p>Are you sure to delete this place?</p>
+        <p>
+          You <strong>cannot undo</strong> this action.
+        </p>
+      </AlertModal>
       <StyledPlaceItem>
         <Card>
           <div className="place-item__image">
@@ -96,7 +124,9 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
           <div className="place-item__actions">
             <Button onClick={openMap}>VIEW ON MAP</Button>
             <Button to={`/places/${props.id}`}>EDIT</Button>
-            <Button danger>DELETE</Button>
+            <Button danger onClick={openDeleteConfirm}>
+              DELETE
+            </Button>
           </div>
         </Card>
       </StyledPlaceItem>
