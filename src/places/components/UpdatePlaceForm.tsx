@@ -11,6 +11,7 @@ import {
 } from '../../shared/utils/validator'
 
 import { Place } from '../../shared/models/types'
+import { useHistory } from 'react-router-dom'
 
 type UpdatePlaceFormProps = {
   place: Place
@@ -31,6 +32,8 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
     true
   )
 
+  const history = useHistory()
+
   const handleUpdateFormSubmit = (e: FormEvent) => {
     e.preventDefault()
     console.log(formState.inputs)
@@ -39,7 +42,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
     <Form
       buttons={
         <>
-          <Button to="/" large>
+          <Button type="button" onClick={() => history.goBack()}>
             CANCEL
           </Button>
           <Button type="submit" disabled={!formState.isValid} primary large>
