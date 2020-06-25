@@ -78,7 +78,9 @@ const formReducer = (state: FormState, action: Action) => {
       return state
   }
 }
-
+/**
+ * @returns [formState, inputChangeCallback]
+ */
 export const useForm = () => {
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: {
