@@ -50,6 +50,8 @@ type InputProps = {
   placeholder?: string
   rows?: number
   validators: Validator[]
+  initialValue?: string
+  initialIsValid?: boolean
   errorText?: string
   inputChangeCallback: (id: string, value: string, isValid: boolean) => void
 }
@@ -83,8 +85,8 @@ const inputReducer = (state: InputState, action: Action) => {
 
 const Input = (props: InputProps) => {
   const [inputState, dispatch] = useReducer(inputReducer, {
-    value: '',
-    isValid: false,
+    value: props.initialValue || '',
+    isValid: props.initialIsValid || false,
     isTouched: false,
   })
 

@@ -43,10 +43,7 @@ const StyledPlaceItem = styled.li`
   }
 `
 
-type PlaceItemProps = Pick<
-  Place,
-  'title' | 'address' | 'description' | 'image' | 'location'
->
+type PlaceItemProps = Omit<Place, 'creator'>
 
 const MapModal = styled(Modal)`
   .map-container {
@@ -98,7 +95,7 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
           </div>
           <div className="place-item__actions">
             <Button onClick={openMap}>VIEW ON MAP</Button>
-            <Button>EDIT</Button>
+            <Button to={`/places/${props.id}`}>EDIT</Button>
             <Button danger>DELETE</Button>
           </div>
         </Card>

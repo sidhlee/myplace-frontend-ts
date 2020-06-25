@@ -10,7 +10,11 @@ import {
   VALIDATOR_MINLENGTH,
 } from '../../shared/utils/validator'
 
-type UpdatePlaceFormProps = {}
+import { Place } from '../../shared/models/types'
+
+type UpdatePlaceFormProps = {
+  place: Place
+}
 
 const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
   const [formState, inputChangeCallback] = useForm()
@@ -36,6 +40,8 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
         validators={[VALIDATOR_REQUIRE()]}
         errorText="Please enter a valid title."
         inputChangeCallback={inputChangeCallback}
+        initialValue={props.place.title}
+        initialIsValid={true}
       />
       <Input
         id="description"
@@ -45,6 +51,8 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
         validators={[VALIDATOR_MINLENGTH(4)]}
         errorText="Description should be more than 4 letters."
         inputChangeCallback={inputChangeCallback}
+        initialValue={props.place.description}
+        initialIsValid={true}
       />
     </Form>
   )

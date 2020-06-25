@@ -1,20 +1,20 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from 'react'
+import styled from 'styled-components'
 
-import { Place } from '../../shared/models/types';
+import { Place } from '../../shared/models/types'
 
-import PlaceItem from './PlaceItem';
+import PlaceItem from './PlaceItem'
 
 const StyledPlaceList = styled.ul`
   list-style: none;
   width: calc(100% - 4px);
   max-width: 36rem;
   margin: 0 auto;
-`;
+`
 
 type PlaceListProps = {
-  places: Place[];
-};
+  places: Place[]
+}
 
 const PlaceList: React.FC<PlaceListProps> = (props) => {
   return (
@@ -22,6 +22,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
       {props.places.map((place) => (
         <PlaceItem
           key={place.id}
+          id={place.id}
           title={place.title}
           address={place.address}
           description={place.description}
@@ -30,7 +31,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
         />
       ))}
     </StyledPlaceList>
-  );
-};
+  )
+}
 
-export default PlaceList;
+export default PlaceList
