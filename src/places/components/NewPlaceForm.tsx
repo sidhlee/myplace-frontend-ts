@@ -1,6 +1,6 @@
 import React, { FormEvent } from 'react'
-import styled from 'styled-components'
 
+import Form from '../../shared/components/formElements/Form'
 import Input from '../../shared/components/formElements/Input'
 import {
   VALIDATOR_REQUIRE,
@@ -9,17 +9,6 @@ import {
 import Button from '../../shared/components/UIElements/Button'
 
 import { useForm } from '../../shared/hooks/useForm'
-
-const StyledNewPlaceForm = styled.form`
-  width: 100%;
-  input,
-  textarea {
-    margin-bottom: 1em;
-  }
-  .form-actions {
-    text-align: right;
-  }
-`
 
 type NewPlaceFormProps = {}
 
@@ -32,7 +21,19 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
   }
 
   return (
-    <StyledNewPlaceForm onSubmit={handleNewPlaceSubmit}>
+    <Form
+      onSubmit={handleNewPlaceSubmit}
+      buttons={
+        <>
+          <Button to="/" large>
+            CANCEL
+          </Button>
+          <Button type="submit" disabled={!formState.isValid} primary large>
+            ADD PLACE
+          </Button>
+        </>
+      }
+    >
       <Input
         id="title"
         element="input"
@@ -62,15 +63,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         errorText="Please enter a valid address."
         inputChangeCallback={inputChangeCallback}
       />
-      <div className="form-actions">
-        <Button to="/" large>
-          CANCEL
-        </Button>
-        <Button type="submit" disabled={!formState.isValid} primary large>
-          ADD PLACE
-        </Button>
-      </div>
-    </StyledNewPlaceForm>
+    </Form>
   )
 }
 
