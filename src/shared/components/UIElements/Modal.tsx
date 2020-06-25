@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactChildren, useRef } from 'react'
+import React, { ReactNode, useRef } from 'react'
 import styled from 'styled-components'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
@@ -55,9 +55,9 @@ const StyledModal = styled.div`
 type ModalProps = {
   show: boolean
   className?: string
-  children: ReactChild | ReactChildren
-  header?: ReactChild | ReactChildren
-  footer?: ReactChild | ReactChildren
+  children: ReactNode
+  header?: ReactNode
+  footer?: ReactNode
   headerClass?: string
   contentClass?: string
   footerClass?: string

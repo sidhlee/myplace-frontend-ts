@@ -1,9 +1,9 @@
-import React, { ReactChild, ReactChildren } from 'react'
+import React, { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
 type ButtonProps = {
-  children: ReactChild | ReactChildren
+  children: ReactNode
   // You need to mark className as optional in Props interface
   // https://styled-components.com/docs/api#caveat-with-classname
   className?: string

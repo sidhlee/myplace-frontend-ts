@@ -24,9 +24,9 @@ Access to fetch at 'http://localhost:5000/api/users' from origin 'http://localho
 type ModalProps = {
   show: boolean;
   className?: string;
-  children: ReactChild | ReactChildren;
-  header?: ReactChild | ReactChildren;
-  footer?: ReactChild | ReactChildren;
+  children: ReactNode;
+  header?: ReactNode;
+  footer?: ReactNode;
 };
 
 const Modal = (props: ModalProps) => {

@@ -1,4 +1,4 @@
-import React, { ReactChild, ReactChildren } from 'react'
+import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 
 const StyledFormPage = styled.div`
@@ -21,8 +21,8 @@ const StyledFormPage = styled.div`
 
 type FormPageProps = {
   className?: string
-  children: ReactChild | ReactChildren
-  header: ReactChild
+  children: ReactNode
+  header: ReactNode
 }
 
 const FormPage = (props: FormPageProps) => {
