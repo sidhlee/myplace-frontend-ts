@@ -45,7 +45,7 @@ const DangerTippy = styled(Tippy)`
 type InputProps = {
   id: string
   element: 'input' | 'textarea'
-  type?: 'text'
+  type?: 'text' | 'email' | 'password'
   label: string
   placeholder?: string
   rows?: number
