@@ -14,12 +14,18 @@ type FormState = {
   isValid: boolean
 }
 
-type Action = {
-  type: 'INPUT_CHANGE'
-  inputId: string
-  value: string
-  isValid: boolean
-}
+type Action =
+  | {
+      type: 'INPUT_CHANGE'
+      inputId: string
+      value: string
+      isValid: boolean
+    }
+  | {
+      type: 'SET_FORM_STATE'
+      initialInputs: FormStateInputs
+      initialFormValidity: boolean
+    }
 
 const formReducer = (state: FormState, action: Action) => {
   // assertion signature only works with function declaration (no arrow func)
@@ -41,7 +47,7 @@ const formReducer = (state: FormState, action: Action) => {
   }
 
   switch (action.type) {
-    case 'INPUT_CHANGE':
+    case 'INPUT_CHANGE': {
       let isFormValid = true
       for (const input in state.inputs) {
         validateInput(input)
@@ -74,6 +80,18 @@ const formReducer = (state: FormState, action: Action) => {
         },
         isValid: isFormValid,
       }
+    }
+    case 'SET_FORM_STATE': {
+      let isFormValid = true
+      for (const input in state.inputs) {
+        validateInput(input)
+        isFormValid = isFormValid && state.inputs[input].isValid
+      }
+      return {
+        inputs: action.initialInputs,
+        isValid: action.initialFormValidity,
+      }
+    }
     default:
       return state
   }
@@ -82,15 +100,10 @@ const formReducer = (state: FormState, action: Action) => {
 // TODO - make this generic which takes InputId
 // and use that to type formState.inputs index
 /**
- * @returns [formState, inputChangeCallback]
+ * @returns [formState, inputChangeCallback, setFormStateCallback]
  */
 export const useForm = (
-  initialInputs: {
-    [inputId: string]: {
-      value: string
-      isValid: boolean
-    }
-  },
+  initialInputs: FormStateInputs,
   initialFormValidity: boolean
 ) => {
   const [formState, dispatch] = useReducer(formReducer, {
@@ -109,9 +122,28 @@ export const useForm = (
     },
     []
   )
+
+  const setFormStateCallback = useCallback(
+    (
+      initialInputs: {
+        [inputId: string]: {
+          value: string
+          isValid: boolean
+        }
+      },
+      initialFormValidity: boolean
+    ) => {
+      dispatch({
+        type: 'SET_FORM_STATE',
+        initialInputs,
+        initialFormValidity,
+      })
+    },
+    []
+  )
   // const assertions - https://www.typescriptlang.org/docs/handbook/release-notes/typescript-3-4.html#const-assertions
   // makes array literals readonly tuples. (diff. types in each position of the array)
   // Without it, TS will infer a union type:
   // (FormState | (id: string, value: string, isValid: boolean) => void)[]
-  return [formState, inputChangeCallback] as const
+  return [formState, inputChangeCallback, setFormStateCallback] as const
 }
