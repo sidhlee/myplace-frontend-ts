@@ -1,12 +1,23 @@
 import React from 'react'
+import Button from './Button'
+import AlertModal from './AlertModal'
 
 type ErrorModalProps = {
-  errorText: string
-  clear: () => void
+  errorText: string | null
+  clearModal: () => void
 }
 
 const ErrorModal = (props: ErrorModalProps) => {
-  return <div>ErrorModal</div>
+  return (
+    <AlertModal
+      show={!!props.errorText}
+      clearModal={props.clearModal}
+      header="Error"
+      footer={<Button onClick={props.clearModal}>Okay</Button>}
+    >
+      <p>{props.errorText}</p>
+    </AlertModal>
+  )
 }
 
 export default ErrorModal

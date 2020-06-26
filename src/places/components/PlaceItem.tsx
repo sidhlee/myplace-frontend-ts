@@ -7,7 +7,7 @@ import Map from '../../shared/components/UIElements/Map'
 
 import { Place } from '../../shared/models/types'
 import { bp } from '../../shared/styled/vars'
-import Backdrop from '../../shared/components/UIElements/Backdrop'
+
 import AlertModal from '../../shared/components/UIElements/AlertModal'
 import { AuthContext } from '../../shared/context/AuthContext'
 

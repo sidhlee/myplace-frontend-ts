@@ -10,6 +10,7 @@ import {
 } from '../../shared/utils/validator'
 import { useForm } from '../../shared/hooks/useForm'
 import { AuthContext } from '../../shared/context/AuthContext'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 
 enum AuthMode {
   LOGIN,
@@ -20,7 +21,8 @@ type AuthFormProps = {}
 
 const AuthForm = (props: AuthFormProps) => {
   const auth = useContext(AuthContext)
-
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [authMode, setAuthMode] = useState(AuthMode.LOGIN)
 
   const [formState, inputChangeCallback, setFormStateCallback] = useForm(
@@ -44,6 +46,8 @@ const AuthForm = (props: AuthFormProps) => {
     }
     if (authMode === AuthMode.SIGNUP) {
       try {
+        setIsLoading(true)
+
         const response = await fetch(
           `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
           {
@@ -60,13 +64,24 @@ const AuthForm = (props: AuthFormProps) => {
         )
 
         const data = await response.json()
+        if (!response.ok) {
+          throw new Error(data.message)
+        }
         console.log(data)
+
+        setIsLoading(false)
+        auth.login()
       } catch (err) {
         console.log(err)
+        setIsLoading(false)
+        setError(err.message || 'Something went wrong.🙁 Please try again.')
       }
     }
-    auth.login()
     console.log(formState.inputs)
+  }
+
+  const clearError = () => {
+    setError(null)
   }
 
   const toggleAuthMode = () => {
@@ -106,52 +121,55 @@ const AuthForm = (props: AuthFormProps) => {
   }
 
   return (
-    <Form
-      onSubmit={handleAuthFormSubmit}
-      buttons={
-        <>
-          <Button type="button" large onClick={toggleAuthMode}>
-            SWITCH TO {authMode === AuthMode.LOGIN ? 'SIGNUP' : 'LOGIN'}
-          </Button>
-          <Button type="submit" disabled={!formState.isValid} primary large>
-            {authMode === AuthMode.LOGIN ? 'LOGIN' : 'SIGNUP'}
-          </Button>
-        </>
-      }
-    >
-      {authMode === AuthMode.SIGNUP && (
+    <React.Fragment>
+      <ErrorModal errorText={error} clearModal={clearError} />
+      <Form
+        onSubmit={handleAuthFormSubmit}
+        buttons={
+          <>
+            <Button type="button" large onClick={toggleAuthMode}>
+              SWITCH TO {authMode === AuthMode.LOGIN ? 'SIGNUP' : 'LOGIN'}
+            </Button>
+            <Button type="submit" disabled={!formState.isValid} primary large>
+              {authMode === AuthMode.LOGIN ? 'LOGIN' : 'SIGNUP'}
+            </Button>
+          </>
+        }
+      >
+        {authMode === AuthMode.SIGNUP && (
+          <Input
+            id="name"
+            element="input"
+            type="text"
+            label="Name"
+            placeholder="Name"
+            validators={[VALIDATOR_REQUIRE()]}
+            errorText="Please enter a valid name"
+            inputChangeCallback={inputChangeCallback}
+          />
+        )}
         <Input
-          id="name"
+          id="email"
           element="input"
-          type="text"
-          label="Name"
-          placeholder="Name"
-          validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid name"
+          type="email"
+          label="Email"
+          placeholder="Email"
+          validators={[VALIDATOR_EMAIL()]}
+          errorText="Please enter a valid email"
           inputChangeCallback={inputChangeCallback}
         />
-      )}
-      <Input
-        id="email"
-        element="input"
-        type="email"
-        label="Email"
-        placeholder="Email"
-        validators={[VALIDATOR_EMAIL()]}
-        errorText="Please enter a valid email"
-        inputChangeCallback={inputChangeCallback}
-      />
-      <Input
-        id="password"
-        element="input"
-        type="password"
-        label="Password"
-        placeholder="Password"
-        validators={[VALIDATOR_MINLENGTH(6)]}
-        errorText="Password should be at least 6 characters"
-        inputChangeCallback={inputChangeCallback}
-      />
-    </Form>
+        <Input
+          id="password"
+          element="input"
+          type="password"
+          label="Password"
+          placeholder="Password"
+          validators={[VALIDATOR_MINLENGTH(6)]}
+          errorText="Password should be at least 6 characters"
+          inputChangeCallback={inputChangeCallback}
+        />
+      </Form>
+    </React.Fragment>
   )
 }
 
