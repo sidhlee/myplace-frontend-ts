@@ -43,12 +43,39 @@ const AuthForm = (props: AuthFormProps) => {
   const handleAuthFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
+    setIsLoading(true)
+
     if (authMode === AuthMode.LOGIN) {
+      try {
+        const response = await fetch(
+          `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: formState.inputs.email.value,
+              password: formState.inputs.password.value,
+            }),
+          }
+        )
+        const data = await response.json()
+
+        if (!response.ok) {
+          throw Error(data.message)
+        }
+
+        setIsLoading(false)
+        auth.login()
+      } catch (err) {
+        console.log(err)
+        setError(err.message || 'Something went wrong.🙁 Please try again.')
+        setIsLoading(false)
+      }
     }
     if (authMode === AuthMode.SIGNUP) {
       try {
-        setIsLoading(true)
-
         const response = await fetch(
           `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
           {
