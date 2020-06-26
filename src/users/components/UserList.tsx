@@ -1,8 +1,8 @@
-import React from 'react';
-import styled from 'styled-components';
-import UserItem from './UserItem';
+import React from 'react'
+import styled from 'styled-components'
+import UserItem from './UserItem'
 
-import { User } from '../../shared/models/types';
+import { User } from '../../shared/models/types'
 
 const StyledUserList = styled.ul`
   list-style: none;
@@ -10,19 +10,19 @@ const StyledUserList = styled.ul`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-`;
+`
 
 type UserListProps = {
-  users: User[];
-};
+  users: User[]
+}
 
 const UserList: React.FC<UserListProps> = (props) => {
   if (props.users.length === 0) {
     return (
-      <div>
+      <div className="center">
         <h2>No users found.</h2>
       </div>
-    );
+    )
   }
   return (
     <StyledUserList>
@@ -36,7 +36,7 @@ const UserList: React.FC<UserListProps> = (props) => {
         />
       ))}
     </StyledUserList>
-  );
-};
+  )
+}
 
-export default UserList;
+export default UserList
