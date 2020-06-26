@@ -13,7 +13,11 @@ const ErrorModal = (props: ErrorModalProps) => {
       show={!!props.errorText}
       clearModal={props.clearModal}
       header="Error"
-      footer={<Button onClick={props.clearModal}>Okay</Button>}
+      footer={
+        <Button onClick={props.clearModal} large>
+          Okay
+        </Button>
+      }
     >
       <p>{props.errorText}</p>
     </AlertModal>

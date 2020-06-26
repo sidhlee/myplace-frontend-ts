@@ -26,6 +26,7 @@
   --cl-danger-alpha: rgba(250, 62, 62, 0.9);
   --cl-danger-hover: #ca3131;
   --cl-overlay: rgba(255, 255, 255, 0.9);
+  --cl-border-color: #bdc7d8;
   --cl-bg: var(--fds-gray-10);
   --cl-btn-bg: var(--fds-gray-00);
   --text-accent: var(--fds-fb-blue-75);
@@ -36,10 +37,11 @@
   --z-drawer: 200;
   --z-backdrop: 100;
   --z-modal: 300;
+  --z-spinner: 400;
 
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   --main-header-height: 3.6rem;
-  --border: 1px solid #bdc7d8;
+  --border: 1px solid var(--cl-border-color);
   --border-radius: 5px;
 }
 

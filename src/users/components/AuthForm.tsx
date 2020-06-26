@@ -11,6 +11,7 @@ import {
 import { useForm } from '../../shared/hooks/useForm'
 import { AuthContext } from '../../shared/context/AuthContext'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 
 enum AuthMode {
   LOGIN,
@@ -122,6 +123,7 @@ const AuthForm = (props: AuthFormProps) => {
 
   return (
     <React.Fragment>
+      {isLoading && <LoadingSpinner asOverlay />}
       <ErrorModal errorText={error} clearModal={clearError} />
       <Form
         onSubmit={handleAuthFormSubmit}
