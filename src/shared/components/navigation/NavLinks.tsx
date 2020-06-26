@@ -1,8 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import React, { useContext } from 'react'
+import styled from 'styled-components'
+import { NavLink } from 'react-router-dom'
 
-import { bp } from '../../styled/vars';
+import { bp } from '../../styled/vars'
+import { AuthContext } from '../../context/AuthContext'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`
   height: 100%;
@@ -53,13 +54,15 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
     display: ${(props) => (props.isSideDrawer ? 'none' : 'flex')};
     flex-direction: row;
   }
-`;
+`
 
 type NavLinksProps = {
-  isSideDrawer?: boolean;
-};
+  isSideDrawer?: boolean
+}
 
 const NavLinks: React.FC<NavLinksProps> = (props) => {
+  const auth = useContext(AuthContext)
+
   return (
     <StyledNavLinks {...props}>
       <li>
@@ -67,17 +70,23 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
           ALL USERS
         </NavLink>
       </li>
-      <li>
-        <NavLink to="/u1/places">My Place</NavLink>
-      </li>
-      <li>
-        <NavLink to="/places/new">Add Place</NavLink>
-      </li>
-      <li>
-        <NavLink to="/auth">Authenticate</NavLink>
-      </li>
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/u1/places">My Place</NavLink>
+        </li>
+      )}
+      {auth.isLoggedIn && (
+        <li>
+          <NavLink to="/places/new">Add Place</NavLink>
+        </li>
+      )}
+      {!auth.isLoggedIn && (
+        <li>
+          <NavLink to="/auth">Authenticate</NavLink>
+        </li>
+      )}
     </StyledNavLinks>
-  );
-};
+  )
+}
 
-export default NavLinks;
+export default NavLinks
