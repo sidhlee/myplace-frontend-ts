@@ -28,6 +28,37 @@ function App() {
     setIsLoggedIn(false)
   }, [])
 
+  const route = isLoggedIn ? (
+    <Switch>
+      <Route path="/" exact>
+        <Users />
+      </Route>
+      <Route path="/:userId/places">
+        <UserPlaces />
+      </Route>
+      <Route path="/places/new">
+        <NewPlace />
+      </Route>
+      <Route path="/places/:placeId">
+        <UpdatePlace />
+      </Route>
+      <Redirect to="/" />
+    </Switch>
+  ) : (
+    <Switch>
+      <Route path="/" exact>
+        <Users />
+      </Route>
+      <Route path="/:userId/places">
+        <UserPlaces />
+      </Route>
+      <Route path="/auth">
+        <Auth />
+      </Route>
+      <Redirect to="/" />
+    </Switch>
+  )
+
   return (
     <AuthContext.Provider
       value={{
@@ -38,26 +69,7 @@ function App() {
     >
       <Router>
         <MainNavigation />
-        <main className="App">
-          <Switch>
-            <Route path="/" exact>
-              <Users />
-            </Route>
-            <Route path="/:userId/places">
-              <UserPlaces />
-            </Route>
-            <Route path="/places/new">
-              <NewPlace />
-            </Route>
-            <Route path="/places/:placeId">
-              <UpdatePlace />
-            </Route>
-            <Route path="/auth">
-              <Auth />
-            </Route>
-            <Redirect to="/" />
-          </Switch>
-        </main>
+        <main className="App">{route}</main>
       </Router>
     </AuthContext.Provider>
   )

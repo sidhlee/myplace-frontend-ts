@@ -85,6 +85,13 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
           <NavLink to="/auth">Authenticate</NavLink>
         </li>
       )}
+      {auth.isLoggedIn && (
+        <li>
+          <button type="button" onClick={auth.logout}>
+            LOGOUT
+          </button>
+        </li>
+      )}
     </StyledNavLinks>
   )
 }

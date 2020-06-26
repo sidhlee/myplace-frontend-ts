@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Button from '../../shared/components/UIElements/Button'
@@ -9,6 +9,7 @@ import {
   VALIDATOR_REQUIRE,
 } from '../../shared/utils/validator'
 import { useForm } from '../../shared/hooks/useForm'
+import { AuthContext } from '../../shared/context/AuthContext'
 
 enum AuthMode {
   LOGIN,
@@ -18,6 +19,8 @@ enum AuthMode {
 type AuthFormProps = {}
 
 const AuthForm = (props: AuthFormProps) => {
+  const auth = useContext(AuthContext)
+
   const [authMode, setAuthMode] = useState(AuthMode.LOGIN)
 
   const [formState, inputChangeCallback, setFormStateCallback] = useForm(
@@ -36,6 +39,7 @@ const AuthForm = (props: AuthFormProps) => {
 
   const handleAuthFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
+    auth.login()
     console.log(formState.inputs)
   }
 

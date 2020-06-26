@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import styled from 'styled-components'
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/UIElements/Button'
@@ -9,6 +9,7 @@ import { Place } from '../../shared/models/types'
 import { bp } from '../../shared/styled/vars'
 import Backdrop from '../../shared/components/UIElements/Backdrop'
 import AlertModal from '../../shared/components/UIElements/AlertModal'
+import { AuthContext } from '../../shared/context/AuthContext'
 
 const StyledPlaceItem = styled.li`
   margin: 1em 0;
@@ -64,6 +65,8 @@ const MapModal = styled(Modal)`
 `
 
 const PlaceItem = (props: PlaceItemProps & { key: string }) => {
+  const auth = useContext(AuthContext)
+
   const [showMap, setShowMap] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
 
@@ -123,10 +126,14 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
           </div>
           <div className="place-item__actions">
             <Button onClick={openMap}>VIEW ON MAP</Button>
-            <Button to={`/places/${props.id}`}>EDIT</Button>
-            <Button danger onClick={openDeleteConfirm}>
-              DELETE
-            </Button>
+            {auth.isLoggedIn && (
+              <Button to={`/places/${props.id}`}>EDIT</Button>
+            )}
+            {auth.isLoggedIn && (
+              <Button danger onClick={openDeleteConfirm}>
+                DELETE
+              </Button>
+            )}
           </div>
         </Card>
       </StyledPlaceItem>
