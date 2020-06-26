@@ -1,7 +1,8 @@
-import React, { ReactNode, useRef } from 'react'
+import React, { ReactNode, useRef, FormEvent } from 'react'
 import styled from 'styled-components'
 import { createPortal } from 'react-dom'
 import { CSSTransition } from 'react-transition-group'
+import Backdrop from './Backdrop'
 
 const StyledModal = styled.div`
   position: fixed;
@@ -61,40 +62,48 @@ type ModalProps = {
   headerClass?: string
   contentClass?: string
   footerClass?: string
+  clearModal: () => void
+  onSubmit?: (e: FormEvent) => void
 }
 
 const Modal = (props: ModalProps) => {
   const nodeRef = useRef(null)
 
   const content = (
-    <CSSTransition
-      // nodeRef for deprecated findDOMNode
-      // https://github.com/reactjs/react-transition-group/blob/1fd4a65ac45edd2aea3dec18eeb8b9c07c7eb93f/CHANGELOG.md#440-2020-05-05
-      nodeRef={nodeRef}
-      in={props.show}
-      timeout={200}
-      classNames="modal"
-      mountOnEnter
-      unmountOnExit
-    >
-      <StyledModal className={props.className} ref={nodeRef}>
-        <header className={`modal__header ${props.headerClass}`}>
-          <h2>{props.header}</h2>
-        </header>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault()
-          }}
-        >
-          <div className={`modal__content ${props.contentClass}`}>
-            {props.children}
-          </div>
-        </form>
-        <footer className={`modal__footer ${props.footerClass}`}>
-          {props.footer}
-        </footer>
-      </StyledModal>
-    </CSSTransition>
+    <React.Fragment>
+      {props.show && <Backdrop onClick={props.clearModal} />}
+      <CSSTransition
+        // nodeRef for deprecated findDOMNode
+        // https://github.com/reactjs/react-transition-group/blob/1fd4a65ac45edd2aea3dec18eeb8b9c07c7eb93f/CHANGELOG.md#440-2020-05-05
+        nodeRef={nodeRef}
+        in={props.show}
+        timeout={200}
+        classNames="modal"
+        mountOnEnter
+        unmountOnExit
+      >
+        <StyledModal className={props.className} ref={nodeRef}>
+          <header className={`modal__header ${props.headerClass}`}>
+            <h2>{props.header}</h2>
+          </header>
+          <form
+            onSubmit={
+              props.onSubmit ||
+              ((e) => {
+                e.preventDefault()
+              })
+            }
+          >
+            <div className={`modal__content ${props.contentClass}`}>
+              {props.children}
+            </div>
+          </form>
+          <footer className={`modal__footer ${props.footerClass}`}>
+            {props.footer}
+          </footer>
+        </StyledModal>
+      </CSSTransition>
+    </React.Fragment>
   )
 
   return createPortal(content, document.getElementById('modal-hook')!)

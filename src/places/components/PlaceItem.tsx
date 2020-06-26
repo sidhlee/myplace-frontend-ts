@@ -81,7 +81,6 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
 
   return (
     <React.Fragment>
-      {showMap && <Backdrop onClick={closeMap} />}
       <MapModal
         show={showMap}
         header={props.address}
@@ -89,14 +88,15 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
         contentClass="place-item__modal-content"
         footerClass="place-item__modal-footer"
         footer={<Button onClick={closeMap}>CLOSE</Button>}
+        clearModal={closeMap}
       >
         <div className="map-container">
           <Map center={props.location} zoom={16} />
         </div>
       </MapModal>
-      {showDeleteConfirm && <Backdrop onClick={closeDeleteConfirm} />}
       <AlertModal
         show={showDeleteConfirm}
+        clearModal={closeDeleteConfirm}
         header={'Delete Place'}
         footer={
           <>
