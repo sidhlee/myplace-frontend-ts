@@ -7,19 +7,19 @@ const UserItemSkeleton = () => {
   return (
     <StyledUserItem>
       <Card>
-        <a href="#">
+        <div className="user-item__link">
           <div className="user-item__image">
             <Skeleton circle height={60} width={60} />
           </div>
           <div className="user-item__info">
             <h2>
-              <Skeleton />
+              <Skeleton width={'50%'} />
             </h2>
             <h3>
-              <Skeleton />
+              <Skeleton width={'6em'} />
             </h3>
           </div>
-        </a>
+        </div>
       </Card>
     </StyledUserItem>
   )

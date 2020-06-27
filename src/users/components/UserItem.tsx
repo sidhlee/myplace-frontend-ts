@@ -7,7 +7,7 @@ import Avatar from '../../shared/components/UIElements/Avatar'
 
 export const StyledUserItem = styled.li`
   margin-bottom: 2em;
-  a {
+  .user-item__link {
     padding: 1em;
     display: flex;
     align-items: center;
@@ -49,7 +49,7 @@ const UserItem: React.FC<UserItemProps> = (props) => {
   return (
     <StyledUserItem>
       <Card>
-        <Link to={`${props.id}/places`}>
+        <Link className="user-item__link" to={`${props.id}/places`}>
           <div className="user-item__image">
             <Avatar src={props.image} alt={props.name} />
           </div>
