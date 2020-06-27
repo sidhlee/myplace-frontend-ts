@@ -2,54 +2,24 @@ import React, { useEffect, useState } from 'react'
 import UserList from '../components/UserList'
 import { User } from '../../shared/models/types'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
-
-const USERS = [
-  {
-    id: 'u1',
-    name: 'Sid',
-    email: 'test@test.com',
-    image: 'https://placem.at/people?w=400&random=1',
-    places: [],
-  },
-  {
-    id: 'u2',
-    name: 'Nayoun',
-    email: 'test2@test.com',
-    image: 'https://placem.at/people?w=400&random=2',
-    places: [],
-  },
-]
+import { useRequest } from '../../shared/hooks/useRequest'
 
 const Users: React.FC = (props) => {
-  const [isLoading, setIsLoading] = useState(false)
+  const { sendRequest, error, clearError } = useRequest()
+
   const [loadedUsers, setLoadedUsers] = useState<User[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
     const fetchUsers = async () => {
-      setIsLoading(true)
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/api/users`
-        )
-        const data = await response.json()
-        if (!response.ok) {
-          throw Error(data.message)
-        }
-
-        setLoadedUsers(data.users)
-      } catch (err) {
-        console.log(err)
-        setError(err.message || 'Something went wrong.🙁 Please try again.')
+      const responseData = await sendRequest<{ users: User[] }>(
+        `${process.env.REACT_APP_SERVER_URL}/api/users`
+      )
+      if (responseData) {
+        setLoadedUsers(responseData.users)
       }
-      setIsLoading(false)
     }
     fetchUsers()
-  }, [])
-
-  const clearError = () => {
-    setError(null)
-  }
+  }, [sendRequest])
 
   return (
     <React.Fragment>

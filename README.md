@@ -2,6 +2,12 @@
 
 Frontend application built with TypeScript
 
+## New in this run
+
+- New Facebook-themed UI
+- Tooltip for input error message (`tippyjs-react`)
+- Skeleton screen for loading data (`react-loading-skeleton`)
+
 ## Debugging Notes
 
 ### Fetch calls return 304 & .env variables return undefined

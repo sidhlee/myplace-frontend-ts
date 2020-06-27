@@ -1,15 +1,17 @@
 import React, { useState, useContext } from 'react'
 
-import Form from '../../shared/components/formElements/Form'
-import Button from '../../shared/components/UIElements/Button'
-import Input from '../../shared/components/formElements/Input'
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
 } from '../../shared/utils/validator'
 import { useForm } from '../../shared/hooks/useForm'
+import { useRequest } from '../../shared/hooks/useRequest'
 import { AuthContext } from '../../shared/context/AuthContext'
+
+import Form from '../../shared/components/formElements/Form'
+import Button from '../../shared/components/UIElements/Button'
+import Input from '../../shared/components/formElements/Input'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 
@@ -18,14 +20,27 @@ enum AuthMode {
   SIGNUP,
 }
 
+type LoginBody = {
+  email: string
+  password: string
+}
+
+// intersection type for augmenting existing type
+type SignupBody = LoginBody & { name: string }
+
+type AuthResponse = {
+  userId: string
+  email: string
+  token: string
+}
+
 type AuthFormProps = {}
 
 const AuthForm = (props: AuthFormProps) => {
   const auth = useContext(AuthContext)
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState<string | null>(null)
   const [authMode, setAuthMode] = useState(AuthMode.LOGIN)
 
+  const { sendRequest, isLoading, error, clearError } = useRequest()
   const [formState, inputChangeCallback, setFormStateCallback] = useForm(
     {
       email: {
@@ -43,73 +58,29 @@ const AuthForm = (props: AuthFormProps) => {
   const handleAuthFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    setIsLoading(true)
-
     if (authMode === AuthMode.LOGIN) {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: formState.inputs.email.value,
-              password: formState.inputs.password.value,
-            }),
-          }
-        )
-        const data = await response.json()
-
-        if (!response.ok) {
-          throw Error(data.message)
+      await sendRequest<AuthResponse | undefined, LoginBody>(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
+        'POST',
+        {
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
         }
-
-        setIsLoading(false)
-        auth.login()
-      } catch (err) {
-        console.log(err)
-        setError(err.message || 'Something went wrong.🙁 Please try again.')
-        setIsLoading(false)
-      }
+      )
+      auth.login()
     }
     if (authMode === AuthMode.SIGNUP) {
-      try {
-        const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
-          {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              name: formState.inputs.name.value,
-              email: formState.inputs.email.value,
-              password: formState.inputs.password.value,
-            }),
-          }
-        )
-
-        const data = await response.json()
-        if (!response.ok) {
-          throw new Error(data.message)
+      await sendRequest<AuthResponse | undefined, SignupBody>(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
+        'POST',
+        {
+          name: formState.inputs.name.value,
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
         }
-        console.log(data)
-
-        setIsLoading(false)
-        auth.login()
-      } catch (err) {
-        console.log(err)
-        setIsLoading(false)
-        setError(err.message || 'Something went wrong.🙁 Please try again.')
-      }
+      )
+      auth.login()
     }
-    console.log(formState.inputs)
-  }
-
-  const clearError = () => {
-    setError(null)
   }
 
   const toggleAuthMode = () => {

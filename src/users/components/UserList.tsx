@@ -21,8 +21,8 @@ const UserList: React.FC<UserListProps> = (props) => {
   if (!props.users) {
     return (
       <StyledUserList>
-        {[...Array(3)].map((item) => (
-          <UserItemSkeleton />
+        {[...Array(3)].map((item, i) => (
+          <UserItemSkeleton key={i} />
         ))}
       </StyledUserList>
     )
