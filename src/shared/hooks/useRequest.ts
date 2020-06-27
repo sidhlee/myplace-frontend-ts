@@ -32,20 +32,40 @@ export const useRequest = () => {
           body: typeof body === 'object' ? JSON.stringify(body) : undefined,
           mode: 'cors',
           headers: {
+            // body-parser on backend needs this header to identify JSON body
             'Content-Type': 'application/json',
             ...headers,
           },
         })
+
         const responseData = await response.json()
+        // Remove abort controller once we receive & parse the response
+        activeHttpRequest.current = activeHttpRequest.current.filter(
+          (v) => v !== abortController
+        )
+
+        // Throw error to catch for response out of 200
         if (!response.ok) {
           throw Error(responseData.message)
         }
+
+        // if ok (200), stop spinner and return parsed data
+        setIsLoading(false)
+
         return responseData
       } catch (err) {
         console.log(err)
         setError(err.message || 'Something went wrong.🙁 Please try again.')
+        setIsLoading(false)
+        throw err // -> you cannot chain .then but only catch
+        // This is enough for our use case where we want to break out of try block
+        // into the catch block and don't execute the rest of the lines in the try block.
+
+        // return err -> this literally returns error object. not Promise
+
+        // return Promise.reject(err) -> this returns rejected Promise and
+        // can be chained with .then for further asynchronous tasks
       }
-      setIsLoading(false)
     },
     []
   )
@@ -57,8 +77,10 @@ export const useRequest = () => {
   useEffect(() => {
     return () => {
       // We can ignore the warning because we do want to abort
-      // whichever components left in the array when the caller component unmounts
+      // all remaining components in the array when the caller component unmounts
+      // eslint-disable-next-line
       activeHttpRequest.current.forEach((abortController) => {
+        // abort all ongoing request on unmount
         abortController.abort()
       })
     }

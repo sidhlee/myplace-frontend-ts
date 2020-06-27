@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useContext } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Input from '../../shared/components/formElements/Input'
@@ -9,10 +9,26 @@ import {
 import Button from '../../shared/components/UIElements/Button'
 
 import { useForm } from '../../shared/hooks/useForm'
+import { useRequest } from '../../shared/hooks/useRequest'
+import { AuthContext } from '../../shared/context/AuthContext'
+import { useHistory } from 'react-router-dom'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
+
+type NewPlaceBody = {
+  title: string
+  description: string
+  address: string
+  creator: string
+}
+
+type NewPlaceResponse = {}
 
 type NewPlaceFormProps = {}
 
 const NewPlaceForm = (props: NewPlaceFormProps) => {
+  const { userId } = useContext(AuthContext)
+  const { sendRequest, isLoading, error, clearError } = useRequest()
   const [formState, inputChangeCallback] = useForm(
     {
       title: {
@@ -30,56 +46,78 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
     },
     false
   )
+  const history = useHistory()
 
-  const handleNewPlaceSubmit = (e: FormEvent) => {
+  const handleNewPlaceSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    console.log(formState.inputs)
+    try {
+      if (userId) {
+        await sendRequest<NewPlaceResponse, NewPlaceBody>(
+          `${process.env.REACT_APP_SERVER_URL}/api/places`,
+          'POST',
+          {
+            title: formState.inputs.title.value,
+            description: formState.inputs.description.value,
+            address: formState.inputs.address.value,
+            creator: userId,
+          }
+        )
+        // if an error occurs during request, below line will not run
+
+        // redirect user on success/fail
+        history.push('/')
+      }
+    } catch (err) {}
   }
 
   return (
-    <Form
-      onSubmit={handleNewPlaceSubmit}
-      buttons={
-        <>
-          <Button to="/" large>
-            CANCEL
-          </Button>
-          <Button type="submit" disabled={!formState.isValid} primary large>
-            ADD PLACE
-          </Button>
-        </>
-      }
-    >
-      <Input
-        id="title"
-        element="input"
-        type="text"
-        label="Title"
-        placeholder="Title"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
-        inputChangeCallback={inputChangeCallback}
-      />
-      <Input
-        id="description"
-        element="textarea"
-        label="Description"
-        placeholder="Description"
-        validators={[VALIDATOR_MINLENGTH(4)]}
-        errorText="Description should be more than 4 letters."
-        inputChangeCallback={inputChangeCallback}
-      />
-      <Input
-        id="address"
-        element="input"
-        type="text"
-        label="Address"
-        placeholder="Address (example: Central Park, NY)"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid address."
-        inputChangeCallback={inputChangeCallback}
-      />
-    </Form>
+    <React.Fragment>
+      <ErrorModal errorText={error} clearModal={clearError} />
+      {isLoading && <LoadingSpinner asOverlay />}
+      <Form
+        onSubmit={handleNewPlaceSubmit}
+        buttons={
+          <>
+            <Button to="/" large>
+              CANCEL
+            </Button>
+            <Button type="submit" disabled={!formState.isValid} primary large>
+              ADD PLACE
+            </Button>
+          </>
+        }
+      >
+        <Input
+          id="title"
+          element="input"
+          type="text"
+          label="Title"
+          placeholder="Title"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid title."
+          inputChangeCallback={inputChangeCallback}
+        />
+        <Input
+          id="description"
+          element="textarea"
+          label="Description"
+          placeholder="Description"
+          validators={[VALIDATOR_MINLENGTH(4)]}
+          errorText="Description should be more than 4 letters."
+          inputChangeCallback={inputChangeCallback}
+        />
+        <Input
+          id="address"
+          element="input"
+          type="text"
+          label="Address"
+          placeholder="Address (example: Central Park, NY)"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid address."
+          inputChangeCallback={inputChangeCallback}
+        />
+      </Form>
+    </React.Fragment>
   )
 }
 

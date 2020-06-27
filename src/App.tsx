@@ -17,11 +17,13 @@ import Auth from './users/pages/Auth'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [userId, setUserId] = useState<string | null>(null)
 
   // If callback is passed down to change the local state,
   // they should be wrapped inside useCallback to prevent infinite loop
-  const login = useCallback(() => {
+  const login = useCallback((uid) => {
     setIsLoggedIn(true)
+    setUserId(uid)
   }, [])
 
   const logout = useCallback(() => {
@@ -63,6 +65,7 @@ function App() {
     <AuthContext.Provider
       value={{
         isLoggedIn,
+        userId,
         login,
         logout,
       }}

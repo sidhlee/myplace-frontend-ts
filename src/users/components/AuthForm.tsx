@@ -59,27 +59,29 @@ const AuthForm = (props: AuthFormProps) => {
     e.preventDefault()
 
     if (authMode === AuthMode.LOGIN) {
-      await sendRequest<AuthResponse | undefined, LoginBody>(
-        `${process.env.REACT_APP_SERVER_URL}/api/users/login`,
-        'POST',
-        {
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        }
-      )
-      auth.login()
+      const responseData = await sendRequest<
+        AuthResponse | undefined,
+        LoginBody
+      >(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, 'POST', {
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value,
+      })
+      if (responseData) {
+        auth.login(responseData?.userId)
+      }
     }
     if (authMode === AuthMode.SIGNUP) {
-      await sendRequest<AuthResponse | undefined, SignupBody>(
-        `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
-        'POST',
-        {
-          name: formState.inputs.name.value,
-          email: formState.inputs.email.value,
-          password: formState.inputs.password.value,
-        }
-      )
-      auth.login()
+      const responseData = await sendRequest<
+        AuthResponse | undefined,
+        SignupBody
+      >(`${process.env.REACT_APP_SERVER_URL}/api/users/signup`, 'POST', {
+        name: formState.inputs.name.value,
+        email: formState.inputs.email.value,
+        password: formState.inputs.password.value,
+      })
+      if (responseData) {
+        auth.login(responseData?.userId)
+      }
     }
   }
 
