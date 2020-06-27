@@ -22,7 +22,7 @@ const USERS = [
 
 const Users: React.FC = (props) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [loadedUsers, setLoadedUsers] = useState<User[]>([])
+  const [loadedUsers, setLoadedUsers] = useState<User[] | null>(null)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const Users: React.FC = (props) => {
       setIsLoading(true)
       try {
         const response = await fetch(
-          `${process.env.REACT_APP_SERVER_URL}/api/user`
+          `${process.env.REACT_APP_SERVER_URL}/api/users`
         )
         const data = await response.json()
         if (!response.ok) {

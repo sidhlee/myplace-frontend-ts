@@ -1,11 +1,11 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React from 'react'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-import Card from '../../shared/components/UIElements/Card';
-import Avatar from '../../shared/components/UIElements/Avatar';
+import Card from '../../shared/components/UIElements/Card'
+import Avatar from '../../shared/components/UIElements/Avatar'
 
-const StyledUserItem = styled.li`
+export const StyledUserItem = styled.li`
   margin-bottom: 2em;
   a {
     padding: 1em;
@@ -36,14 +36,14 @@ const StyledUserItem = styled.li`
       }
     }
   }
-`;
+`
 
 type UserItemProps = {
-  id: string;
-  image: string;
-  name: string;
-  placeCount: number;
-};
+  id: string
+  image: string
+  name: string
+  placeCount: number
+}
 
 const UserItem: React.FC<UserItemProps> = (props) => {
   return (
@@ -62,7 +62,7 @@ const UserItem: React.FC<UserItemProps> = (props) => {
         </Link>
       </Card>
     </StyledUserItem>
-  );
-};
+  )
+}
 
-export default UserItem;
+export default UserItem

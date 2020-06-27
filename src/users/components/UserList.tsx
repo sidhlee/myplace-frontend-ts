@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import UserItem from './UserItem'
+import UserItemSkeleton from './UserItemSkeleton'
 
 import { User } from '../../shared/models/types'
 
@@ -13,10 +14,19 @@ const StyledUserList = styled.ul`
 `
 
 type UserListProps = {
-  users: User[]
+  users: User[] | null
 }
 
 const UserList: React.FC<UserListProps> = (props) => {
+  if (!props.users) {
+    return (
+      <StyledUserList>
+        {[...Array(3)].map((item) => (
+          <UserItemSkeleton />
+        ))}
+      </StyledUserList>
+    )
+  }
   if (props.users.length === 0) {
     return (
       <div className="center">
