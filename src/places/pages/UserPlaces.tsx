@@ -1,41 +1,38 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Place } from '../../shared/models/types'
 
 import PlaceList from '../components/PlaceList'
 import { useParams } from 'react-router-dom'
+import { useRequest } from '../../shared/hooks/useRequest'
 
-const PLACES: Place[] = [
-  {
-    id: 'p1',
-    title: 'Rainbow Cinema',
-    description: 'A cozy movie theater near Harbourfront',
-    address: 'Rainbow Cinema, Toronto',
-    image: 'https://placem.at/places?w=800&random=1',
-    location: {
-      lat: 43.649584,
-      lng: -79.372489,
-    },
-    creator: 'u1',
-  },
-  {
-    id: 'p2',
-    title: 'The Central',
-    description: 'Now-defunct music & comedy club that I used to play at',
-    address: 'The central, Bathurst & Bloor, Toronto',
-    image: 'https://placem.at/places?w=800&random=2',
-    location: {
-      lat: 43.664416,
-      lng: -79.412119,
-    },
-    creator: 'u2',
-  },
-]
+type FetchPlacesResponse = {
+  places: Place[]
+}
 
 const UserPlaces = () => {
+  const [loadedPlaces, setLoadedPlaces] = useState<Place[] | null>(null)
+
   const { userId } = useParams<{ userId: string }>()
-  const loadedPlace = PLACES.filter((place) => place.creator === userId)
-  return <PlaceList places={loadedPlace} />
+  const { sendRequest } = useRequest()
+
+  useEffect(() => {
+    const fetchPlaces = async () => {
+      try {
+        const url = `${process.env.REACT_APP_SERVER_URL}/api/places/user/${userId}`
+        const responseData = await sendRequest<FetchPlacesResponse>(url)
+        if (responseData) {
+          console.log('responseData')
+          setLoadedPlaces(responseData.places)
+        }
+      } catch {}
+    }
+    fetchPlaces()
+
+    // userId is from url param which don't change as long as we stay on the page
+  }, [sendRequest, userId])
+
+  return <PlaceList places={loadedPlaces} />
 }
 
 export default UserPlaces

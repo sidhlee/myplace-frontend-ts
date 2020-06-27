@@ -11,7 +11,7 @@ import { bp } from '../../shared/styled/vars'
 import AlertModal from '../../shared/components/UIElements/AlertModal'
 import { AuthContext } from '../../shared/context/AuthContext'
 
-const StyledPlaceItem = styled.li`
+export const StyledPlaceItem = styled.li`
   margin: 1em 0;
 
   .place-item__image {

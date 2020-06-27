@@ -6,6 +6,7 @@ import { Place } from '../../shared/models/types'
 import PlaceItem from './PlaceItem'
 import FormPage from '../../shared/components/formElements/FormPage'
 import Button from '../../shared/components/UIElements/Button'
+import PlaceItemSkeleton from './PlaceItemSkeleton'
 
 const StyledPlaceList = styled.ul`
   list-style: none;
@@ -15,10 +16,19 @@ const StyledPlaceList = styled.ul`
 `
 
 type PlaceListProps = {
-  places: Place[]
+  places: Place[] | null
 }
 
 const PlaceList: React.FC<PlaceListProps> = (props) => {
+  if (!props.places) {
+    return (
+      <StyledPlaceList>
+        {[...Array(2)].map((skeleton, i) => (
+          <PlaceItemSkeleton key={i} />
+        ))}
+      </StyledPlaceList>
+    )
+  }
   if (props.places.length === 0) {
     return (
       <FormPage
