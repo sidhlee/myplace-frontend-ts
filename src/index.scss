@@ -25,8 +25,12 @@
   --cl-danger: #fa3e3e;
   --cl-danger-alpha: rgba(250, 62, 62, 0.9);
   --cl-danger-hover: #ca3131;
+  --cl-success-gradient: linear-gradient(#67ae55, #578843);
+  --cl-success-gradient-hover: linear-gradient(#79bc64, #578843);
+  --cl-success: #69a74e;
   --cl-overlay: rgba(255, 255, 255, 0.9);
   --cl-border-color: #bdc7d8;
+  --cl-border-color-success: #3b6e22 #3b6e22 #2c5115;
   --cl-bg: var(--fds-gray-10);
   --cl-btn-bg: var(--fds-gray-00);
   --text-accent: var(--fds-fb-blue-75);
@@ -40,6 +44,7 @@
   --z-spinner: 250;
 
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  --box-shadow-success: inset 0 1px 1px #a4e388;
   --main-header-height: 3.6rem;
   --border: 1px solid var(--cl-border-color);
   --border-radius: 5px;

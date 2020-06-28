@@ -4,7 +4,7 @@ type FormStateInputId = string
 
 type FormStateInputs = {
   [inputId in FormStateInputId]: {
-    value: string
+    value: any // can be string, File, .. anything! TS will not care
     isValid: boolean
   }
 }
@@ -127,7 +127,7 @@ export const useForm = (
     (
       initialInputs: {
         [inputId: string]: {
-          value: string
+          value: any
           isValid: boolean
         }
       },

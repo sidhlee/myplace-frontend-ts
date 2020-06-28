@@ -14,6 +14,7 @@ import Button from '../../shared/components/UIElements/Button'
 import Input from '../../shared/components/formElements/Input'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
+import ImageUpload from '../../shared/components/formElements/ImageUpload'
 
 enum AuthMode {
   LOGIN,
@@ -95,6 +96,12 @@ const AuthForm = (props: AuthFormProps) => {
             value: '',
             isValid: false,
           },
+          image: {
+            // HTML input element of type="file" has string value
+            // that represents the path to the selected file(s)
+            value: null,
+            isValid: false,
+          },
         },
         false
       )
@@ -170,6 +177,9 @@ const AuthForm = (props: AuthFormProps) => {
           errorText="Password should be at least 6 characters"
           inputChangeCallback={inputChangeCallback}
         />
+        {authMode === AuthMode.SIGNUP && (
+          <ImageUpload id="image" inputChangeCallback={inputChangeCallback} />
+        )}
       </Form>
     </React.Fragment>
   )

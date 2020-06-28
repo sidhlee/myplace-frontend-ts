@@ -12,6 +12,7 @@ type ButtonProps = {
   to?: string
   href?: string
   primary?: boolean
+  success?: boolean
   danger?: boolean
   small?: boolean
   large?: boolean
@@ -55,6 +56,17 @@ const primaryCss = css`
   }
 `
 
+const successCss = css`
+  background: var(--cl-success-gradient);
+  background-color: var(--cl-success);
+  box-shadow: var(--box-shadow-success);
+  border: 1px solid var(--cl-border-color-success);
+  color: var(--cl-white);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  &:hover {
+    background: var(--cl-success-gradient-hover);
+  }
+`
 const dangerCss = css`
   background: var(--cl-danger);
   border-color: var(--cl-danger);
@@ -92,6 +104,7 @@ export default styled(Button)`
 
   ${(props) => (props.primary ? primaryCss : null)}
   ${(props) => (props.danger ? dangerCss : null)}
+  ${(props) => (props.success ? successCss : null)}
   ${(props) => (props.large ? largeCss : null)}
 
   ${(props) => (props.disabled ? disabledCss : null)}
