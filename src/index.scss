@@ -60,19 +60,22 @@ html {
 }
 
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // These two body lines are customary
+  margin: 0;
+  background: var(--cl-bg); // always! set your BG in body
 }
 
 .App {
-  background: var(--cl-bg);
-  width: 100vw;
-  overflow-x: hidden;
-  min-height: 100vh;
+  // If you set background here, it'll only cover as far as the content goes.
+
+  // min-height: 100vh; will introduce weird behaviors when new elements are added
+  // outside the initial dimension.
+  // (eg. nested scrollbar, vertical overflow-hidden, ...)
   padding: calc(var(--main-header-height) + 1em) 0 2em;
 }
 

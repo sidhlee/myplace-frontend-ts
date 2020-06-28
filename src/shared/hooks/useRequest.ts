@@ -26,7 +26,6 @@ export const useRequest = () => {
       activeHttpRequest.current.push(abortController)
 
       try {
-        console.log(body)
         const response = await fetch(url, {
           method,
           signal: abortController.signal,
