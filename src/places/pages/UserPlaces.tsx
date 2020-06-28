@@ -31,7 +31,16 @@ const UserPlaces = () => {
     // userId is from url param which don't change as long as we stay on the page
   }, [sendRequest, userId])
 
-  return <PlaceList places={loadedPlaces} />
+  const updateLoadedPlaces = (placeId: string) => {
+    if (loadedPlaces) {
+      const updated = loadedPlaces.filter((place) => place.id !== placeId)
+      setLoadedPlaces(updated)
+    }
+  }
+
+  return (
+    <PlaceList places={loadedPlaces} updateLoadedPlaces={updateLoadedPlaces} />
+  )
 }
 
 export default UserPlaces

@@ -18,6 +18,7 @@ const StyledPlaceList = styled.ul`
 
 type PlaceListProps = {
   places: Place[] | null
+  updateLoadedPlaces: (placeId: string) => void
 }
 
 const PlaceList: React.FC<PlaceListProps> = (props) => {
@@ -63,6 +64,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
           description={place.description}
           image={place.image}
           location={place.location}
+          handleConfirmDelete={props.updateLoadedPlaces}
         />
       ))}
     </StyledPlaceList>

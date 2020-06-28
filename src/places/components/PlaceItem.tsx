@@ -10,10 +10,14 @@ import { bp } from '../../shared/styled/vars'
 
 import AlertModal from '../../shared/components/UIElements/AlertModal'
 import { AuthContext } from '../../shared/context/AuthContext'
+import { useRequest } from '../../shared/hooks/useRequest'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 
 export const StyledPlaceItem = styled.li`
   margin: 1em 0;
-
+  /* for abs-positioning spinner inside PlaceItem */
+  position: relative;
   .place-item__image {
     width: 100%;
     height: 12.5rem;
@@ -64,8 +68,14 @@ const MapModal = styled(Modal)`
   }
 `
 
-const PlaceItem = (props: PlaceItemProps & { key: string }) => {
+const PlaceItem = (
+  props: PlaceItemProps & {
+    key: string
+    handleConfirmDelete: (placeId: string) => void
+  }
+) => {
   const auth = useContext(AuthContext)
+  const { sendRequest, isLoading, error, clearError } = useRequest()
 
   const [showMap, setShowMap] = useState(false)
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false)
@@ -74,13 +84,18 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
   const closeMap = () => setShowMap(false)
   const openDeleteConfirm = () => setShowDeleteConfirm(true)
   const closeDeleteConfirm = () => setShowDeleteConfirm(false)
-  const confirmDelete = () => {
+  const confirmDelete = async () => {
     closeDeleteConfirm()
-    console.log('Deleting place...')
+    try {
+      const url = `${process.env.REACT_APP_SERVER_URL}/api/places/${props.id}`
+      await sendRequest(url, 'DELETE')
+      props.handleConfirmDelete(props.id)
+    } catch (err) {}
   }
 
   return (
     <React.Fragment>
+      <ErrorModal errorText={error} clearModal={clearError} />
       <MapModal
         show={showMap}
         header={props.address}
@@ -116,6 +131,7 @@ const PlaceItem = (props: PlaceItemProps & { key: string }) => {
       </AlertModal>
       <StyledPlaceItem>
         <Card>
+          {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img src={props.image} alt={props.title} />
           </div>
