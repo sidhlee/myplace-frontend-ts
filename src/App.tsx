@@ -14,6 +14,7 @@ import NewPlace from './places/pages/NewPlace'
 import UserPlaces from './places/pages/UserPlaces'
 import UpdatePlace from './places/pages/UpdatePlace'
 import Auth from './users/pages/Auth'
+import { SkeletonTheme } from 'react-loading-skeleton'
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
@@ -72,7 +73,9 @@ function App() {
     >
       <Router>
         <MainNavigation />
-        <main className="App">{route}</main>
+        <SkeletonTheme color="#f5f5f5" highlightColor="#eee">
+          <main className="App">{route}</main>
+        </SkeletonTheme>
       </Router>
     </AuthContext.Provider>
   )

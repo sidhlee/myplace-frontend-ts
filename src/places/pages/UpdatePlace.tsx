@@ -1,57 +1,45 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+
 import { Place } from '../../shared/models/types'
 
 import FormPage from '../../shared/components/formElements/FormPage'
 import UpdatePlaceForm from '../components/UpdatePlaceForm'
 import { useParams } from 'react-router-dom'
+import { useRequest } from '../../shared/hooks/useRequest'
+import ErrorModal from '../../shared/components/UIElements/ErrorModal'
+import UpdatePlaceSkeleton from '../components/UpdatePlaceSkeleton'
 
-const PLACES: Place[] = [
-  {
-    id: 'p1',
-    title: 'Rainbow Cinema',
-    description: 'A cozy movie theater near Harbourfront',
-    address: 'Rainbow Cinema, Toronto',
-    image: 'https://placem.at/places?w=800&random=1',
-    location: {
-      lat: 43.649584,
-      lng: -79.372489,
-    },
-    creator: 'u1',
-  },
-  {
-    id: 'p2',
-    title: 'The Central',
-    description: 'Now-defunct music & comedy club that I used to play at',
-    address: 'The central, Bathurst & Bloor, Toronto',
-    image: 'https://placem.at/places?w=800&random=2',
-    location: {
-      lat: 43.664416,
-      lng: -79.412119,
-    },
-    creator: 'u2',
-  },
-]
-
-const StyledImage = styled.img`
+export const StyledImageWrapper = styled.div`
   width: 100%;
   height: 16rem;
-  object-fit: cover;
   margin-bottom: 0.5em;
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 `
 
 type UpdatePlaceProps = {}
 
 const UpdatePlace = (props: UpdatePlaceProps) => {
+  const [loadedPlace, setLoadedPlace] = useState<Place | null>(null)
   const { placeId } = useParams()
-  const place = PLACES.find((p) => p.id === placeId)
-  if (!place) {
-    return (
-      <div className="center">
-        <h2>Cannot find the place!</h2>
-      </div>
-    )
-  }
+  const { sendRequest, error, clearError } = useRequest()
+
+  useEffect(() => {
+    const fetchPlace = async () => {
+      try {
+        const url = `${process.env.REACT_APP_SERVER_URL}/api/places/${placeId}`
+        const responseData = await sendRequest<{ place: Place }>(url)
+        if (responseData) {
+          setLoadedPlace(responseData.place)
+        }
+      } catch (err) {}
+    }
+    fetchPlace()
+  }, [sendRequest, placeId])
 
   const header = (
     <header>
@@ -60,10 +48,21 @@ const UpdatePlace = (props: UpdatePlaceProps) => {
     </header>
   )
   return (
-    <FormPage header={header}>
-      <StyledImage src={place.image} alt={place.title} />
-      <UpdatePlaceForm place={place} />
-    </FormPage>
+    <React.Fragment>
+      <ErrorModal errorText={error} clearModal={clearError} />
+      <FormPage header={header}>
+        {loadedPlace ? (
+          <>
+            <StyledImageWrapper>
+              <img src={loadedPlace.image} alt={loadedPlace.title} />
+            </StyledImageWrapper>
+            <UpdatePlaceForm place={loadedPlace as Place} />
+          </>
+        ) : (
+          <UpdatePlaceSkeleton />
+        )}
+      </FormPage>
+    </React.Fragment>
   )
 }
 

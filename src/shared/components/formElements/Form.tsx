@@ -1,7 +1,7 @@
 import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 
-const StyledForm = styled.form`
+export const StyledForm = styled.form`
   width: 100%;
   input,
   textarea {

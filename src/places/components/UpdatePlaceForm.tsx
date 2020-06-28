@@ -1,4 +1,4 @@
-import React, { FormEvent } from 'react'
+import React, { FormEvent, useEffect } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Button from '../../shared/components/UIElements/Button'
@@ -42,7 +42,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
     <Form
       buttons={
         <>
-          <Button type="button" onClick={() => history.goBack()}>
+          <Button type="button" onClick={() => history.goBack()} large>
             CANCEL
           </Button>
           <Button type="submit" disabled={!formState.isValid} primary large>

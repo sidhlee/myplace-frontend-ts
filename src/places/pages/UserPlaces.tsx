@@ -22,7 +22,6 @@ const UserPlaces = () => {
         const url = `${process.env.REACT_APP_SERVER_URL}/api/places/user/${userId}`
         const responseData = await sendRequest<FetchPlacesResponse>(url)
         if (responseData) {
-          console.log('responseData')
           setLoadedPlaces(responseData.places)
         }
       } catch {}
