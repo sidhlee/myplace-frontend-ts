@@ -60,16 +60,18 @@ const AuthForm = (props: AuthFormProps) => {
     e.preventDefault()
 
     if (authMode === AuthMode.LOGIN) {
-      const responseData = await sendRequest<
-        AuthResponse | undefined,
-        LoginBody
-      >(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, 'POST', {
-        email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
-      })
-      if (responseData) {
-        auth.login(responseData?.userId)
-      }
+      try {
+        const responseData = await sendRequest<
+          AuthResponse | undefined,
+          LoginBody
+        >(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, 'POST', {
+          email: formState.inputs.email.value,
+          password: formState.inputs.password.value,
+        })
+        if (responseData) {
+          auth.login(responseData?.userId)
+        }
+      } catch (err) {}
     }
     if (authMode === AuthMode.SIGNUP) {
       const formData = new FormData()
@@ -77,18 +79,19 @@ const AuthForm = (props: AuthFormProps) => {
       formData.append('email', formState.inputs.email.value)
       formData.append('password', formState.inputs.password.value)
       formData.append('image', formState.inputs.image.value)
-
-      const responseData = await sendRequest<
-        AuthResponse | undefined,
-        FormData
-      >(
-        `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
-        'POST',
-        formData
-      )
-      if (responseData) {
-        auth.login(responseData?.userId)
-      }
+      try {
+        const responseData = await sendRequest<
+          AuthResponse | undefined,
+          FormData
+        >(
+          `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
+          'POST',
+          formData
+        )
+        if (responseData) {
+          auth.login(responseData?.userId)
+        }
+      } catch (err) {}
     }
   }
 
@@ -106,7 +109,7 @@ const AuthForm = (props: AuthFormProps) => {
             // HTML input element of type="file" has string value
             // that represents the path to the selected file(s)
             value: null,
-            isValid: false,
+            isValid: true,
           },
         },
         false
