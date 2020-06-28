@@ -72,14 +72,20 @@ const AuthForm = (props: AuthFormProps) => {
       }
     }
     if (authMode === AuthMode.SIGNUP) {
+      const formData = new FormData()
+      formData.append('name', formState.inputs.name.value)
+      formData.append('email', formState.inputs.email.value)
+      formData.append('password', formState.inputs.password.value)
+      formData.append('image', formState.inputs.image.value)
+
       const responseData = await sendRequest<
         AuthResponse | undefined,
-        SignupBody
-      >(`${process.env.REACT_APP_SERVER_URL}/api/users/signup`, 'POST', {
-        name: formState.inputs.name.value,
-        email: formState.inputs.email.value,
-        password: formState.inputs.password.value,
-      })
+        FormData
+      >(
+        `${process.env.REACT_APP_SERVER_URL}/api/users/signup`,
+        'POST',
+        formData
+      )
       if (responseData) {
         auth.login(responseData?.userId)
       }
