@@ -67,6 +67,32 @@ const MapModal = styled(Modal)`
 `;
 ```
 
+### Fetch with FormData returns CORS error
+
+- When you pass FormData to the `body` field of the fetch option, you MUST pass an empty object to the header field. If you assign non-empty object to the header field, it will override the auto-generated headers and will cause CORS error.
+
+```js
+const response = await fetch(url, {
+  method,
+  signal: abortController.signal,
+  body:
+    body instanceof FormData
+      ? body
+      : typeof body === 'object'
+      ? JSON.stringify(body)
+      : undefined,
+  // You MUST leave the headers empty when using FormData in fetch!!!
+  headers:
+    body instanceof FormData
+      ? {}
+      : {
+          // body-parser on backend needs this header to identify JSON body
+          'Content-Type': 'application/json',
+          ...headers,
+        },
+})
+```
+
 ## Things To Remember
 
 ### Only give the core styles to the UI component for reusability.

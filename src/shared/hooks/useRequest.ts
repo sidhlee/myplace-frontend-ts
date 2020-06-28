@@ -26,16 +26,25 @@ export const useRequest = () => {
       activeHttpRequest.current.push(abortController)
 
       try {
+        console.log(body)
         const response = await fetch(url, {
           method,
           signal: abortController.signal,
-          body: typeof body === 'object' ? JSON.stringify(body) : undefined,
-          mode: 'cors',
-          headers: {
-            // body-parser on backend needs this header to identify JSON body
-            'Content-Type': 'application/json',
-            ...headers,
-          },
+          body:
+            body instanceof FormData
+              ? body
+              : typeof body === 'object'
+              ? JSON.stringify(body)
+              : undefined,
+          // You MUST leave the headers empty when using FormData in fetch!!!
+          headers:
+            body instanceof FormData
+              ? {}
+              : {
+                  // body-parser on backend needs this header to identify JSON body
+                  'Content-Type': 'application/json',
+                  ...headers,
+                },
         })
 
         const responseData = await response.json()
