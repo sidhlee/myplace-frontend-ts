@@ -64,6 +64,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
           description={place.description}
           image={place.image}
           location={place.location}
+          creator={place.creator}
           handleConfirmDelete={props.updateLoadedPlaces}
         />
       ))}

@@ -49,7 +49,7 @@ export const StyledPlaceItem = styled.li`
   }
 `
 
-type PlaceItemProps = Omit<Place, 'creator'>
+type PlaceItemProps = Place
 
 const MapModal = styled(Modal)`
   .map-container {
@@ -142,10 +142,10 @@ const PlaceItem = (
           </div>
           <div className="place-item__actions">
             <Button onClick={openMap}>VIEW ON MAP</Button>
-            {auth.isLoggedIn && (
+            {auth.isLoggedIn && auth.userId === props.creator && (
               <Button to={`/places/${props.id}`}>EDIT</Button>
             )}
-            {auth.isLoggedIn && (
+            {auth.isLoggedIn && auth.userId === props.creator && (
               <Button danger onClick={openDeleteConfirm}>
                 DELETE
               </Button>
