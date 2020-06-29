@@ -188,7 +188,12 @@ const AuthForm = (props: AuthFormProps) => {
           inputChangeCallback={inputChangeCallback}
         />
         {authMode === AuthMode.SIGNUP && (
-          <ImageUpload id="image" inputChangeCallback={inputChangeCallback} />
+          <ImageUpload
+            id="image"
+            inputChangeCallback={inputChangeCallback}
+            initialPreviewUrl={require('../../shared/image/Portrait_Placeholder.png')}
+            autoFocus
+          />
         )}
       </Form>
     </React.Fragment>

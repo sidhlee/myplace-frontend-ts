@@ -1,10 +1,9 @@
 import React, { useReducer, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 
-import Tippy from '@tippyjs/react'
-import 'tippy.js/dist/tippy.css'
-
 import { validate, Validator } from '../../utils/validator'
+
+import ThemedTippy from './ThemedTippy'
 
 const invalidCss = css`
   border-color: var(--cl-danger);
@@ -23,22 +22,6 @@ const StyledInput = styled.div<{ invalid: boolean }>`
   }
   textarea {
     resize: none;
-  }
-`
-
-const DangerTippy = styled(Tippy)`
-  background: var(--cl-danger-alpha);
-  &[data-placement^='top'] > .tippy-arrow::before {
-    border-top-color: var(--cl-danger);
-  }
-  &[data-placement^='bottom'] > .tippy-arrow::before {
-    border-bottom-color: var(--cl-danger);
-  }
-  &[data-placement^='left'] > .tippy-arrow::before {
-    border-left-color: var(--cl-danger);
-  }
-  &[data-placement^='right'] > .tippy-arrow::before {
-    border-right-color: var(--cl-danger);
   }
 `
 
@@ -145,7 +128,7 @@ const Input = (props: InputProps) => {
 
   const invalid = !inputState.isValid && inputState.isTouched
   return (
-    <DangerTippy
+    <ThemedTippy
       content={props.errorText}
       visible={invalid}
       placement="left"
@@ -157,7 +140,7 @@ const Input = (props: InputProps) => {
       maxWidth={220}
     >
       <StyledInput invalid={invalid}>{element}</StyledInput>
-    </DangerTippy>
+    </ThemedTippy>
   )
 }
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, ChangeEvent } from 'react'
 import styled from 'styled-components'
 import Button from '../UIElements/Button'
+import ThemedTippy from './ThemedTippy'
 
 const StyledImageUpload = styled.div`
   margin-bottom: 1em;
@@ -33,14 +34,20 @@ const StyledImageUpload = styled.div`
 
 type ImageUploadProps = {
   id: string
+  errorText?: string
+  initialPreviewUrl?: string
+  required?: boolean
+  autoFocus?: boolean
   inputChangeCallback: (id: string, value: any, isValid: boolean) => void
 }
 
 const ImageUpload = (props: ImageUploadProps) => {
   const [file, setFile] = useState<File | null>(null) // points to file(binary)
   const [previewUrl, setPreviewUrl] = useState<string>( // points to dataURL(base64)
-    // pre-load portrait placeholder
-    require('../../image/Portrait_Placeholder.png')
+    // pre-load image placeholder
+    props.initialPreviewUrl
+      ? props.initialPreviewUrl
+      : require('../../image/place-placeholder.png')
   )
   const [isValid, setIsValid] = useState(false)
 
@@ -77,6 +84,8 @@ const ImageUpload = (props: ImageUploadProps) => {
     props.inputChangeCallback(props.id, selectedFile, isFileValid)
   }
 
+  const inValid = props.required && !isValid
+
   return (
     <StyledImageUpload>
       <input
@@ -86,9 +95,16 @@ const ImageUpload = (props: ImageUploadProps) => {
         onChange={handleInputChange}
       />
       <div className="image-upload">
-        <div className="image-upload__preview">
-          <img src={previewUrl} alt="Preview" />
-        </div>
+        <ThemedTippy
+          content={props.errorText}
+          visible={inValid}
+          placement="right-start"
+          theme="primary"
+        >
+          <div className="image-upload__preview">
+            <img src={previewUrl} alt="Preview" />
+          </div>
+        </ThemedTippy>
         <div className="image-upload">
           <div className="image-upload__button">
             <Button type="button" onClick={handleSelectImage} success>

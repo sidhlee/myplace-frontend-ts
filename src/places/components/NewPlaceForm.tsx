@@ -14,6 +14,7 @@ import { AuthContext } from '../../shared/context/AuthContext'
 import { useHistory } from 'react-router-dom'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
+import ImageUpload from '../../shared/components/formElements/ImageUpload'
 
 type NewPlaceBody = {
   title: string
@@ -87,6 +88,12 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           </>
         }
       >
+        <ImageUpload
+          id="image"
+          inputChangeCallback={inputChangeCallback}
+          errorText="Please select an image"
+          required
+        />
         <Input
           id="title"
           element="input"
