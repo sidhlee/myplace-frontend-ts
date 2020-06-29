@@ -44,6 +44,10 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         value: '',
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   )
@@ -53,22 +57,25 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
     e.preventDefault()
     try {
       if (userId) {
-        await sendRequest<NewPlaceResponse, NewPlaceBody>(
+        const formData = new FormData()
+        formData.append('title', formState.inputs.title.value)
+        formData.append('description', formState.inputs.description.value)
+        formData.append('address', formState.inputs.address.value)
+        formData.append('image', formState.inputs.image.value)
+        formData.append('creator', userId)
+        await sendRequest<NewPlaceResponse, FormData>(
           `${process.env.REACT_APP_SERVER_URL}/api/places`,
           'POST',
-          {
-            title: formState.inputs.title.value,
-            description: formState.inputs.description.value,
-            address: formState.inputs.address.value,
-            creator: userId,
-          }
+          formData
         )
         // if an error occurs during request, below line will not run
 
         // redirect user on success/fail
         history.push('/')
       }
-    } catch (err) {}
+    } catch (err) {
+      console.log(err)
+    }
   }
 
   return (
