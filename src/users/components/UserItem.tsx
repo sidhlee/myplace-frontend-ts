@@ -51,7 +51,10 @@ const UserItem: React.FC<UserItemProps> = (props) => {
       <Card>
         <Link className="user-item__link" to={`${props.id}/places`}>
           <div className="user-item__image">
-            <Avatar src={props.image} alt={props.name} />
+            <Avatar
+              src={`${process.env.REACT_APP_ASSETS_URL}/${props.image}`}
+              alt={props.name}
+            />
           </div>
           <div className="user-item__info">
             <h2>{props.name}</h2>
