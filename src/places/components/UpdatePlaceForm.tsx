@@ -26,7 +26,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
   const { sendRequest, isLoading, error, clearError } = useRequest()
   const history = useHistory()
   const { placeId } = useParams()
-  const { userId } = useContext(AuthContext)
+  const { userId, token } = useContext(AuthContext)
   const [formState, inputChangeCallback] = useForm(
     {
       title: {
@@ -45,10 +45,15 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
     e.preventDefault()
     try {
       const url = `${process.env.REACT_APP_SERVER_URL}/api/places/${placeId}`
-      await sendRequest<undefined, UpdatePlaceBody>(url, 'PATCH', {
-        title: formState.inputs.title.value,
-        description: formState.inputs.description.value,
-      })
+      await sendRequest<undefined, UpdatePlaceBody>(
+        url,
+        'PATCH',
+        {
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+        },
+        { Authorization: `Bearer ${token}` }
+      )
 
       history.push(`/${userId}/places`)
     } catch (err) {}
