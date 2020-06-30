@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -25,11 +25,28 @@ function App() {
   const login = useCallback((uid, token) => {
     setToken(token)
     setUserId(uid)
+
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({ userId: uid, token: token })
+    )
   }, [])
 
   const logout = useCallback(() => {
     setToken(null)
+    setUserId(null)
+    localStorage.removeItem('userData')
   }, [])
+
+  useEffect(() => {
+    const item = localStorage.getItem('userData')
+    if (!item) return
+
+    const { userId, token } = JSON.parse(item)
+    if (userId && token) {
+      login(userId, token)
+    }
+  }, [login]) // login will not change => onMount effect
 
   const route = isLoggedIn ? (
     <Switch>
