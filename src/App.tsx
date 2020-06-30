@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from 'react'
+import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -15,38 +15,12 @@ import UserPlaces from './places/pages/UserPlaces'
 import UpdatePlace from './places/pages/UpdatePlace'
 import Auth from './users/pages/Auth'
 import { SkeletonTheme } from 'react-loading-skeleton'
+import { useAuth } from './shared/hooks/useAuth'
 
 function App() {
-  const [token, setToken] = useState<string | null>(null)
-  const [userId, setUserId] = useState<string | null>(null)
+  const { userId, token, login, logout } = useAuth()
+
   const isLoggedIn = !!token
-  // If callback is passed down to change the local state,
-  // they should be wrapped inside useCallback to prevent infinite loop
-  const login = useCallback((uid, token) => {
-    setToken(token)
-    setUserId(uid)
-
-    localStorage.setItem(
-      'userData',
-      JSON.stringify({ userId: uid, token: token })
-    )
-  }, [])
-
-  const logout = useCallback(() => {
-    setToken(null)
-    setUserId(null)
-    localStorage.removeItem('userData')
-  }, [])
-
-  useEffect(() => {
-    const item = localStorage.getItem('userData')
-    if (!item) return
-
-    const { userId, token } = JSON.parse(item)
-    if (userId && token) {
-      login(userId, token)
-    }
-  }, [login]) // login will not change => onMount effect
 
   const route = isLoggedIn ? (
     <Switch>

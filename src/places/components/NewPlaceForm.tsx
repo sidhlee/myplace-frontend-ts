@@ -62,7 +62,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         formData.append('description', formState.inputs.description.value)
         formData.append('address', formState.inputs.address.value)
         formData.append('image', formState.inputs.image.value)
-        formData.append('creator', userId)
+        // now the server gets creator(userId) from token
         await sendRequest<NewPlaceResponse, FormData>(
           `${process.env.REACT_APP_SERVER_URL}/api/places`,
           'POST',
