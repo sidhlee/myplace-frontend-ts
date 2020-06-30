@@ -28,7 +28,7 @@ type NewPlaceResponse = {}
 type NewPlaceFormProps = {}
 
 const NewPlaceForm = (props: NewPlaceFormProps) => {
-  const { userId } = useContext(AuthContext)
+  const { userId, token } = useContext(AuthContext)
   const { sendRequest, isLoading, error, clearError } = useRequest()
   const [formState, inputChangeCallback] = useForm(
     {
@@ -66,7 +66,8 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         await sendRequest<NewPlaceResponse, FormData>(
           `${process.env.REACT_APP_SERVER_URL}/api/places`,
           'POST',
-          formData
+          formData,
+          { Authorization: `Bearer ${token}` }
         )
         // if an error occurs during request, below line will not run
 

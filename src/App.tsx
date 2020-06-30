@@ -17,18 +17,18 @@ import Auth from './users/pages/Auth'
 import { SkeletonTheme } from 'react-loading-skeleton'
 
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [token, setToken] = useState<string | null>(null)
   const [userId, setUserId] = useState<string | null>(null)
-
+  const isLoggedIn = !!token
   // If callback is passed down to change the local state,
   // they should be wrapped inside useCallback to prevent infinite loop
-  const login = useCallback((uid) => {
-    setIsLoggedIn(true)
+  const login = useCallback((uid, token) => {
+    setToken(token)
     setUserId(uid)
   }, [])
 
   const logout = useCallback(() => {
-    setIsLoggedIn(false)
+    setToken(null)
   }, [])
 
   const route = isLoggedIn ? (
@@ -69,6 +69,7 @@ function App() {
         userId,
         login,
         logout,
+        token,
       }}
     >
       <Router>

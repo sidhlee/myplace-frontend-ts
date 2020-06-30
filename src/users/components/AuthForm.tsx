@@ -69,7 +69,7 @@ const AuthForm = (props: AuthFormProps) => {
           password: formState.inputs.password.value,
         })
         if (responseData) {
-          auth.login(responseData?.userId)
+          auth.login(responseData?.userId, responseData?.token)
         }
       } catch (err) {}
     }
@@ -90,7 +90,7 @@ const AuthForm = (props: AuthFormProps) => {
           formData
         )
         if (responseData) {
-          auth.login(responseData?.userId)
+          auth.login(responseData?.userId, responseData?.token)
         }
       } catch (err) {}
     }

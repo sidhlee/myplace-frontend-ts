@@ -35,10 +35,11 @@ export const useRequest = () => {
               : typeof body === 'object'
               ? JSON.stringify(body)
               : undefined,
-          // You MUST leave the headers empty when using FormData in fetch!!!
+          // You MUST leave the 'Content-Type' header empty when using FormData in fetch!!!
+          // (FormData automatically sets them based on the values)
           headers:
             body instanceof FormData
-              ? {}
+              ? { ...headers }
               : {
                   // body-parser on backend needs this header to identify JSON body
                   'Content-Type': 'application/json',

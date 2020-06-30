@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react'
+import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
-import { bp } from '../../styled/vars';
+import { bp } from '../../styled/vars'
 
-import SideDrawer from './SideDrawer';
-import MainHeader from './MainHeader';
-import NavLinks from './NavLinks';
-import Backdrop from '../UIElements/Backdrop';
+import SideDrawer from './SideDrawer'
+import MainHeader from './MainHeader'
+import NavLinks from './NavLinks'
+import Backdrop from '../UIElements/Backdrop'
 
 // Extending MainHeader to style the nested components
 const Navbar = styled(MainHeader)`
@@ -40,25 +40,25 @@ const Navbar = styled(MainHeader)`
       color: var(--cl-white);
     }
   }
-`;
+`
 
 type MainNavigationProps = {
-  sideDrawer?: boolean;
-};
+  sideDrawer?: boolean
+}
 
 /**
  * Renders side-drawer and nav-bar, both of which contain nav-links
  * @param props
  */
 const MainNavigation: React.FC<MainNavigationProps> = (props) => {
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
 
   const openDrawer = () => {
-    setIsDrawerOpen(true);
-  };
+    setIsDrawerOpen(true)
+  }
   const closeDrawer = () => {
-    setIsDrawerOpen(false);
-  };
+    setIsDrawerOpen(false)
+  }
 
   return (
     <React.Fragment>
@@ -86,7 +86,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
         </nav>
       </Navbar>
     </React.Fragment>
-  );
-};
+  )
+}
 
-export default MainNavigation;
+export default MainNavigation

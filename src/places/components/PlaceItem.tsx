@@ -88,7 +88,9 @@ const PlaceItem = (
     closeDeleteConfirm()
     try {
       const url = `${process.env.REACT_APP_SERVER_URL}/api/places/${props.id}`
-      await sendRequest(url, 'DELETE')
+      await sendRequest(url, 'DELETE', undefined, {
+        Authorization: `Bearer ${auth.token}`,
+      })
       props.handleConfirmDelete(props.id)
     } catch (err) {}
   }
