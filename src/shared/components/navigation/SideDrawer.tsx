@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import styled from 'styled-components';
-import { CSSTransition } from 'react-transition-group';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import styled from 'styled-components'
+import { CSSTransition } from 'react-transition-group'
 
 const StyledSideDrawer = styled.aside`
   position: fixed;
@@ -31,16 +31,20 @@ const StyledSideDrawer = styled.aside`
     transform: translateX(-100%);
     opacity: 0;
   }
-`;
+`
 
 type SideDrawerProps = {
-  show: boolean;
-  closeDrawer: () => void;
-};
+  show: boolean
+  closeDrawer: () => void
+}
 const SideDrawer: React.FC<SideDrawerProps> = (props) => {
+  // const nodeRef = useRef(null)
+
   const content = (
     <CSSTransition
       in={props.show}
+      // ISSUE: nodeRef disables animation with createPortal
+      // nodeRef={nodeRef}
       timeout={200}
       classNames="slide-in-left"
       mountOnEnter
@@ -50,11 +54,8 @@ const SideDrawer: React.FC<SideDrawerProps> = (props) => {
         {props.children}
       </StyledSideDrawer>
     </CSSTransition>
-  );
-  return ReactDOM.createPortal(
-    content,
-    document.getElementById('drawer-hook')!
-  );
-};
+  )
+  return ReactDOM.createPortal(content, document.getElementById('drawer-hook')!)
+}
 
-export default SideDrawer;
+export default SideDrawer

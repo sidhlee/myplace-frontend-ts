@@ -47,9 +47,11 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
         }
       >
         {userId === auth.userId && (
-          <Button to="/places/new" large>
-            CREATE
-          </Button>
+          <div className="control">
+            <Button to="/places/new" large>
+              CREATE
+            </Button>
+          </div>
         )}
       </FormPage>
     )

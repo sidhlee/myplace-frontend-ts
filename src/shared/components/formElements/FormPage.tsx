@@ -9,6 +9,7 @@ const StyledFormPage = styled.div`
     padding: 20px 0;
     color: var(--text-main);
     margin-bottom: 0.5rem;
+    text-align: center;
     h2 {
       font-size: 2.5rem;
     }
@@ -16,6 +17,9 @@ const StyledFormPage = styled.div`
       font-size: 1.3rem;
       color: var(--text-secondary);
     }
+  }
+  .control {
+    text-align: center;
   }
 `
 
