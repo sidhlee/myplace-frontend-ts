@@ -1,4 +1,4 @@
-import React, { FormEvent, useEffect, useContext } from 'react'
+import React, { FormEvent, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { useForm } from '../../shared/hooks/useForm'

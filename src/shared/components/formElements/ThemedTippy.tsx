@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css'
