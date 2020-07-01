@@ -53,6 +53,7 @@ const ImageUpload = (props: ImageUploadProps) => {
 
   const inputRef = useRef<HTMLInputElement>(null)
 
+  // If file is selected, parse file and set url
   useEffect(() => {
     if (!file) return
     const fileReader = new FileReader()
@@ -64,6 +65,17 @@ const ImageUpload = (props: ImageUploadProps) => {
     fileReader.readAsDataURL(file)
   }, [file])
 
+  // If not required anymore, reset all state to default(blank)
+  useEffect(() => {
+    if (!props.required) {
+      setFile(null)
+      setPreviewUrl(require('../../image/place-placeholder.png'))
+      if (inputRef.current) {
+        inputRef.current.value = ''
+      }
+    }
+  }, [props.required])
+
   const handleSelectImage = () => {
     inputRef.current?.click()
   }
@@ -73,6 +85,7 @@ const ImageUpload = (props: ImageUploadProps) => {
     let isFileValid = isValid
     if (e.target.files && e.target.files.length === 1) {
       selectedFile = e.target.files[0]
+      // console.log(selectedFile)
       setFile(selectedFile)
       setIsValid(true)
       isFileValid = true

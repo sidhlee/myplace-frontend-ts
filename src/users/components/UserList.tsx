@@ -8,7 +8,7 @@ import { User } from '../../shared/models/types'
 const StyledUserList = styled.ul`
   list-style: none;
   max-width: 20rem;
-  margin: 0 auto;
+  margin: 1em auto;
   display: flex;
   flex-direction: column;
 `

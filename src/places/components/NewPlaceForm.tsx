@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext } from 'react'
+import React, { FormEvent, useContext, useState, useEffect } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Input from '../../shared/components/formElements/Input'
@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import ImageUpload from '../../shared/components/formElements/ImageUpload'
+import Checkbox from '../../shared/components/formElements/Checkbox'
 
 type NewPlaceBody = {
   title: string
@@ -29,8 +30,9 @@ type NewPlaceFormProps = {}
 
 const NewPlaceForm = (props: NewPlaceFormProps) => {
   const { userId, token } = useContext(AuthContext)
+  const [uploadImage, setUploadImage] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useRequest()
-  const [formState, inputChangeCallback] = useForm(
+  const [formState, inputChangeCallback, setFormStateCallback] = useForm(
     {
       title: {
         value: '',
@@ -52,6 +54,13 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
     false
   )
   const history = useHistory()
+
+  const { image } = formState.inputs
+  useEffect(() => {
+    if (image.value) {
+      setUploadImage(true)
+    }
+  }, [image.value])
 
   const handleNewPlaceSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -79,6 +88,28 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
     }
   }
 
+  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.checked) {
+      // if all inputs except image are valid by the time checkbox is checked, form is valid
+      const { title, description, address } = formState.inputs
+      let isFormValid = title.isValid && description.isValid && address.isValid
+      setUploadImage(false)
+      setFormStateCallback(
+        {
+          ...formState.inputs,
+          image: {
+            value: '',
+            isValid: true,
+          },
+        },
+        isFormValid
+      )
+    } else {
+      // unchecked
+      setUploadImage(true)
+    }
+  }
+
   return (
     <React.Fragment>
       <ErrorModal errorText={error} clearModal={clearError} />
@@ -100,8 +131,9 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           id="image"
           inputChangeCallback={inputChangeCallback}
           errorText="Please select an image"
-          required
+          required={uploadImage}
         />
+        <Checkbox onChange={handleCheckboxChange} checked={!uploadImage} />
         <Input
           id="title"
           element="input"
