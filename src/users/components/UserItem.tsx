@@ -46,15 +46,15 @@ type UserItemProps = {
 }
 
 const UserItem: React.FC<UserItemProps> = (props) => {
+  const src = props.image // Cloudinary publicId
+    ? `${process.env.REACT_APP_CLOUDINARY_URL}/${props.image}`
+    : require('../../shared/image/Portrait_Placeholder.png')
   return (
     <StyledUserItem>
       <Card>
         <Link className="user-item__link" to={`${props.id}/places`}>
           <div className="user-item__image">
-            <Avatar
-              src={`${process.env.REACT_APP_ASSETS_URL}/${props.image}`}
-              alt={props.name}
-            />
+            <Avatar src={src} alt={props.name} />
           </div>
           <div className="user-item__info">
             <h2>{props.name}</h2>
