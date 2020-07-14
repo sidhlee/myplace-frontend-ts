@@ -54,10 +54,7 @@ const UpdatePlace = (props: UpdatePlaceProps) => {
         {loadedPlace ? (
           <>
             <StyledImageWrapper>
-              <img
-                src={`${process.env.REACT_APP_ASSETS_URL}/${loadedPlace.image}`}
-                alt={loadedPlace.title}
-              />
+              <img src={loadedPlace.image} alt={loadedPlace.title} />
             </StyledImageWrapper>
             <UpdatePlaceForm place={loadedPlace as Place} />
           </>
