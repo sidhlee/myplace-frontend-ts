@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
-import { bp } from '../../styled/vars'
+import { bp } from '../../vars'
 import { AuthContext } from '../../context/AuthContext'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`

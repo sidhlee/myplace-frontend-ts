@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
-import { bp } from '../../styled/vars'
+import { bp } from '../../vars'
 
 import SideDrawer from './SideDrawer'
 import MainHeader from './MainHeader'

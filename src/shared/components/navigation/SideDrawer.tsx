@@ -1,8 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
-
 import { useTransition, animated } from 'react-spring'
+
+import { config } from '../../vars'
 
 const StyledSideDrawer = styled(animated.aside)`
   position: fixed;
@@ -34,10 +35,7 @@ const SideDrawer: React.FC<SideDrawerProps> = (props) => {
       opacity: 0,
       transform: `translate3d(-100%,0,0)`,
     },
-    config: {
-      clamp: true,
-      tension: 200,
-    },
+    config: config.smart,
   })
 
   const content = (

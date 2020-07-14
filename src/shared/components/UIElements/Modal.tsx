@@ -1,10 +1,12 @@
-import React, { ReactNode, useRef, FormEvent } from 'react'
+import React, { ReactNode, FormEvent } from 'react'
 import styled from 'styled-components'
 import { createPortal } from 'react-dom'
-import { CSSTransition } from 'react-transition-group'
-import Backdrop from './Backdrop'
+import { useTransition, animated } from 'react-spring'
 
-const StyledModal = styled.div`
+import Backdrop from './Backdrop'
+import { config } from '../../vars'
+
+const StyledModal = styled(animated.div)`
   position: fixed;
   z-index: var(--z-modal);
   top: 20vh;
@@ -25,32 +27,6 @@ const StyledModal = styled.div`
       font-size: 1.2rem;
     }
   }
-  .modal__content {
-  }
-
-  /* These transition classes are attached to the StyledModal itself (not to its children)*/
-  &.modal-enter {
-    /*
-    This will override the existing transform value 
-    Therefore, you also need to specify horizontal transform here. 
-    */
-    transform: translateY(-10rem) translateX(-50%);
-    opacity: 0;
-  }
-  &.modal-enter-active {
-    transition: all 200ms;
-    transform: translateY(0) translateX(-50%);
-    opacity: 1;
-  }
-  &.modal-exit {
-    transform: translateY(0) translateX(-50%);
-    opacity: 1;
-  }
-  &.modal-exit-active {
-    transition: all 200ms;
-    transform: translateY(-10rem) translateX(-50%);
-    opacity: 0;
-  }
 `
 
 type ModalProps = {
@@ -67,42 +43,54 @@ type ModalProps = {
 }
 
 const Modal = (props: ModalProps) => {
-  const nodeRef = useRef(null)
+  const transition = useTransition(props.show, null, {
+    from: {
+      transform: `translateY(-10rem) translateX(-50%)`,
+      opacity: 0,
+    },
+    enter: {
+      transform: `translateY(0) translateX(-50%)`,
+      opacity: 1,
+    },
+    leave: {
+      transform: `translateY(-10rem) translateX(-50%)`,
+      opacity: 0,
+    },
+    config: config.smart,
+  })
 
   const content = (
     <>
-      <Backdrop show={props.show} onClick={props.clearModal} />}
-      <CSSTransition
-        // nodeRef for deprecated findDOMNode
-        // https://github.com/reactjs/react-transition-group/blob/1fd4a65ac45edd2aea3dec18eeb8b9c07c7eb93f/CHANGELOG.md#440-2020-05-05
-        nodeRef={nodeRef}
-        in={props.show}
-        timeout={200}
-        classNames="modal"
-        mountOnEnter
-        unmountOnExit
-      >
-        <StyledModal className={props.className} ref={nodeRef}>
-          <header className={`modal__header ${props.headerClass}`}>
-            <h2>{props.header}</h2>
-          </header>
-          <form
-            onSubmit={
-              props.onSubmit ||
-              ((e) => {
-                e.preventDefault()
-              })
-            }
-          >
-            <div className={`modal__content ${props.contentClass}`}>
-              {props.children}
-            </div>
-          </form>
-          <footer className={`modal__footer ${props.footerClass}`}>
-            {props.footer}
-          </footer>
-        </StyledModal>
-      </CSSTransition>
+      <Backdrop show={props.show} onClick={props.clearModal} />
+      {transition.map(
+        ({ item: show, key, props: transition }) =>
+          show && (
+            <StyledModal
+              key={key}
+              style={transition}
+              className={props.className}
+            >
+              <header className={`modal__header ${props.headerClass}`}>
+                <h2>{props.header}</h2>
+              </header>
+              <form
+                onSubmit={
+                  props.onSubmit ||
+                  ((e) => {
+                    e.preventDefault()
+                  })
+                }
+              >
+                <div className={`modal__content ${props.contentClass}`}>
+                  {props.children}
+                </div>
+              </form>
+              <footer className={`modal__footer ${props.footerClass}`}>
+                {props.footer}
+              </footer>
+            </StyledModal>
+          )
+      )}
     </>
   )
 

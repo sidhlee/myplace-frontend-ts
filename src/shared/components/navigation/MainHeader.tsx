@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { bp } from '../../styled/vars'
+import { bp } from '../../vars'
 
 const StyledMainHeader = styled.div`
   width: 100%;

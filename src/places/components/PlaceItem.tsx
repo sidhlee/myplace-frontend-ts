@@ -6,7 +6,7 @@ import Modal from '../../shared/components/UIElements/Modal'
 import Map from '../../shared/components/UIElements/Map'
 
 import { Place } from '../../shared/models/types'
-import { bp } from '../../shared/styled/vars'
+import { bp } from '../../shared/vars'
 
 import AlertModal from '../../shared/components/UIElements/AlertModal'
 import { AuthContext } from '../../shared/context/AuthContext'
