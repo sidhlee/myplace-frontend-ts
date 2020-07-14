@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import styled from 'styled-components'
-import { CSSTransition } from 'react-transition-group'
 
-const StyledSideDrawer = styled.aside`
+import { useTransition, animated } from 'react-spring'
+
+const StyledSideDrawer = styled(animated.aside)`
   position: fixed;
   top: 0;
   left: 0;
@@ -13,24 +14,6 @@ const StyledSideDrawer = styled.aside`
   background: var(--cl-primary);
   box-shadow: var(--box-shadow);
   z-index: var(--z-drawer);
-
-  &.slide-in-left-enter {
-    transform: translateX(-100%);
-  }
-  &.slide-in-left-enter-active {
-    transition: all 200ms;
-    transform: translateX(0);
-    opacity: 1;
-  }
-  &.slide-in-left-exit {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  &.slide-in-left-exit-active {
-    transition: all 200ms;
-    transform: translateX(-100%);
-    opacity: 0;
-  }
 `
 
 type SideDrawerProps = {
@@ -38,22 +21,40 @@ type SideDrawerProps = {
   closeDrawer: () => void
 }
 const SideDrawer: React.FC<SideDrawerProps> = (props) => {
-  // const nodeRef = useRef(null)
+  const transition = useTransition(props.show, null, {
+    from: {
+      opacity: 1,
+      transform: `translate3d(-100%,0,0)`,
+    },
+    enter: {
+      opacity: 1,
+      transform: `translate3d(0,0,0)`,
+    },
+    leave: {
+      opacity: 0,
+      transform: `translate3d(-100%,0,0)`,
+    },
+    config: {
+      clamp: true,
+      tension: 180,
+    },
+  })
 
   const content = (
-    <CSSTransition
-      in={props.show}
-      // ISSUE: nodeRef disables animation with createPortal
-      // nodeRef={nodeRef}
-      timeout={200}
-      classNames="slide-in-left"
-      mountOnEnter
-      unmountOnExit
-    >
-      <StyledSideDrawer onClick={props.closeDrawer}>
-        {props.children}
-      </StyledSideDrawer>
-    </CSSTransition>
+    <>
+      {transition.map(
+        ({ item, key, props: transition }) =>
+          item && (
+            <StyledSideDrawer
+              onClick={props.closeDrawer}
+              key={key}
+              style={transition}
+            >
+              {props.children}
+            </StyledSideDrawer>
+          )
+      )}
+    </>
   )
   return ReactDOM.createPortal(content, document.getElementById('drawer-hook')!)
 }

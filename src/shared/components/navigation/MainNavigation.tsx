@@ -61,8 +61,8 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   }
 
   return (
-    <React.Fragment>
-      {/* In order of CSSTransition to work, animating component should be rendered unconditionally */}
+    <>
+      {/* In order for CSSTransition to work, animating component should be rendered unconditionally */}
       <SideDrawer show={isDrawerOpen} closeDrawer={closeDrawer}>
         <nav style={{ height: '100%' }}>
           <NavLinks isSideDrawer />
@@ -85,7 +85,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
           <NavLinks />
         </nav>
       </Navbar>
-    </React.Fragment>
+    </>
   )
 }
 

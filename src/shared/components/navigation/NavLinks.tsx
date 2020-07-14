@@ -62,7 +62,11 @@ type NavLinksProps = {
 
 const NavLinks: React.FC<NavLinksProps> = (props) => {
   const auth = useContext(AuthContext)
-
+  // TODO: add dropdown menu
+  // User icon will drop down MyPlace + logout
+  // Replace "New Place" with icon (+)
+  // https://www.youtube.com/watch?v=IF6k0uZuypA
+  // Replace "ALL USERS" with MyPlace logo
   return (
     <StyledNavLinks {...props}>
       <li>
@@ -77,7 +81,7 @@ const NavLinks: React.FC<NavLinksProps> = (props) => {
       )}
       {auth.isLoggedIn && (
         <li>
-          <NavLink to="/places/new">Add Place</NavLink>
+          <NavLink to="/places/new">New Place</NavLink>
         </li>
       )}
       {!auth.isLoggedIn && (

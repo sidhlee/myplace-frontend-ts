@@ -8,6 +8,10 @@ Frontend application built with TypeScript
 - Tooltip for input error message (`tippyjs-react`)
 - Skeleton screen for loading data (`react-loading-skeleton`)
 
+## TODOS
+
+- Migrate to [react-spring](https://www.react-spring.io/) from react-transition-group
+
 ## Debugging Notes
 
 ### Fetch calls return 304 & .env variables return undefined
