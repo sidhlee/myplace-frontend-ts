@@ -70,8 +70,8 @@ const Modal = (props: ModalProps) => {
   const nodeRef = useRef(null)
 
   const content = (
-    <React.Fragment>
-      {props.show && <Backdrop onClick={props.clearModal} />}
+    <>
+      <Backdrop show={props.show} onClick={props.clearModal} />}
       <CSSTransition
         // nodeRef for deprecated findDOMNode
         // https://github.com/reactjs/react-transition-group/blob/1fd4a65ac45edd2aea3dec18eeb8b9c07c7eb93f/CHANGELOG.md#440-2020-05-05
@@ -103,7 +103,7 @@ const Modal = (props: ModalProps) => {
           </footer>
         </StyledModal>
       </CSSTransition>
-    </React.Fragment>
+    </>
   )
 
   return createPortal(content, document.getElementById('modal-hook')!)

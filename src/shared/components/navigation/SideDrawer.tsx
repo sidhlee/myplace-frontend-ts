@@ -36,7 +36,7 @@ const SideDrawer: React.FC<SideDrawerProps> = (props) => {
     },
     config: {
       clamp: true,
-      tension: 180,
+      tension: 200,
     },
   })
 

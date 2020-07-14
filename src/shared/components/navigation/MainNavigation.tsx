@@ -68,7 +68,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
           <NavLinks isSideDrawer />
         </nav>
       </SideDrawer>
-      {isDrawerOpen && <Backdrop onClick={closeDrawer} />}
+      <Backdrop show={isDrawerOpen} onClick={closeDrawer} />}
       {/* De-couple Navbar(MainHeader) from its content */}
       <Navbar>
         {/* We can re-use MainHeader wrapping on different components
