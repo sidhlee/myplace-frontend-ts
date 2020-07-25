@@ -42,13 +42,12 @@ type ImageUploadProps = {
 }
 
 const ImageUpload = (props: ImageUploadProps) => {
+  const initialPreviewUrl = props.initialPreviewUrl
+    ? props.initialPreviewUrl
+    : require('../../image/place-placeholder.png')
+
   const [file, setFile] = useState<File | null>(null) // points to file(binary)
-  const [previewUrl, setPreviewUrl] = useState<string>( // points to dataURL(base64)
-    // pre-load image placeholder
-    props.initialPreviewUrl
-      ? props.initialPreviewUrl
-      : require('../../image/place-placeholder.png')
-  )
+  const [previewUrl, setPreviewUrl] = useState<string>(initialPreviewUrl) // points to dataURL(base64)
   const [isValid, setIsValid] = useState(false)
 
   const inputRef = useRef<HTMLInputElement>(null)
@@ -69,12 +68,12 @@ const ImageUpload = (props: ImageUploadProps) => {
   useEffect(() => {
     if (!props.required) {
       setFile(null)
-      setPreviewUrl(require('../../image/place-placeholder.png'))
+      setPreviewUrl(initialPreviewUrl)
       if (inputRef.current) {
         inputRef.current.value = ''
       }
     }
-  }, [props.required])
+  }, [props.required, initialPreviewUrl])
 
   const handleSelectImage = () => {
     inputRef.current?.click()

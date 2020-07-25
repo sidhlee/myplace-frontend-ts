@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useContext } from 'react'
 
 import {
   VALIDATOR_EMAIL,
@@ -15,11 +15,7 @@ import Input from '../../shared/components/formElements/Input'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import ImageUpload from '../../shared/components/formElements/ImageUpload'
-
-enum AuthMode {
-  LOGIN,
-  SIGNUP,
-}
+import { AuthMode } from '../pages/Auth'
 
 type LoginBody = {
   email: string
@@ -35,11 +31,13 @@ type AuthResponse = {
   token: string
 }
 
-type AuthFormProps = {}
+type AuthFormProps = {
+  authMode: AuthMode
+  toggleAuthMode: () => void
+}
 
-const AuthForm = (props: AuthFormProps) => {
+const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
   const auth = useContext(AuthContext)
-  const [authMode, setAuthMode] = useState(AuthMode.LOGIN)
 
   const { sendRequest, isLoading, error, clearError } = useRequest()
   const [formState, inputChangeCallback, setFormStateCallback] = useForm(
@@ -55,6 +53,45 @@ const AuthForm = (props: AuthFormProps) => {
     },
     false
   )
+
+  const handleAuthModeButtonClick = () => {
+    // switch to signup - add name & image input field
+    if (authMode === AuthMode.LOGIN) {
+      setFormStateCallback(
+        {
+          ...formState.inputs,
+          name: {
+            value: '',
+            isValid: false,
+          },
+          image: {
+            // HTML input element of type="file" has string value
+            // that represents the path to the selected file(s)
+            value: null,
+            isValid: true,
+          },
+        },
+        false
+      )
+    }
+    if (authMode === AuthMode.SIGNUP) {
+      // switch to login - remove name & image input field
+      setFormStateCallback(
+        {
+          email: {
+            value: formState.inputs.email.value,
+            isValid: formState.inputs.email.isValid,
+          },
+          password: {
+            value: formState.inputs.password.value,
+            isValid: formState.inputs.password.isValid,
+          },
+        },
+        formState.isValid
+      )
+    }
+    toggleAuthMode()
+  }
 
   const handleAuthFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -96,48 +133,6 @@ const AuthForm = (props: AuthFormProps) => {
     }
   }
 
-  const toggleAuthMode = () => {
-    // switch to signup
-    if (authMode === AuthMode.LOGIN) {
-      setFormStateCallback(
-        {
-          ...formState.inputs,
-          name: {
-            value: '',
-            isValid: false,
-          },
-          image: {
-            // HTML input element of type="file" has string value
-            // that represents the path to the selected file(s)
-            value: null,
-            isValid: true,
-          },
-        },
-        false
-      )
-
-      setAuthMode(AuthMode.SIGNUP)
-    } else {
-      // switch to login
-
-      setFormStateCallback(
-        {
-          email: {
-            value: formState.inputs.email.value,
-            isValid: formState.inputs.email.isValid,
-          },
-          password: {
-            value: formState.inputs.password.value,
-            isValid: formState.inputs.password.isValid,
-          },
-        },
-        formState.isValid
-      )
-
-      setAuthMode(AuthMode.LOGIN)
-    }
-  }
-
   return (
     <React.Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
@@ -146,7 +141,7 @@ const AuthForm = (props: AuthFormProps) => {
         onSubmit={handleAuthFormSubmit}
         buttons={
           <>
-            <Button type="button" large onClick={toggleAuthMode}>
+            <Button type="button" large onClick={handleAuthModeButtonClick}>
               SWITCH TO {authMode === AuthMode.LOGIN ? 'SIGNUP' : 'LOGIN'}
             </Button>
             <Button type="submit" disabled={!formState.isValid} primary large>

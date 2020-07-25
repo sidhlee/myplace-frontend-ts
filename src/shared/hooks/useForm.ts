@@ -82,11 +82,12 @@ const formReducer = (state: FormState, action: Action) => {
       }
     }
     case 'SET_FORM_STATE': {
-      let isFormValid = true
-      for (const input in state.inputs) {
-        validateInput(input)
-        isFormValid = isFormValid && state.inputs[input].isValid
-      }
+      // TODO: why these lines necessary?
+      // let isFormValid = true
+      // for (const input in state.inputs) {
+      //   validateInput(input)
+      //   isFormValid = isFormValid && state.inputs[input].isValid
+      // }
       return {
         inputs: action.initialInputs,
         isValid: action.initialFormValidity,
