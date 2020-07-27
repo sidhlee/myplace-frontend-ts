@@ -27,6 +27,8 @@ type SignupBody = LoginBody & { name: string }
 
 type AuthResponse = {
   userId: string
+  userName: string
+  userImageUrl: string
   email: string
   token: string
 }
@@ -106,7 +108,8 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           password: formState.inputs.password.value,
         })
         if (responseData) {
-          auth.login(responseData?.userId, responseData?.token)
+          const { userId, userName, userImageUrl, token } = responseData
+          auth.login(userId, userName, userImageUrl, token)
         }
       } catch (err) {}
     }
@@ -127,7 +130,8 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           formData
         )
         if (responseData) {
-          auth.login(responseData?.userId, responseData?.token)
+          const { userId, userName, userImageUrl, token } = responseData
+          auth.login(userId, userName, userImageUrl, token)
         }
       } catch (err) {}
     }

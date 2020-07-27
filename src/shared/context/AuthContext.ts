@@ -3,7 +3,15 @@ import { createContext } from 'react'
 type AuthContextType = {
   isLoggedIn: boolean
   userId: null | string
-  login: (uid: string, token: string) => void
+  userName: null | string
+  userImageUrl: null | string
+  login: (
+    userId: string,
+    userName: string,
+    userImageUrl: string,
+    token: string,
+    expirationDate?: Date
+  ) => void
   logout: () => void
   token: string | null
 }
@@ -11,6 +19,8 @@ type AuthContextType = {
 export const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
   userId: null,
+  userName: null,
+  userImageUrl: null,
   login: () => {},
   logout: () => {},
   token: null,

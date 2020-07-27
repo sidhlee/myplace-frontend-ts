@@ -15,7 +15,7 @@ const StyledMainHeader = styled.div`
   padding: 0 1em;
   @media (min-width: ${bp.desktop}) {
     justify-content: space-between;
-    padding: 0 2em;
+    padding: 0 1em;
   }
 `
 const MainHeader: React.FC = (props) => {

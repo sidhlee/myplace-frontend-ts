@@ -21,8 +21,8 @@ const Auth = () => {
   const header =
     authMode === AuthMode.LOGIN ? (
       <header>
-        <h2>Log In</h2>
-        <p>Please login to continue.</p>
+        <h2>Sign In</h2>
+        <p>Sign in to MyPlace</p>
       </header>
     ) : (
       <header>

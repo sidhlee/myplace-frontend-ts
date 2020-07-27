@@ -18,7 +18,7 @@ import { SkeletonTheme } from 'react-loading-skeleton'
 import { useAuth } from './shared/hooks/useAuth'
 
 function App() {
-  const { userId, token, login, logout } = useAuth()
+  const { userId, userName, userImageUrl, token, login, logout } = useAuth()
 
   const isLoggedIn = !!token
 
@@ -58,6 +58,8 @@ function App() {
       value={{
         isLoggedIn,
         userId,
+        userName,
+        userImageUrl,
         login,
         logout,
         token,

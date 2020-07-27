@@ -2,14 +2,24 @@ import { useState, useEffect, useCallback } from 'react'
 
 export const useAuth = () => {
   const [userId, setUserId] = useState<string | null>(null)
+  const [userName, setUserName] = useState<string | null>(null)
+  const [userImageUrl, setUserImageUrl] = useState<string | null>(null)
   const [token, setToken] = useState<string | null>(null)
   const [tokenExpirationDate, setTokenExpirationDate] = useState<Date | null>(
     null
   )
 
   const login = useCallback(
-    (userId: string, token: string, expirationDate?: Date) => {
+    (
+      userId: string,
+      userName: string,
+      userImageUrl: string,
+      token: string,
+      expirationDate?: Date
+    ) => {
       setUserId(userId)
+      setUserName(userName)
+      setUserImageUrl(userImageUrl)
       setToken(token)
       const tokenExpirationDate =
         expirationDate || new Date(new Date().getTime() + 3600 * 1000)
@@ -17,6 +27,8 @@ export const useAuth = () => {
 
       const userData = {
         userId,
+        userName,
+        userImageUrl,
         token,
         tokenExpiration: tokenExpirationDate.toISOString(),
       }
@@ -28,6 +40,8 @@ export const useAuth = () => {
   const logout = useCallback(() => {
     // clear local state
     setUserId(null)
+    setUserName(null)
+    setUserImageUrl(null)
     setToken(null)
     setTokenExpirationDate(null)
     // clear localStorage
@@ -39,10 +53,16 @@ export const useAuth = () => {
   useEffect(() => {
     const item = localStorage.getItem('userData')
     if (item) {
-      const { userId, token, tokenExpiration } = JSON.parse(item)
+      const {
+        userId,
+        userName,
+        userImageUrl,
+        token,
+        tokenExpiration,
+      } = JSON.parse(item)
       const tokenExpirationDate = new Date(tokenExpiration)
       if (userId && token && new Date() < tokenExpirationDate) {
-        login(userId, token, tokenExpirationDate)
+        login(userId, userName, userImageUrl, token, tokenExpirationDate)
       }
     }
   }, [login]) // only runs on mount (login never changes)
@@ -67,5 +87,5 @@ export const useAuth = () => {
     // tokenExpirationDate will be a new object with every login & page reload
   }, [token, tokenExpirationDate, logout])
 
-  return { userId, token, login, logout }
+  return { userId, userName, userImageUrl, token, login, logout }
 }

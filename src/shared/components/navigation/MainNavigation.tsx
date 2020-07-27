@@ -64,9 +64,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
     <>
       {/* In order for CSSTransition to work, animating component should be rendered unconditionally */}
       <SideDrawer show={isDrawerOpen} closeDrawer={closeDrawer}>
-        <nav style={{ height: '100%' }}>
-          <NavLinks isSideDrawer />
-        </nav>
+        <NavLinks sideDrawer />
       </SideDrawer>
       <Backdrop show={isDrawerOpen} onClick={closeDrawer} />}
       {/* De-couple Navbar(MainHeader) from its content */}

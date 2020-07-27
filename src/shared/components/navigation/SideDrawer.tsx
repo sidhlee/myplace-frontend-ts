@@ -15,6 +15,7 @@ const StyledSideDrawer = styled(animated.aside)`
   background: var(--cl-primary);
   box-shadow: var(--box-shadow);
   z-index: var(--z-drawer);
+  padding: 1em;
 `
 
 type SideDrawerProps = {
