@@ -1,5 +1,5 @@
 export const bp = {
-  desktop: '500px',
+  desktop: '400px',
 }
 
 export const config = {

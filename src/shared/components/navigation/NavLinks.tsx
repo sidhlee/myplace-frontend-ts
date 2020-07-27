@@ -79,6 +79,13 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
     display: ${(props) => (props.sideDrawer ? 'none' : 'flex')};
     flex-direction: row;
     .home {
+      display: none;
+    }
+  }
+
+  @media (min-width: 500px) {
+    .home {
+      display: block;
       position: absolute;
       left: calc(50% - 15px);
     }
