@@ -1,11 +1,18 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
 import { bp } from '../../vars'
 import { AuthContext } from '../../context/AuthContext'
 import { MdHome, MdAddCircleOutline, MdArrowDropDown } from 'react-icons/md'
 import Avatar from '../UIElements/Avatar'
+
+import { ReactComponent as HomeIcon } from '../../image/home-icon.svg'
+import { ReactComponent as HomeIconOutline } from '../../image/home-icon-outline.svg'
+import { ReactComponent as PlusIcon } from '../../image/plus-icon.svg'
+import { ReactComponent as CaretIcon } from '../../image/caret-icon.svg'
+import DropdownButton from './DropdownButton'
+import NavItem from './NavItem'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`
   height: 100%;
@@ -22,57 +29,6 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
   align-items: center;
   li {
     margin-right: 3px;
-    a,
-    button {
-      color: var(--text-inverse);
-      white-space: nowrap;
-    }
-    a {
-      display: flex;
-      align-items: center;
-      text-decoration: none;
-      padding: 0.5em;
-      &:hover,
-      &:active {
-        background: var(--text-accent);
-      }
-    }
-    button {
-      font: inherit;
-      background: transparent;
-      border: 1px solid var(--text-inverse);
-      padding: 0.5rem;
-      &:hover,
-      &:active {
-        background: var(--text-accent);
-        color: var(--cl-white);
-      }
-    }
-    a:focus,
-    button:focus {
-      outline: thin dotted;
-    }
-
-    .nav-icon {
-      width: 30px;
-      height: 30px;
-      &.dropdown {
-        color: var(--cl-white);
-      }
-    }
-
-    .nav-user {
-      display: flex;
-      align-items: center;
-      &__avatar {
-        width: 25px;
-        height: 25px;
-        margin-right: 5px;
-      }
-      &__name {
-        font-size: 1.2rem;
-      }
-    }
   }
 
   @media (min-width: ${bp.desktop}) {
@@ -98,6 +54,7 @@ type NavLinksProps = {
 
 const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
   const auth = useContext(AuthContext)
+  const { pathname } = useLocation()
   // TODO: add dropdown menu
   // User icon will drop down MyPlace + logout
   // Replace "New Place" with icon (+)
@@ -106,52 +63,43 @@ const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
 
   return (
     <StyledNavLinks>
-      <li className="home">
-        <NavLink to="/" exact>
-          {sd ? 'Home' : <MdHome className="nav-icon" />}
-        </NavLink>
-      </li>
-      {auth.isLoggedIn && (
-        <li>
-          <NavLink to={`/${auth.userId}/places`}>
-            <div className="nav-user">
-              <div className="nav-user__avatar">
-                <Avatar
-                  src={
-                    auth.userImageUrl ||
-                    require('../../image/Portrait_Placeholder.png')
-                  }
-                  alt={auth.userName || ''}
-                />
-              </div>
-              <div className="nav-user__name">{auth.userName}</div>
-            </div>
-          </NavLink>
-        </li>
-      )}
+      <NavItem className="home" type="link" to="/" exact>
+        {sd ? 'Home' : pathname === '/' ? <HomeIcon /> : <HomeIconOutline />}
+      </NavItem>
 
       {auth.isLoggedIn && (
-        <li>
-          <NavLink to="/places/new">
-            {sd ? 'New Place' : <MdAddCircleOutline className="nav-icon" />}
-          </NavLink>
-        </li>
+        <NavItem type="link" to="/places/new">
+          {sd ? 'New Place' : <MdAddCircleOutline className="nav-icon" />}
+        </NavItem>
       )}
       {!auth.isLoggedIn && (
-        <li>
-          <NavLink to="/auth">Sign in</NavLink>
-        </li>
+        <NavItem type="link" to="/auth">
+          Sign in
+        </NavItem>
       )}
-      <li>
-        <MdArrowDropDown className="nav-icon dropdown" />
-      </li>
-      {/* {auth.isLoggedIn && (
-        <li>
-          <button type="button" onClick={auth.logout}>
-            Sign out
-          </button>
-        </li>
-      )} */}
+      {auth.isLoggedIn && (
+        <DropdownButton icon={<CaretIcon />}>
+          <div>
+            <NavLink to={`/${auth.userId}/places`}>
+              <div className="nav-user">
+                <div className="nav-user__avatar">
+                  <Avatar
+                    src={
+                      auth.userImageUrl ||
+                      require('../../image/Portrait_Placeholder.png')
+                    }
+                    alt={auth.userName || ''}
+                  />
+                </div>
+                <div className="nav-user__name">{auth.userName}</div>
+              </div>
+            </NavLink>
+            <button type="button" onClick={auth.logout}>
+              Sign out
+            </button>
+          </div>
+        </DropdownButton>
+      )}
     </StyledNavLinks>
   )
 }

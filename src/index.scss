@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 :root {
   /* FB Vars */
   --fds-gray-00: #f5f6f7;
@@ -19,7 +21,7 @@
   --cl-white: #fff;
   --cl-drawer-bg: var(--cl-white);
   --cl-backdrop: rgba(0, 0, 0, 0.75);
-  --cl-primary: var(--fds-fb-blue-70);
+  --cl-primary: #1877f2;
   --cl-primary-gradient: linear-gradient(#4e69a2, #3b5998 50%);
   --cl-secondary: #2a006e;
   --cl-accent: #f8df00;
@@ -50,6 +52,8 @@
   --main-header-height: 3.6rem;
   --border: 1px solid var(--cl-border-color);
   --border-radius: 5px;
+
+  --transition-duration: 250ms;
 }
 
 html {

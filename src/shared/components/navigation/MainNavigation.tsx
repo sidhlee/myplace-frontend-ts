@@ -34,10 +34,19 @@ const Navbar = styled(MainHeader)`
   }
 
   .main-navigation__title {
+    font-family: 'Lobster';
+    background-color: var(--cl-primary);
+    background-image: linear-gradient(0deg, #0062E0, #19AFFF);
+    background-size: 100%;
+    background-repeat: repeat;
     margin: 0;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    -moz-background-clip: text;
+    -moz-text-fill-color: transparent;
     a {
       text-decoration: none;
-      color: var(--cl-white);
+      color: var(--text-main);
     }
   }
 `
@@ -63,9 +72,7 @@ const MainNavigation: React.FC<MainNavigationProps> = (props) => {
   return (
     <>
       {/* In order for CSSTransition to work, animating component should be rendered unconditionally */}
-      <SideDrawer show={isDrawerOpen} closeDrawer={closeDrawer}>
-        <NavLinks sideDrawer />
-      </SideDrawer>
+      <SideDrawer show={isDrawerOpen} closeDrawer={closeDrawer} />
       <Backdrop show={isDrawerOpen} onClick={closeDrawer} />}
       {/* De-couple Navbar(MainHeader) from its content */}
       <Navbar>

@@ -22,7 +22,7 @@ export const StyledUserItem = styled.li`
 
   .user-item__info {
     h2 {
-      color: var(--cl-primary);
+      color: var(--text-main);
       font-size: 1.2rem;
     }
     h3 {
@@ -46,8 +46,8 @@ type UserItemProps = {
 }
 
 const UserItem: React.FC<UserItemProps> = (props) => {
-  const src = props.image // Cloudinary publicId
-    ? `${process.env.REACT_APP_CLOUDINARY_URL}/${props.image}`
+  const src = props.image // image url
+    ? props.image
     : require('../../shared/image/Portrait_Placeholder.png')
   return (
     <StyledUserItem>

@@ -49,7 +49,7 @@ const SideDrawer: React.FC<SideDrawerProps> = (props) => {
               key={key}
               style={transition}
             >
-              {props.children}
+              User
             </StyledSideDrawer>
           )
       )}
