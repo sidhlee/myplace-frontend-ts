@@ -1,23 +1,30 @@
 import React, { useContext } from 'react'
-import styled from 'styled-components'
 
 import { AuthContext } from '../../context/AuthContext'
 import Avatar from '../UIElements/Avatar'
 
-const StyledUser = styled.div``
+import { StyledUser } from './navigation-styles'
 
-type UserProps = {}
+type UserProps = {
+  small?: boolean
+}
 
-const User = (props: UserProps) => {
+const User = ({ small }: UserProps) => {
   const auth = useContext(AuthContext)
   return (
     <StyledUser>
-      <Avatar
-        src={
-          auth.userImageUrl || require('../../image/Portrait_Placeholder.png')
-        }
-        alt={auth.userName || ''}
-      />
+      <div className="user__avatar">
+        <Avatar
+          src={
+            auth.userImageUrl || require('../../image/Portrait_Placeholder.png')
+          }
+          alt={auth.userName || ''}
+        />
+      </div>
+      <section className="user__body">
+        <h1>{auth.userName}</h1>
+        <p>See your places</p>
+      </section>
     </StyledUser>
   )
 }

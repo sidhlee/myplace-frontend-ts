@@ -32,13 +32,17 @@
   --cl-success-gradient-hover: linear-gradient(#79bc64, #578843);
   --cl-success: #69a74e;
   --cl-overlay: rgba(255, 255, 255, 0.9);
+  --cl-navbar: var(--cl-white);
   --cl-border-color: #bdc7d8;
   --cl-border-color-success: #3b6e22 #3b6e22 #2c5115;
   --cl-bg: var(--fds-gray-10);
   --cl-btn-bg: var(--fds-gray-00);
+  --cl-icon-bg: #e4e6eb;
+  --cl-item-hover: var(--fds-gray-10);
+
   --text-accent: var(--fds-fb-blue-75);
   --text-main: var(--fds-gray-100);
-  --text-secondary: var(--fds-gray-80);
+  --text-secondary: #65676b;
   --text-inverse: var(--cl-white);
 
   --z-navbar: 50;
@@ -110,6 +114,13 @@ ul {
 
 a {
   text-decoration: none;
+}
+
+hr {
+  background: #dadde1;
+  border-width: 0;
+  color: #dadde1;
+  height: 1px;
 }
 
 .center {

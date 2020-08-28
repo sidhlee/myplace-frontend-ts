@@ -5,7 +5,7 @@ import { bp } from '../../vars'
 const StyledMainHeader = styled.div`
   width: 100%;
   height: var(--main-header-height);
-  background: var(--cl-white);
+  background: var(--cl-navbar);
   position: fixed;
   z-index: var(--z-navbar);
   top: 0;

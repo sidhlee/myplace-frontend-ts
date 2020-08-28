@@ -10,10 +10,12 @@ type DropdownButtonProps = {
 const DropdownButton = ({ icon, children }: DropdownButtonProps) => {
   const [open, set] = useState(false)
   return (
-    <NavItem type="button" onClick={() => set(!open)}>
-      {icon}
+    <>
+      <NavItem type="button" circle onClick={() => set(!open)}>
+        {icon}
+      </NavItem>
       {open && children}
-    </NavItem>
+    </>
   )
 }
 

@@ -1,11 +1,9 @@
 import React, { useContext } from 'react'
 import styled from 'styled-components'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 
 import { bp } from '../../vars'
 import { AuthContext } from '../../context/AuthContext'
-import { MdHome, MdAddCircleOutline, MdArrowDropDown } from 'react-icons/md'
-import Avatar from '../UIElements/Avatar'
 
 import { ReactComponent as HomeIcon } from '../../image/home-icon.svg'
 import { ReactComponent as HomeIconOutline } from '../../image/home-icon-outline.svg'
@@ -13,6 +11,7 @@ import { ReactComponent as PlusIcon } from '../../image/plus-icon.svg'
 import { ReactComponent as CaretIcon } from '../../image/caret-icon.svg'
 import DropdownButton from './DropdownButton'
 import NavItem from './NavItem'
+import DropdownMenu from './DropdownMenu'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`
   height: 100%;
@@ -64,12 +63,18 @@ const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
   return (
     <StyledNavLinks>
       <NavItem className="home" type="link" to="/" exact>
-        {sd ? 'Home' : pathname === '/' ? <HomeIcon /> : <HomeIconOutline />}
+        {sd ? (
+          'Home'
+        ) : pathname === '/' ? (
+          <HomeIcon style={{ height: 30, width: 30 }} />
+        ) : (
+          <HomeIconOutline style={{ height: 30, width: 30 }} />
+        )}
       </NavItem>
 
       {auth.isLoggedIn && (
-        <NavItem type="link" to="/places/new">
-          {sd ? 'New Place' : <MdAddCircleOutline className="nav-icon" />}
+        <NavItem type="link" to="/places/new" circle>
+          {sd ? 'New Place' : <PlusIcon className="nav-icon" />}
         </NavItem>
       )}
       {!auth.isLoggedIn && (
@@ -79,25 +84,7 @@ const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
       )}
       {auth.isLoggedIn && (
         <DropdownButton icon={<CaretIcon />}>
-          <div>
-            <NavLink to={`/${auth.userId}/places`}>
-              <div className="nav-user">
-                <div className="nav-user__avatar">
-                  <Avatar
-                    src={
-                      auth.userImageUrl ||
-                      require('../../image/Portrait_Placeholder.png')
-                    }
-                    alt={auth.userName || ''}
-                  />
-                </div>
-                <div className="nav-user__name">{auth.userName}</div>
-              </div>
-            </NavLink>
-            <button type="button" onClick={auth.logout}>
-              Sign out
-            </button>
-          </div>
+          <DropdownMenu />
         </DropdownButton>
       )}
     </StyledNavLinks>
