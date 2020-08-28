@@ -112,6 +112,7 @@ const ImageUpload = (props: ImageUploadProps) => {
           visible={inValid}
           placement="right-start"
           theme="primary"
+          zIndex={5}
         >
           <div className="image-upload__preview">
             <img src={previewUrl} alt="Preview" />

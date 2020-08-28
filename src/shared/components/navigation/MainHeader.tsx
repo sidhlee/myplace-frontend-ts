@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import { bp } from '../../vars'
 
 const StyledMainHeader = styled.div`
   width: 100%;
@@ -14,7 +13,6 @@ const StyledMainHeader = styled.div`
   align-items: center;
   padding: 0 1em;
   justify-content: space-between;
-  padding: 0 1em;
 `
 const MainHeader: React.FC = (props) => {
   // To be able to extend the style,

@@ -1,5 +1,4 @@
 import styled, { css } from 'styled-components'
-import { NavLink } from 'react-router-dom'
 
 const expandingHoverCss = css`
   &::before {
@@ -110,7 +109,7 @@ export const DropdownBackdrop = styled('div')`
   right: 0;
   pointer-events: auto;
   background: rgba(0, 0, 0, 0.2);
-  z-index: 100;
+  z-index: 500;
 `
 
 export const StyledDropdownMenu = styled('div')`

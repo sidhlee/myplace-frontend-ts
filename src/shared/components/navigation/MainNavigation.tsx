@@ -7,6 +7,7 @@ import NavLinks from './NavLinks'
 
 // Extending MainHeader to style the nested components
 const Navbar = styled(MainHeader)`
+  /* box-shadow: 0 1px 5px 0 rgba(0, 0, 0, 0.1); */
   .main-navigation__title {
     font-family: 'Lobster';
     background-color: var(--cl-primary);

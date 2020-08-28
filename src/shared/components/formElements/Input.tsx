@@ -134,7 +134,10 @@ const Input = (props: InputProps) => {
       placement="left"
       popperOptions={{
         modifiers: [
-          { name: 'flip', options: { fallbackPlacements: ['top-end'] } },
+          {
+            name: 'flip',
+            options: { fallbackPlacements: ['top-end'] },
+          },
         ],
       }}
       maxWidth={220}

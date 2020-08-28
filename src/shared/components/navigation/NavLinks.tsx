@@ -63,11 +63,6 @@ type NavLinksProps = {
 const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
   const auth = useContext(AuthContext)
   const { pathname } = useLocation()
-  // TODO: add dropdown menu
-  // User icon will drop down MyPlace + logout
-  // Replace "New Place" with icon (+)
-  // https://www.youtube.com/watch?v=IF6k0uZuypA
-  // Replace "ALL USERS" with MyPlace logo
 
   return (
     <StyledNavLinks>
