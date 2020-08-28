@@ -12,6 +12,7 @@ import { ReactComponent as CaretIcon } from '../../image/caret-icon.svg'
 import DropdownButton from './DropdownButton'
 import NavItem from './NavItem'
 import DropdownMenu from './DropdownMenu'
+import NavUser from './NavUser'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`
   height: 100%;
@@ -45,6 +46,15 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
       left: calc(50% - 15px);
     }
   }
+
+  .nav-user {
+    display: none;
+  }
+  @media (min-width: 1000px) {
+    .nav-user {
+      display: block;
+    }
+  }
 `
 
 type NavLinksProps = {
@@ -71,7 +81,9 @@ const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
           <HomeIconOutline style={{ height: 30, width: 30 }} />
         )}
       </NavItem>
-
+      {auth.isLoggedIn && (
+        <NavUser className="nav-user" to={`/${auth.userId}/places`} />
+      )}
       {auth.isLoggedIn && (
         <NavItem type="link" to="/places/new" circle>
           {sd ? 'New Place' : <PlusIcon className="nav-icon" />}
@@ -82,6 +94,7 @@ const NavLinks = ({ sideDrawer: sd }: NavLinksProps) => {
           Sign in
         </NavItem>
       )}
+
       {auth.isLoggedIn && (
         <DropdownButton icon={<CaretIcon />}>
           <DropdownMenu />

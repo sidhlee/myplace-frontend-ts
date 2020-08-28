@@ -76,28 +76,9 @@ export const StyledNavItem = styled('li')<{ circle: boolean }>`
   }
 `
 
-export const HomeButton = styled(NavLink)`
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  padding: 0.5em;
-  &:hover,
-  &:active {
-    background: var(--text-accent);
-  }
-`
-
-export const NavItem = styled('li')`
-  --size: calc(var(--main-header_height) * 0.8);
-  height: var(--size);
-  width: var(--size);
-  display: block;
-  justify-content: center;
-  align-items: center;
-`
-
+const navIconSize = 'calc(var(--main-header_height) * 0.66)'
 export const NavIcon = styled('button')`
-  --size: calc(var(--main-header_height) * 0.66);
+  --size: ${navIconSize};
   width: var(--size);
   height: var(--size);
   background-color: var(--cl-border-color);
@@ -145,11 +126,11 @@ export const StyledDropdownMenu = styled('div')`
   box-shadow: var(--box-shadow);
 `
 
-export const StyledUser = styled('div')`
+export const StyledUser = styled('div')<{ small: boolean }>`
   display: flex;
   align-items: center;
   .user__avatar {
-    --size: 60px;
+    --size: ${(props) => (props.small ? '30px' : '60px')};
     width: var(--size);
     height: var(--size);
   }
