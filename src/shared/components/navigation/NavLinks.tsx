@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
 
-import { bp } from '../../vars'
+import { bp } from 'styles'
 import { AuthContext } from '../../context/AuthContext'
 
 import { ReactComponent as HomeIcon } from '../../image/home-icon.svg'

@@ -1,3 +1,6 @@
+import { createGlobalStyle } from 'styled-components'
+
+export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 
 :root {
@@ -128,4 +131,16 @@ hr {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+`
+
+export const bp = {
+  desktop: '400px',
+}
+
+export const config = {
+  smart: {
+    clamp: true,
+    tension: 200,
+  },
 }

@@ -3,8 +3,8 @@ import styled from 'styled-components'
 import { createPortal } from 'react-dom'
 import { useTransition, animated } from 'react-spring'
 
+import { config } from 'styles'
 import Backdrop from './Backdrop'
-import { config } from '../../vars'
 
 const StyledModal = styled(animated.div)`
   position: fixed;
