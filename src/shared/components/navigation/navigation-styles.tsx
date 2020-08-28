@@ -174,6 +174,8 @@ export const DropdownMenuItem = styled('div')`
   }
 
   button {
+    width: 100%;
+    height: 100%;
     border: none;
     background: transparent;
     display: flex;
