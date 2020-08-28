@@ -125,7 +125,7 @@ const Input = (props: InputProps) => {
         />
       )
   }
-
+  // TODO: show tooltip only when submit button is clicked
   const invalid = !inputState.isValid && inputState.isTouched
   return (
     <ThemedTippy
