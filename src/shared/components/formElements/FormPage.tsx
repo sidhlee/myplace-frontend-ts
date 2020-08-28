@@ -2,7 +2,7 @@ import React, { ReactNode } from 'react'
 import styled from 'styled-components'
 
 const StyledFormPage = styled.div`
-  width: 100%;
+  width: 95%;
   max-width: 350px;
   margin: 0 auto;
   header {

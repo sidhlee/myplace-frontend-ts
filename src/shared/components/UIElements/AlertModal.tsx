@@ -11,6 +11,7 @@ const AlertModal = styled(Modal)`
     }
   }
   .modal__content {
+    text-align: center;
     font-size: 1.2rem;
     padding: 1em;
   }
