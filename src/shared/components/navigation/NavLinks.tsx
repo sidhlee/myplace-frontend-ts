@@ -21,25 +21,24 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
   padding: 0;
   width: 100%;
   height: 100%;
-  /* hide from mobile navbar */
-  /* Only show inside side-drawer on mobile view */
-  display: ${(props) => (props.sideDrawer ? 'flex' : 'none')};
-  flex-direction: column;
-  justify-content: center;
+  display: flex;
   align-items: center;
   li {
     margin-right: 3px;
   }
+  .home {
+    display: none;
+  }
 
   @media (min-width: ${bp.desktop}) {
-    display: ${(props) => (props.sideDrawer ? 'none' : 'flex')};
+    display: flex;
     flex-direction: row;
     .home {
       display: none;
     }
   }
 
-  @media (min-width: 500px) {
+  @media (min-width: 400px) {
     .home {
       display: block;
       position: absolute;

@@ -13,10 +13,8 @@ const StyledMainHeader = styled.div`
   display: flex;
   align-items: center;
   padding: 0 1em;
-  @media (min-width: ${bp.desktop}) {
-    justify-content: space-between;
-    padding: 0 1em;
-  }
+  justify-content: space-between;
+  padding: 0 1em;
 `
 const MainHeader: React.FC = (props) => {
   // To be able to extend the style,
