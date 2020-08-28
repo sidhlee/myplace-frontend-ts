@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import NavItem from './NavItem'
+import { DropdownBackdrop } from './navigation-styles'
 
 type DropdownButtonProps = {
   children: React.ReactNode
@@ -14,7 +15,11 @@ const DropdownButton = ({ icon, children }: DropdownButtonProps) => {
       <NavItem type="button" circle onClick={() => set(!open)}>
         {icon}
       </NavItem>
-      {open && children}
+      {open && (
+        <DropdownBackdrop onClick={() => set(false)}>
+          {children}
+        </DropdownBackdrop>
+      )}
     </>
   )
 }

@@ -120,6 +120,18 @@ export const NavIcon = styled('button')`
     filter: brightness(1.2);
   }
 `
+
+export const DropdownBackdrop = styled('div')`
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  pointer-events: auto;
+  background: rgba(0, 0, 0, 0.2);
+  z-index: 100;
+`
+
 export const StyledDropdownMenu = styled('div')`
   position: absolute;
   min-width: 250px;
