@@ -10,7 +10,7 @@ Frontend application built with TypeScript
 
 ## TODOS
 
-- Migrate to [react-spring](https://www.react-spring.io/) from react-transition-group
+- ~~Migrate to [react-spring](https://www.react-spring.io/) from react-transition-group~~
 
 ## Debugging Notes
 
