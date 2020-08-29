@@ -9,15 +9,25 @@ const StyledMainHeader = styled.div`
   z-index: var(--z-navbar);
   top: 0;
   left: 0;
-  display: flex;
-  align-items: center;
-  padding: 0 1em;
-  justify-content: space-between;
+
+  .container {
+    max-width: var(--app-max-width);
+    margin: auto;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 1em;
+    justify-content: space-between;
+  }
 `
 const MainHeader: React.FC = (props) => {
   // To be able to extend the style,
   // you need to attach the passed className prop to a DOM element
-  return <StyledMainHeader {...props}>{props.children}</StyledMainHeader>
+  return (
+    <StyledMainHeader {...props}>
+      <div className="container">{props.children}</div>
+    </StyledMainHeader>
+  )
 }
 
 export default MainHeader

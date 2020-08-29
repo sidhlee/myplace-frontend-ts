@@ -118,7 +118,7 @@ export const StyledDropdownMenu = styled('div')`
   height: auto;
   z-index: 1000;
   top: calc(var(--main-header-height) - 2px);
-  right: 1em;
+  right: max(calc(50vw - calc(var(--app-max-width) / 2) + 1em), 1em);
   background-color: var(--cl-navbar);
   padding: 0.5rem;
   border-radius: var(--border-radius);

@@ -57,6 +57,7 @@ export const GlobalStyle = createGlobalStyle`
   --box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   --box-shadow-success: inset 0 1px 1px #a4e388;
   --main-header-height: 3.8rem;
+  --app-max-width: 1400px;
   --border: 1px solid var(--cl-border-color);
   --border-radius: 5px;
 
