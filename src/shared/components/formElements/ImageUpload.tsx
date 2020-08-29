@@ -35,6 +35,7 @@ const StyledImageUpload = styled.div`
 type ImageUploadProps = {
   id: string
   errorText?: string
+  showErrorMessage: boolean
   initialPreviewUrl?: string
   required?: boolean
   autoFocus?: boolean
@@ -96,7 +97,7 @@ const ImageUpload = (props: ImageUploadProps) => {
     props.inputChangeCallback(props.id, selectedFile, isFileValid)
   }
 
-  const inValid = props.required && !isValid
+  const inValid = props.required && !isValid && props.showErrorMessage
 
   return (
     <StyledImageUpload>
@@ -111,7 +112,16 @@ const ImageUpload = (props: ImageUploadProps) => {
           content={props.errorText}
           visible={inValid}
           placement="right-start"
-          theme="primary"
+          popperOptions={{
+            modifiers: [
+              {
+                name: 'flip',
+                options: {
+                  fallbackPlacements: ['top-end'],
+                },
+              },
+            ],
+          }}
           zIndex={5}
         >
           <div className="image-upload__preview">

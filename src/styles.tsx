@@ -135,7 +135,7 @@ hr {
 `
 
 export const bp = {
-  desktop: '400px',
+  desktop: '350px',
 }
 
 export const config = {

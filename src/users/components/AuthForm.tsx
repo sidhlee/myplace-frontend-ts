@@ -42,7 +42,12 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
   const auth = useContext(AuthContext)
 
   const { sendRequest, isLoading, error, clearError } = useRequest()
-  const [formState, inputChangeCallback, setFormStateCallback] = useForm(
+  const [
+    formState,
+    inputChangeCallback,
+    setFormStateCallback,
+    dispatch,
+  ] = useForm(
     {
       email: {
         value: '',
@@ -97,6 +102,10 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
 
   const handleAuthFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    if (!formState.isValid) {
+      dispatch({ type: 'SHOW_ERROR_MESSAGE' })
+      return
+    }
 
     if (authMode === AuthMode.LOGIN) {
       try {
@@ -137,6 +146,10 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
     }
   }
 
+  const handleSubmitBlur = () => {
+    dispatch({ type: 'CLEAR_ERROR_MESSAGE' })
+  }
+
   return (
     <React.Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
@@ -148,7 +161,13 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
             <Button type="button" large onClick={handleAuthModeButtonClick}>
               SWITCH TO {authMode === AuthMode.LOGIN ? 'SIGNUP' : 'LOGIN'}
             </Button>
-            <Button type="submit" disabled={!formState.isValid} primary large>
+            <Button
+              type="submit"
+              onBlur={handleSubmitBlur}
+              disabled={false}
+              primary
+              large
+            >
               {authMode === AuthMode.LOGIN ? 'LOGIN' : 'SIGNUP'}
             </Button>
           </>
@@ -164,6 +183,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Please enter a valid name"
             inputChangeCallback={inputChangeCallback}
+            showErrorMessage={formState.showErrorMessage}
           />
         )}
         <Input
@@ -175,6 +195,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           validators={[VALIDATOR_EMAIL()]}
           errorText="Please enter a valid email"
           inputChangeCallback={inputChangeCallback}
+          showErrorMessage={formState.showErrorMessage}
         />
         <Input
           id="password"
@@ -185,6 +206,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           validators={[VALIDATOR_MINLENGTH(6)]}
           errorText="Password should be at least 6 characters"
           inputChangeCallback={inputChangeCallback}
+          showErrorMessage={formState.showErrorMessage}
         />
         {authMode === AuthMode.SIGNUP && (
           <ImageUpload
@@ -192,6 +214,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
             inputChangeCallback={inputChangeCallback}
             initialPreviewUrl={require('../../shared/image/Portrait_Placeholder.png')}
             autoFocus
+            showErrorMessage={formState.showErrorMessage}
           />
         )}
       </Form>

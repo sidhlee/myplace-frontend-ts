@@ -32,7 +32,12 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
   const { userId, token } = useContext(AuthContext)
   const [uploadImage, setUploadImage] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useRequest()
-  const [formState, inputChangeCallback, setFormStateCallback] = useForm(
+  const [
+    formState,
+    inputChangeCallback,
+    setFormStateCallback,
+    dispatch,
+  ] = useForm(
     {
       title: {
         value: '',
@@ -64,6 +69,10 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
 
   const handleNewPlaceSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    if (!formState.isValid) {
+      dispatch({ type: 'SHOW_ERROR_MESSAGE' })
+      return
+    }
     try {
       if (userId) {
         const formData = new FormData()
@@ -89,10 +98,12 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
   }
 
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { title, description, address } = formState.inputs
+    let isFormValid = title.isValid && description.isValid && address.isValid
+
     if (e.target.checked) {
-      // if all inputs except image are valid by the time checkbox is checked, form is valid
-      const { title, description, address } = formState.inputs
-      let isFormValid = title.isValid && description.isValid && address.isValid
+      // if all inputs except image are valid by the time checkbox is checked,
+      // form is valid
       setUploadImage(false)
       setFormStateCallback(
         {
@@ -107,7 +118,21 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
     } else {
       // unchecked
       setUploadImage(true)
+      setFormStateCallback(
+        {
+          ...formState.inputs,
+          image: {
+            value: '',
+            isValid: false,
+          },
+        },
+        false
+      )
     }
+  }
+
+  const handleSubmitBlur = () => {
+    dispatch({ type: 'CLEAR_ERROR_MESSAGE' })
   }
 
   return (
@@ -121,7 +146,13 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
             <Button to="/" large>
               CANCEL
             </Button>
-            <Button type="submit" disabled={!formState.isValid} primary large>
+            <Button
+              onBlur={handleSubmitBlur}
+              type="submit"
+              disabled={false}
+              primary
+              large
+            >
               ADD PLACE
             </Button>
           </>
@@ -130,8 +161,9 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
         <ImageUpload
           id="image"
           inputChangeCallback={inputChangeCallback}
-          errorText="Please select an image"
+          errorText="Please select an image or check 'auto-generate' option"
           required={uploadImage}
+          showErrorMessage={formState.showErrorMessage}
         />
         <Checkbox onChange={handleCheckboxChange} checked={!uploadImage} />
         <Input
@@ -143,6 +175,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid title."
           inputChangeCallback={inputChangeCallback}
+          showErrorMessage={formState.showErrorMessage}
         />
         <Input
           id="description"
@@ -152,6 +185,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           validators={[VALIDATOR_MINLENGTH(4)]}
           errorText="Description should be more than 4 letters."
           inputChangeCallback={inputChangeCallback}
+          showErrorMessage={formState.showErrorMessage}
         />
         <Input
           id="address"
@@ -162,6 +196,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           validators={[VALIDATOR_REQUIRE()]}
           errorText="Please enter a valid address."
           inputChangeCallback={inputChangeCallback}
+          showErrorMessage={formState.showErrorMessage}
         />
       </Form>
     </React.Fragment>

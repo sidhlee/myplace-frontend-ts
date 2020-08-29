@@ -36,6 +36,7 @@ type InputProps = {
   initialValue?: string
   initialIsValid?: boolean
   errorText?: string
+  showErrorMessage: boolean
   inputChangeCallback: (id: string, value: string, isValid: boolean) => void
 }
 
@@ -125,8 +126,8 @@ const Input = (props: InputProps) => {
         />
       )
   }
-  // TODO: show tooltip only when submit button is clicked
-  const invalid = !inputState.isValid && inputState.isTouched
+
+  const invalid = !inputState.isValid && props.showErrorMessage
   return (
     <ThemedTippy
       content={props.errorText}

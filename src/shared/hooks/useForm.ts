@@ -12,6 +12,7 @@ type FormStateInputs = {
 type FormState = {
   inputs: FormStateInputs
   isValid: boolean
+  showErrorMessage: boolean
 }
 
 type Action =
@@ -25,6 +26,12 @@ type Action =
       type: 'SET_FORM_STATE'
       initialInputs: FormStateInputs
       initialFormValidity: boolean
+    }
+  | {
+      type: 'SHOW_ERROR_MESSAGE'
+    }
+  | {
+      type: 'CLEAR_ERROR_MESSAGE'
     }
 
 const formReducer = (state: FormState, action: Action) => {
@@ -79,6 +86,7 @@ const formReducer = (state: FormState, action: Action) => {
           },
         },
         isValid: isFormValid,
+        showErrorMessage: false,
       }
     }
     case 'SET_FORM_STATE': {
@@ -89,8 +97,22 @@ const formReducer = (state: FormState, action: Action) => {
       //   isFormValid = isFormValid && state.inputs[input].isValid
       // }
       return {
+        ...state,
         inputs: action.initialInputs,
         isValid: action.initialFormValidity,
+        showErrorMessage: false,
+      }
+    }
+    case 'SHOW_ERROR_MESSAGE': {
+      return {
+        ...state,
+        showErrorMessage: true,
+      }
+    }
+    case 'CLEAR_ERROR_MESSAGE': {
+      return {
+        ...state,
+        showErrorMessage: false,
       }
     }
     default:
@@ -110,6 +132,7 @@ export const useForm = (
   const [formState, dispatch] = useReducer(formReducer, {
     inputs: initialInputs,
     isValid: initialFormValidity,
+    showErrorMessage: false,
   })
 
   const inputChangeCallback = useCallback(
@@ -146,5 +169,10 @@ export const useForm = (
   // makes array literals readonly tuples. (diff. types in each position of the array)
   // Without it, TS will infer a union type:
   // (FormState | (id: string, value: string, isValid: boolean) => void)[]
-  return [formState, inputChangeCallback, setFormStateCallback] as const
+  return [
+    formState,
+    inputChangeCallback,
+    setFormStateCallback,
+    dispatch,
+  ] as const
 }

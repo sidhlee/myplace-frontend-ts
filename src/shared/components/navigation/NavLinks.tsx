@@ -15,7 +15,6 @@ import DropdownMenu from './DropdownMenu'
 import NavUser from './NavUser'
 
 const StyledNavLinks = styled.ul<NavLinksProps>`
-  height: 100%;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -31,25 +30,17 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
   }
 
   @media (min-width: ${bp.desktop}) {
-    display: flex;
-    flex-direction: row;
-    .home {
-      display: none;
-    }
-  }
-
-  @media (min-width: 400px) {
     .home {
       display: block;
       position: absolute;
-      left: calc(50% - 15px);
+      left: calc(50% - 20px);
     }
   }
 
   .nav-user {
     display: none;
   }
-  @media (min-width: 1000px) {
+  @media (min-width: 800px) {
     .nav-user {
       display: block;
     }

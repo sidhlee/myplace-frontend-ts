@@ -87,6 +87,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
           // All input & output data should be synchronized with formState
           initialValue={formState.inputs.title.value}
           initialIsValid={formState.inputs.title.isValid}
+          showErrorMessage={formState.showErrorMessage}
         />
         <Input
           id="description"
@@ -98,6 +99,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
           inputChangeCallback={inputChangeCallback}
           initialValue={formState.inputs.description.value}
           initialIsValid={formState.inputs.description.isValid}
+          showErrorMessage={formState.showErrorMessage}
         />
       </Form>
     </React.Fragment>

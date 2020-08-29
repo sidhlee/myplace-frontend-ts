@@ -17,6 +17,7 @@ type ButtonProps = {
   small?: boolean
   large?: boolean
   onClick?: () => void
+  onBlur?: () => void
 }
 
 const Button = (props: ButtonProps) => {
@@ -40,6 +41,7 @@ const Button = (props: ButtonProps) => {
       type={props.type}
       disabled={props.disabled}
       onClick={props.onClick}
+      onBlur={props.onBlur}
     >
       {props.children}
     </button>
@@ -104,8 +106,11 @@ export default styled(Button)`
 
   ${(props) => (props.primary ? primaryCss : null)}
   ${(props) => (props.danger ? dangerCss : null)}
-  ${(props) => (props.success ? successCss : null)}
-  ${(props) => (props.large ? largeCss : null)}
+  ${(props) =>
+    props.success ? successCss : null}
+  ${(props) =>
+    props.large ? largeCss : null}
 
-  ${(props) => (props.disabled ? disabledCss : null)}
+  ${(props) =>
+    props.disabled ? disabledCss : null}
 `
