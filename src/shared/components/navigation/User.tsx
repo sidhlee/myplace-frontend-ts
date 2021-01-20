@@ -9,6 +9,7 @@ type UserProps = {
   small?: boolean
 }
 
+// TODO: DEBUG - User not re-rendering after new user signup with bew userImageURL
 const User = ({ small }: UserProps) => {
   const auth = useContext(AuthContext)
   return (

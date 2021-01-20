@@ -40,7 +40,7 @@ const StyledNavLinks = styled.ul<NavLinksProps>`
   .nav-user {
     display: none;
   }
-  @media (min-width: 800px) {
+  @media (min-width: 600px) {
     .nav-user {
       display: block;
     }
