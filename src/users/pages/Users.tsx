@@ -11,6 +11,8 @@ const Users: React.FC = (props) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
+      // simulate Heroku spinning up from sleep
+      await new Promise((resolve) => setTimeout(resolve, 5000))
       const responseData = await sendRequest<{ users: User[] }>(
         `${process.env.REACT_APP_SERVER_URL}/api/users`
       )
@@ -18,6 +20,7 @@ const Users: React.FC = (props) => {
         setLoadedUsers(responseData.users)
       }
     }
+
     fetchUsers()
   }, [sendRequest])
 
