@@ -22,7 +22,7 @@ function App() {
 
   const isLoggedIn = !!token
 
-  const route = isLoggedIn ? (
+  const route = (
     <Switch>
       <Route path="/" exact>
         <Users />
@@ -30,25 +30,20 @@ function App() {
       <Route path="/:userId/places">
         <UserPlaces />
       </Route>
-      <Route path="/places/new">
-        <NewPlace />
-      </Route>
-      <Route path="/places/:placeId">
-        <UpdatePlace />
-      </Route>
-      <Redirect to="/" />
-    </Switch>
-  ) : (
-    <Switch>
-      <Route path="/" exact>
-        <Users />
-      </Route>
-      <Route path="/:userId/places">
-        <UserPlaces />
-      </Route>
-      <Route path="/auth">
-        <Auth />
-      </Route>
+      {isLoggedIn ? (
+        <>
+          <Route path="/places/new">
+            <NewPlace />
+          </Route>
+          <Route path="/places/:placeId">
+            <UpdatePlace />
+          </Route>
+        </>
+      ) : (
+        <Route path="/auth">
+          <Auth />
+        </Route>
+      )}
       <Redirect to="/" />
     </Switch>
   )
