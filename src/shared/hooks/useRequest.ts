@@ -57,6 +57,8 @@ export const useRequest = () => {
         if (!response.ok) {
           throw Error(responseData.message)
         }
+        // simulate Heroku spinning up from sleep
+        // await new Promise((resolve) => setTimeout(resolve, 5000))
 
         // if ok (200), stop spinner and return parsed data
         setIsLoading(false)

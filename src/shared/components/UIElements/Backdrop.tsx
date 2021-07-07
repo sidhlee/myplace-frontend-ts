@@ -15,7 +15,7 @@ const StyledBackdrop = styled(animated.div)`
 
 type BackdropProps = {
   show: boolean
-  onClick: () => void
+  onClick?: () => void
 }
 const Backdrop = (props: BackdropProps) => {
   const transition = useTransition(props.show, null, {

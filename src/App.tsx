@@ -16,16 +16,22 @@ import UpdatePlace from './places/pages/UpdatePlace'
 import Auth from './users/pages/Auth'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import { useAuth } from './shared/hooks/useAuth'
+import { useState } from 'react'
 
 function App() {
   const { userId, userName, userImageUrl, token, login, logout } = useAuth()
+  // For showing spinner while heroku server is spinning up
+  const [firstPageLoaded, setFirstPageLoaded] = useState(false)
 
   const isLoggedIn = !!token
 
   const route = (
     <Switch>
       <Route path="/" exact>
-        <Users />
+        <Users
+          firstPageLoaded={firstPageLoaded}
+          setFirstPageLoaded={setFirstPageLoaded}
+        />
       </Route>
       <Route path="/:userId/places">
         <UserPlaces />

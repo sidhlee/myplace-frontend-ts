@@ -32,17 +32,16 @@ const StyledModal = styled(animated.div)`
 type ModalProps = {
   show: boolean
   className?: string
-  children: ReactNode
   header?: ReactNode
   footer?: ReactNode
   headerClass?: string
   contentClass?: string
   footerClass?: string
-  clearModal: () => void
+  clearModal?: () => void
   onSubmit?: (e: FormEvent) => void
 }
 
-const Modal = (props: ModalProps) => {
+const Modal: React.FC<ModalProps> = (props) => {
   const transition = useTransition(props.show, null, {
     from: {
       transform: `translateY(-10rem) translateX(-50%)`,
