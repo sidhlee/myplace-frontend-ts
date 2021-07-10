@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext } from 'react'
+import { FormEvent, useContext } from 'react'
 import { useHistory, useParams } from 'react-router-dom'
 
 import { useForm } from '../../shared/hooks/useForm'
@@ -59,7 +59,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
     } catch (err) {}
   }
   return (
-    <React.Fragment>
+    <>
       <ErrorModal errorText={error} clearModal={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <Form
@@ -102,7 +102,7 @@ const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
           showErrorMessage={formState.showErrorMessage}
         />
       </Form>
-    </React.Fragment>
+    </>
   )
 }
 

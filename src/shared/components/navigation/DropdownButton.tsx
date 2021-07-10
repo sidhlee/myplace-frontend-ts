@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import NavItem from './NavItem'
 import { DropdownBackdrop } from './navigation-styles'

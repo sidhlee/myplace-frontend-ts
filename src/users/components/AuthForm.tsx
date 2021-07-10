@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 
 import {
   VALIDATOR_EMAIL,
@@ -160,7 +160,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       {isLoading && <LoadingSpinner asOverlay />}
       <ErrorModal errorText={error} clearModal={clearError} />
       <Form
@@ -230,7 +230,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           />
         )}
       </Form>
-    </React.Fragment>
+    </>
   )
 }
 

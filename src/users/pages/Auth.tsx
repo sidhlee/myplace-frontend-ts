@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import FormPage from '../../shared/components/formElements/FormPage'
 import AuthForm from '../components/AuthForm'

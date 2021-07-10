@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import UserList from '../components/UserList'
 import { User } from '../../shared/models/types'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
@@ -46,11 +46,11 @@ const Users: React.FC<UsersProps> = ({
   }, [firstPageLoaded])
 
   return (
-    <React.Fragment>
+    <>
       <ErrorModal errorText={error} clearModal={clearError} />
       <HerokuSpinner isLoading={!firstPageLoaded && takingTooLong} />
       <UserList users={loadedUsers} />
-    </React.Fragment>
+    </>
   )
 }
 

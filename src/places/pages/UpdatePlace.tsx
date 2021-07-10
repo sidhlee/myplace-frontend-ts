@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { Place } from '../../shared/models/types'
@@ -48,7 +48,7 @@ const UpdatePlace = (props: UpdatePlaceProps) => {
     </header>
   )
   return (
-    <React.Fragment>
+    <>
       <ErrorModal errorText={error} clearModal={clearError} />
       <FormPage header={header}>
         {loadedPlace ? (
@@ -62,7 +62,7 @@ const UpdatePlace = (props: UpdatePlaceProps) => {
           <UpdatePlaceSkeleton />
         )}
       </FormPage>
-    </React.Fragment>
+    </>
   )
 }
 
