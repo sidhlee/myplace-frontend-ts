@@ -18,7 +18,8 @@
     "noEmit": true,
     "jsx": "react",
     "baseUrl": "src",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "noFallthroughCasesInSwitch": true
   },
   "include": [
     "src"
