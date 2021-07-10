@@ -1,4 +1,3 @@
-import React from 'react'
 import NewPlaceForm from '../components/NewPlaceForm'
 import FormPage from '../../shared/components/formElements/FormPage'
 

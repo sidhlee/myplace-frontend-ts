@@ -1,4 +1,3 @@
-import React from 'react'
 import { StyledUserItem } from './UserItem'
 import Card from '../../shared/components/UIElements/Card'
 import Skeleton from 'react-loading-skeleton'

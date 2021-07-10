@@ -1,7 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from 'react'
 
 type RequestMethod = 'GET' | 'POST' | 'PATCH' | 'DELETE'
-type RequestBody = Request
 type RequestHeader = {
   [header: string]: string
 }

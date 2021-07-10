@@ -1,9 +1,8 @@
-import React, { useContext } from 'react'
-
+import { useContext } from 'react'
 import { AuthContext } from '../../context/AuthContext'
 import Avatar from '../UIElements/Avatar'
-
 import { StyledUser } from './navigation-styles'
+import userPlaceholder from '../../../shared/image/Portrait_Placeholder.png'
 
 type UserProps = {
   small?: boolean
@@ -16,9 +15,7 @@ const User = ({ small }: UserProps) => {
     <StyledUser small={!!small}>
       <div className="user__avatar">
         <Avatar
-          src={
-            auth.userImageUrl || require('../../image/Portrait_Placeholder.png')
-          }
+          src={auth.userImageUrl || userPlaceholder}
           alt={auth.userName || ''}
         />
       </div>

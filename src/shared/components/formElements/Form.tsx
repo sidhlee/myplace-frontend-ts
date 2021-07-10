@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 
 export const StyledForm = styled.form`
@@ -9,6 +9,11 @@ export const StyledForm = styled.form`
   }
   .form-actions {
     text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    button {
+      flex: 1 1 auto;
+    }
   }
 `
 

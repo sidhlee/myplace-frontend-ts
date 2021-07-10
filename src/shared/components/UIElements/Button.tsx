@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react'
+import { ReactNode } from 'react'
 import styled, { css } from 'styled-components'
 import { Link } from 'react-router-dom'
 
@@ -106,11 +106,8 @@ export default styled(Button)`
 
   ${(props) => (props.primary ? primaryCss : null)}
   ${(props) => (props.danger ? dangerCss : null)}
-  ${(props) =>
-    props.success ? successCss : null}
-  ${(props) =>
-    props.large ? largeCss : null}
+  ${(props) => (props.success ? successCss : null)}
+  ${(props) => (props.large ? largeCss : null)}
 
-  ${(props) =>
-    props.disabled ? disabledCss : null}
+  ${(props) => (props.disabled ? disabledCss : null)}
 `

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import { useState, useContext } from 'react'
 import styled from 'styled-components'
 import Card from '../../shared/components/UIElements/Card'
 import Button from '../../shared/components/UIElements/Button'
@@ -96,7 +96,7 @@ const PlaceItem = (
   }
 
   return (
-    <React.Fragment>
+    <>
       <ErrorModal errorText={error} clearModal={clearError} />
       <MapModal
         show={showMap}
@@ -155,7 +155,7 @@ const PlaceItem = (
           </div>
         </Card>
       </StyledPlaceItem>
-    </React.Fragment>
+    </>
   )
 }
 

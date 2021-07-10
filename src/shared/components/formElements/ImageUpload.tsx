@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef, ChangeEvent } from 'react'
+import { useState, useEffect, useRef, ChangeEvent } from 'react'
 import styled from 'styled-components'
 import Button from '../UIElements/Button'
 import ThemedTippy from './ThemedTippy'
+import placePlaceholder from '../../../shared/image/place-placeholder.png'
 
 const StyledImageUpload = styled.div`
   margin-bottom: 1em;
@@ -45,7 +46,7 @@ type ImageUploadProps = {
 const ImageUpload = (props: ImageUploadProps) => {
   const initialPreviewUrl = props.initialPreviewUrl
     ? props.initialPreviewUrl
-    : require('../../image/place-placeholder.png')
+    : placePlaceholder
 
   const [file, setFile] = useState<File | null>(null) // points to file(binary)
   const [previewUrl, setPreviewUrl] = useState<string>(initialPreviewUrl) // points to dataURL(base64)

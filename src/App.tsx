@@ -1,4 +1,3 @@
-import React from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -17,6 +16,7 @@ import Auth from './users/pages/Auth'
 import { SkeletonTheme } from 'react-loading-skeleton'
 import { useAuth } from './shared/hooks/useAuth'
 import { useState } from 'react'
+import ProtectedRoute from './shared/components/navigation/ProtectedRoutes'
 
 function App() {
   const { userId, userName, userImageUrl, token, login, logout } = useAuth()
@@ -36,16 +36,13 @@ function App() {
       <Route path="/:userId/places">
         <UserPlaces />
       </Route>
-      {isLoggedIn ? (
-        <>
-          <Route path="/places/new">
-            <NewPlace />
-          </Route>
-          <Route path="/places/:placeId">
-            <UpdatePlace />
-          </Route>
-        </>
-      ) : (
+      <ProtectedRoute authenticated={isLoggedIn} path="/places/new" exact>
+        <NewPlace />
+      </ProtectedRoute>
+      <ProtectedRoute authenticated={isLoggedIn} path="/places/:placeId">
+        <UpdatePlace />
+      </ProtectedRoute>
+      {isLoggedIn ? null : (
         <Route path="/auth">
           <Auth />
         </Route>

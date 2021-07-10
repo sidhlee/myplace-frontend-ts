@@ -1,4 +1,3 @@
-import React from 'react'
 import styled from 'styled-components'
 import { useTransition, animated } from 'react-spring'
 import { createPortal } from 'react-dom'
