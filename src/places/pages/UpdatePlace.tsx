@@ -25,7 +25,7 @@ type UpdatePlaceProps = {}
 
 const UpdatePlace = (props: UpdatePlaceProps) => {
   const [loadedPlace, setLoadedPlace] = useState<Place | null>(null)
-  const { placeId } = useParams()
+  const { placeId } = useParams<{ placeId: string }>()
   const { sendRequest, error, clearError } = useRequest()
 
   useEffect(() => {

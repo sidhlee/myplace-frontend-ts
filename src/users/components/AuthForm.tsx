@@ -23,9 +23,6 @@ type LoginBody = {
   password: string
 }
 
-// intersection type for augmenting existing type
-type SignupBody = LoginBody & { name: string }
-
 type AuthResponse = {
   userId: string
   userName: string

@@ -25,7 +25,7 @@ type UpdatePlaceFormProps = {
 const UpdatePlaceForm = (props: UpdatePlaceFormProps) => {
   const { sendRequest, isLoading, error, clearError } = useRequest()
   const history = useHistory()
-  const { placeId } = useParams()
+  const { placeId } = useParams<{ placeId: string }>()
   const { userId, token } = useContext(AuthContext)
   const [formState, inputChangeCallback] = useForm(
     {

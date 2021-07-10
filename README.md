@@ -103,3 +103,7 @@ const response = await fetch(url, {
 
 - To make UI component more re-usable, it should only have styles that is NOT going to change across different use cases.
 - For example, If you give default padding to the Card component, you might have to remove that padding with negative margin with calc-ed value when you want to have a image header with no padding, which is a little bit hacky and you have to hard-code the padding width from the Card component.
+
+## Reference
+
+- [Upgrade Create React App-Based Projects to Version 4 (CRA 4)](https://betterprogramming.pub/upgrade-create-react-app-based-projects-to-version-4-cra-4-d7962aee11a6)

@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useState, useEffect } from 'react'
+import { FormEvent, useContext, useState, useEffect } from 'react'
 
 import Form from '../../shared/components/formElements/Form'
 import Input from '../../shared/components/formElements/Input'
@@ -17,13 +17,6 @@ import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import ImageUpload from '../../shared/components/formElements/ImageUpload'
 import Checkbox from '../../shared/components/formElements/Checkbox'
 
-type NewPlaceBody = {
-  title: string
-  description: string
-  address: string
-  creator: string
-}
-
 type NewPlaceResponse = {}
 
 type NewPlaceFormProps = {}
@@ -32,32 +25,28 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
   const { userId, token } = useContext(AuthContext)
   const [uploadImage, setUploadImage] = useState(true)
   const { sendRequest, isLoading, error, clearError } = useRequest()
-  const [
-    formState,
-    inputChangeCallback,
-    setFormStateCallback,
-    dispatch,
-  ] = useForm(
-    {
-      title: {
-        value: '',
-        isValid: false,
+  const [formState, inputChangeCallback, setFormStateCallback, dispatch] =
+    useForm(
+      {
+        title: {
+          value: '',
+          isValid: false,
+        },
+        description: {
+          value: '',
+          isValid: false,
+        },
+        address: {
+          value: '',
+          isValid: false,
+        },
+        image: {
+          value: null,
+          isValid: false,
+        },
       },
-      description: {
-        value: '',
-        isValid: false,
-      },
-      address: {
-        value: '',
-        isValid: false,
-      },
-      image: {
-        value: null,
-        isValid: false,
-      },
-    },
-    false
-  )
+      false
+    )
   const history = useHistory()
 
   const { image } = formState.inputs
@@ -136,7 +125,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <ErrorModal errorText={error} clearModal={clearError} />
       {isLoading && <LoadingSpinner asOverlay />}
       <Form
@@ -199,7 +188,7 @@ const NewPlaceForm = (props: NewPlaceFormProps) => {
           showErrorMessage={formState.showErrorMessage}
         />
       </Form>
-    </React.Fragment>
+    </>
   )
 }
 
