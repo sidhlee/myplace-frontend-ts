@@ -38,28 +38,23 @@ type AuthFormProps = {
   toggleAuthMode: () => void
 }
 
+const initialInputs = {
+  email: {
+    value: '',
+    isValid: false,
+  },
+  password: {
+    value: '',
+    isValid: false,
+  },
+}
+
 const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
   const auth = useContext(AuthContext)
 
   const { sendRequest, isLoading, error, clearError } = useRequest()
-  const [
-    formState,
-    inputChangeCallback,
-    setFormStateCallback,
-    dispatch,
-  ] = useForm(
-    {
-      email: {
-        value: '',
-        isValid: false,
-      },
-      password: {
-        value: '',
-        isValid: false,
-      },
-    },
-    false
-  )
+  const [formState, inputChangeCallback, setFormStateCallback, dispatch] =
+    useForm(initialInputs, false)
 
   const handleAuthModeButtonClick = () => {
     // switch to signup - add name & image input field
@@ -150,6 +145,22 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
     dispatch({ type: 'CLEAR_ERROR_MESSAGE' })
   }
 
+  const handleDemoButtonClick = async () => {
+    try {
+      const responseData = await sendRequest<
+        AuthResponse | undefined,
+        LoginBody
+      >(`${process.env.REACT_APP_SERVER_URL}/api/users/login`, 'POST', {
+        email: 'demo@myplace.com',
+        password: '123123',
+      })
+      if (responseData) {
+        const { userId, userName, userImageUrl, token } = responseData
+        auth.login(userId, userName, userImageUrl, token)
+      }
+    } catch (err) {}
+  }
+
   return (
     <React.Fragment>
       {isLoading && <LoadingSpinner asOverlay />}
@@ -169,6 +180,9 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
               large
             >
               {authMode === AuthMode.LOGIN ? 'LOGIN' : 'SIGNUP'}
+            </Button>
+            <Button type="button" onClick={handleDemoButtonClick} large primary>
+              TRY DEMO
             </Button>
           </>
         }

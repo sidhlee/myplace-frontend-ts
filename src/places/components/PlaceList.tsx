@@ -24,7 +24,7 @@ type PlaceListProps = {
 
 const PlaceList: React.FC<PlaceListProps> = (props) => {
   const auth = useContext(AuthContext)
-  const { userId } = useParams()
+  const { userId } = useParams<{ userId: string }>()
   if (!props.places) {
     return (
       <StyledPlaceList>
@@ -40,7 +40,7 @@ const PlaceList: React.FC<PlaceListProps> = (props) => {
         header={
           <header>
             <h2 className="center" style={{ fontSize: '1.4rem' }}>
-              No places found.{' '}
+              No places found{' '}
             </h2>
             {userId === auth.userId && <p>Create a new place!</p>}
           </header>

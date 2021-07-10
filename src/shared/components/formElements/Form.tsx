@@ -9,6 +9,11 @@ export const StyledForm = styled.form`
   }
   .form-actions {
     text-align: right;
+    display: flex;
+    flex-wrap: wrap;
+    button {
+      flex: 1 1 auto;
+    }
   }
 `
 

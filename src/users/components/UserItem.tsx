@@ -49,7 +49,7 @@ const UserItem: React.FC<UserItemProps> = (props) => {
   const src = props.image // image url
     ? props.image
     : require('../../shared/image/Portrait_Placeholder.png')
-  return (
+  return props.placeCount > 0 ? (
     <StyledUserItem>
       <Card>
         <Link className="user-item__link" to={`${props.id}/places`}>
@@ -65,7 +65,7 @@ const UserItem: React.FC<UserItemProps> = (props) => {
         </Link>
       </Card>
     </StyledUserItem>
-  )
+  ) : null
 }
 
 export default UserItem

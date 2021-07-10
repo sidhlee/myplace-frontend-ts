@@ -37,14 +37,15 @@ function App() {
         <UserPlaces />
       </Route>
       {isLoggedIn ? (
-        <>
-          <Route path="/places/new">
+        // Don't show UpdatePlace when path is "/places/new" (:placeId being "new")
+        <Switch>
+          <Route path="/places/new" exact>
             <NewPlace />
           </Route>
           <Route path="/places/:placeId">
             <UpdatePlace />
           </Route>
-        </>
+        </Switch>
       ) : (
         <Route path="/auth">
           <Auth />
