@@ -16,6 +16,7 @@ import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import LoadingSpinner from '../../shared/components/UIElements/LoadingSpinner'
 import ImageUpload from '../../shared/components/formElements/ImageUpload'
 import { AuthMode } from '../pages/Auth'
+import userPlaceholder from '../../shared/image/Portrait_Placeholder.png'
 
 type LoginBody = {
   email: string
@@ -226,7 +227,7 @@ const AuthForm = ({ authMode, toggleAuthMode }: AuthFormProps) => {
           <ImageUpload
             id="image"
             inputChangeCallback={inputChangeCallback}
-            initialPreviewUrl={require('../../shared/image/Portrait_Placeholder.png')}
+            initialPreviewUrl={userPlaceholder}
             autoFocus
             showErrorMessage={formState.showErrorMessage}
           />
