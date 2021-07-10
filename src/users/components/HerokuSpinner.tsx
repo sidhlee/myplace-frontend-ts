@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import Modal from '../../shared/components/UIElements/Modal'
 
 const StyledHerokuSpinner = styled('div')`
-  padding: 1rem;
+  padding: 2rem 1em;
   text-align: center;
 `
 

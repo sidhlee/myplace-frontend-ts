@@ -11,13 +11,15 @@ const StyledModal = styled(animated.div)`
   z-index: var(--z-modal);
   top: 20vh;
   left: 0;
-  width: 100%;
-  max-width: 36rem;
+  /* width: 100%;
+  max-width: 36rem; */
+  min-width: 5rem;
   margin-left: 50%;
   transform: translateX(-50%);
   background: white;
   box-shadow: var(--box-shadow);
   border-radius: var(--border-radius);
+  overflow: hidden;
   header {
     padding: 1em 0.5em;
     background: var(--cl-primary);

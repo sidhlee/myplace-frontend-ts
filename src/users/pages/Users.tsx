@@ -4,6 +4,7 @@ import { User } from '../../shared/models/types'
 import ErrorModal from '../../shared/components/UIElements/ErrorModal'
 import { useRequest } from '../../shared/hooks/useRequest'
 import HerokuSpinner from '../components/HerokuSpinner'
+import { useRef } from 'react'
 
 type UsersProps = {
   firstPageLoaded: boolean
@@ -14,9 +15,10 @@ const Users: React.FC<UsersProps> = ({
   setFirstPageLoaded,
   firstPageLoaded,
 }) => {
-  const { sendRequest, error, clearError, isLoading } = useRequest()
-
+  const [takingTooLong, setTakingTooLong] = useState(false)
+  const { sendRequest, error, clearError } = useRequest()
   const [loadedUsers, setLoadedUsers] = useState<User[] | null>(null)
+  const timeoutRef = useRef<number | undefined>()
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -33,10 +35,20 @@ const Users: React.FC<UsersProps> = ({
     fetchUsers()
   }, [sendRequest, setFirstPageLoaded])
 
+  useEffect(() => {
+    if (!firstPageLoaded) {
+      timeoutRef.current = setTimeout(() => {
+        setTakingTooLong(true)
+      }, 1000)
+    }
+
+    return () => clearTimeout(timeoutRef.current)
+  }, [firstPageLoaded])
+
   return (
     <React.Fragment>
       <ErrorModal errorText={error} clearModal={clearError} />
-      <HerokuSpinner isLoading={!firstPageLoaded} />
+      <HerokuSpinner isLoading={!firstPageLoaded && takingTooLong} />
       <UserList users={loadedUsers} />
     </React.Fragment>
   )
